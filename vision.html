@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vision — Kitchen Table Cloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;
+  --white:#FDFAF5;--brick:#B54C2F;--slate:#2A4860;
+  --amber:#C8872C;--sage:#3A6B50;--sage-m:#5D9478;
+  --muted:#7A7068;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.78;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
+
+/* HEADER */
+.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--amber);position:sticky;top:0;z-index:200}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
+.logo span{color:var(--amber)}
+.back-link{font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s}
+.back-link:hover{color:var(--amber)}
+
+/* HERO */
+.vision-hero{
+  background:var(--ink);padding:100px 40px 80px;position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+}
+.vision-hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at 70% 40%,rgba(200,135,44,0.06) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-inner{max-width:900px;margin:0 auto;text-align:center}
+.kicker{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:22px;display:block}
+.vision-title{font-size:clamp(4rem,8vw,8rem);color:var(--white);line-height:0.88;margin-bottom:28px}
+.vision-title .amber{color:var(--amber)}
+.vision-deck{font-size:1.2rem;color:rgba(255,255,255,0.6);line-height:1.78;max-width:720px;margin:0 auto 36px}
+.vision-deck strong{color:var(--white)}
+.vision-date{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em}
+
+/* SECTIONS */
+.vision-section{padding:80px 40px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.vision-section.light{background:var(--bg);color:var(--ink);border-color:rgba(0,0,0,0.08)}
+.vision-section.slate-bg{background:var(--slate);color:var(--white);border-color:rgba(255,255,255,0.08)}
+.vision-section.sage-bg{background:var(--sage);color:var(--white);border-color:rgba(255,255,255,0.08)}
+.inner{max-width:900px;margin:0 auto}
+
+.section-num{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--amber);text-transform:uppercase;margin-bottom:14px;display:block}
+.v-title{font-size:clamp(2.4rem,4.5vw,3.8rem);margin-bottom:20px}
+.v-body p{font-size:1.06rem;line-height:1.82;margin-bottom:22px;color:rgba(255,255,255,0.72)}
+.v-body p:last-child{margin-bottom:0}
+.v-body p strong{color:var(--white)}
+.v-body p em{color:var(--amber);font-style:normal}
+.light .v-body p{color:var(--ink)}
+.light .v-body p strong{color:var(--slate)}
+.light .v-body p em{color:var(--brick)}
+.slate-bg .v-body p{color:rgba(255,255,255,0.68)}
+.sage-bg .v-body p{color:rgba(255,255,255,0.82)}
+
+/* KOTTER STEPS */
+.kotter-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.08);margin-top:36px}
+.kotter-step{background:rgba(255,255,255,0.03);padding:28px 24px}
+.ks-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(200,135,44,0.25);display:block;line-height:1;margin-bottom:8px}
+.ks-head{font-size:1.3rem;color:var(--amber);margin-bottom:10px}
+.ks-body{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.65}
+.ks-how{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(93,148,120,0.8);margin-top:10px;border-top:1px solid rgba(255,255,255,0.07);padding-top:10px}
+
+/* TIMELINE */
+.timeline{margin-top:36px;position:relative;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:rgba(200,135,44,0.2)}
+.tl-item{position:relative;margin-bottom:36px}
+.tl-item::before{content:'';position:absolute;left:-28px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--amber);border:2px solid var(--ink)}
+.tl-year{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--amber);letter-spacing:0.08em;display:block;margin-bottom:6px}
+.tl-item h4{font-size:1.4rem;color:var(--white);margin-bottom:8px}
+.tl-item p{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.65}
+
+/* WORLD WE WANT */
+.world-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px}
+.world-card{padding:28px;border:1px solid rgba(255,255,255,0.12)}
+.world-card h4{font-size:1.4rem;color:var(--amber);margin-bottom:12px}
+.world-card p{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.65}
+
+/* NOT WE */
+.not-we{background:rgba(200,135,44,0.05);border:2px solid rgba(200,135,44,0.15);padding:36px;margin-top:36px}
+.not-we h3{font-size:2rem;color:var(--amber);margin-bottom:18px}
+.not-we-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.nw-col h5{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.07em;margin-bottom:12px}
+.nw-col.nope h5{color:rgba(255,255,255,0.4)}
+.nw-col.yes h5{color:var(--sage-m)}
+.nw-col ul{list-style:none}
+.nw-col ul li{font-family:'Space Mono',monospace;font-size:0.74rem;color:rgba(255,255,255,0.5);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:8px;line-height:1.5}
+.nw-col.nope ul li::before{content:'✕';color:rgba(181,76,47,0.7);flex-shrink:0}
+.nw-col.yes ul li::before{content:'✓';color:var(--sage-m);flex-shrink:0}
+
+/* MANIFESTO CLOSER */
+.manifesto-closer{text-align:center;padding:80px 40px;background:var(--ink);border-top:1px solid rgba(255,255,255,0.06)}
+.mc-title{font-size:clamp(3rem,6vw,5.5rem);color:var(--white);margin-bottom:24px;line-height:0.95}
+.mc-title span{color:var(--amber)}
+.mc-body{max-width:680px;margin:0 auto;font-size:1.1rem;color:rgba(255,255,255,0.55);line-height:1.8;margin-bottom:36px}
+.mc-body strong{color:var(--white)}
+.btn-amber{background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.07em;padding:13px 28px;text-decoration:none;border:3px solid var(--amber);transition:all 0.2s;display:inline-block;margin:6px}
+.btn-amber:hover{background:transparent;color:var(--amber)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,0.6);font-family:'Space Mono',monospace;font-size:0.75rem;padding:13px 20px;text-decoration:none;border:2px solid rgba(255,255,255,0.2);transition:all 0.2s;display:inline-block;margin:6px}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.6);color:var(--white)}
+
+/* FOOTER */
+footer{background:var(--ink);border-top:3px solid var(--amber);padding:36px 40px;text-align:center}
+footer p{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.28)}
+footer a{color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s}
+footer a:hover{color:var(--amber)}
+
+@media(max-width:720px){
+  .kotter-grid,.world-grid,.not-we-grid{grid-template-columns:1fr}
+  .vision-section{padding:60px 24px}
+  .site-header{padding:12px 24px}
+  .manifesto-closer{padding:60px 24px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Kitchen Table <span>Cloud</span></div>
+  <a href="index.html" class="back-link">← Back to the main site</a>
+</header>
+
+<!-- VISION HERO -->
+<div class="vision-hero">
+  <div class="hero-inner">
+    <span class="kicker">A living document — updated as we learn</span>
+    <h1 class="vision-title">The World<br>We're <span class="amber">Building</span><br>Toward</h1>
+    <p class="vision-deck">
+      This is not a product roadmap. It's a <strong>philosophical commitment</strong> — 
+      a description of the world we believe is possible when communities govern their own infrastructure, 
+      and the work we're doing to make it real.
+    </p>
+    <div class="vision-date">Kitchen Table Cloud — Vision Document — 2025 →</div>
+  </div>
+</div>
+
+<!-- SECTION 1: THE DIAGNOSIS -->
+<div class="vision-section" id="diagnosis">
+  <div class="inner">
+    <span class="section-num">01 — The Diagnosis</span>
+    <h2 class="v-title">We Gave Away the Kitchen and Called It Convenience</h2>
+    <div class="v-body">
+      <p>The internet was supposed to be a commons. Its early architecture — decentralized, resilient, owned by no single entity — reflected the values of the people who built it. Email was federated. Web servers were owned by the people running them. Information moved freely between nodes that treated each other as peers.</p>
+      <p>Then came the platform era. In the span of a decade, we handed the keys of our digital lives to a handful of corporations: <em>our photos to Google and Apple, our music to Spotify, our conversations to Meta and Discord, our intelligence to OpenAI and Anthropic, our searches to Google, our code to Microsoft.</em> We called it convenience. It was actually a capitulation.</p>
+      <p>The terms were never balanced. We got free services. They got our data, our behavior, our relationships, our intellectual output, and the ability to change the terms whenever they wanted. <strong>The surveillance economy is not a bug. It's the business model.</strong></p>
+      <p>The harm isn't just economic — though the economics are real. It's structural. When the infrastructure that mediates modern life is privately owned and extractively operated, the people who depend on it lose the ability to govern the conditions of their own lives. That's not a policy problem. It's a power problem. And the only answer to a power problem is a counter-power.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: THE OPPORTUNITY -->
+<div class="vision-section light" id="opportunity">
+  <div class="inner">
+    <span class="section-num" style="color:var(--brick)">02 — The Opportunity</span>
+    <h2 class="v-title" style="color:var(--ink)">The Window Is Open</h2>
+    <div class="v-body">
+      <p>Every decade or so, the cost of compute drops enough that something previously only possible at institutional scale becomes possible at the kitchen table. The 1970s gave us personal computers. The 1990s gave us personal internet access. The 2010s gave us personal cloud storage. <em>The 2020s are giving us personal AI and personal infrastructure.</em></p>
+      <p>The pieces are all here. Open-weight AI models — downloadable, inspectable, offline-capable — now match the performance of cloud APIs for most everyday tasks. A Raspberry Pi 5 costs $80 and runs a capable AI model. A group of six people pooling six Pi 5s creates 48GB of collective RAM — enough to run models that would have required a GPU cluster three years ago.</p>
+      <p>Mesh networking is free. Self-hosted services have matured from hobbyist experiments into production-grade systems used by hundreds of thousands of people. The r/selfhosted community has over a million members. The knowledge is there.</p>
+      <p><strong>The missing piece is not the technology. It's the community infrastructure layer.</strong> The cooperative governance model. The shared economic arrangement. The documentation written for people who care about digital sovereignty but don't have computer science degrees. That's what we're building.</p>
+      <p>The window won't stay open forever. As open-weight models improve, corporations will work to close them — through legislation, through partnership agreements, through safety-theater regulations that only incumbents can comply with. <em>The time to build cooperative infrastructure is while the tools are available and the regulatory environment hasn't calcified around the incumbent model.</em> That time is now.</p>
+    </div>
+
+    <div class="timeline" style="color:var(--ink)">
+      <div class="tl-item">
+        <span class="tl-year" style="color:var(--brick)">1970s</span>
+        <h4 style="color:var(--ink)">Personal Computers</h4>
+        <p style="color:var(--muted)">Computing moves from institutional scale to the home. The Homebrew Computer Club. The Apple I. The idea that a computer could belong to a person.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year" style="color:var(--brick)">1990s</span>
+        <h4 style="color:var(--ink)">Personal Internet</h4>
+        <p style="color:var(--muted)">TCP/IP, HTML, and the browser democratize publishing and communication. The early web is decentralized by design. Email federates.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year" style="color:var(--brick)">2000s–2010s</span>
+        <h4 style="color:var(--ink)">The Platform Capture</h4>
+        <p style="color:var(--muted)">Google, Facebook, Amazon, Apple, and Microsoft consolidate digital infrastructure. The commons is enclosed. The subscription economy emerges. Surveillance becomes the business model.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year" style="color:var(--brick)">2020s</span>
+        <h4 style="color:var(--ink)">Personal Infrastructure — Now</h4>
+        <p style="color:var(--muted)">Open-weight AI models. $80 AI-capable hardware. Mature self-hosting ecosystems. The window to build community-owned infrastructure is open. This is when we build.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year" style="color:var(--sage)">2030s → </span>
+        <h4 style="color:var(--ink)">Community Infrastructure as Normal</h4>
+        <p style="color:var(--muted)">If we do this right: cooperative digital infrastructure is as normal as a credit union. Communities govern the technology that mediates their lives. The extractive model is one option among many — not the only option.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: THE KOTTER MODEL — OUR CHANGE STRATEGY -->
+<div class="vision-section" id="change">
+  <div class="inner">
+    <span class="section-num">03 — How We're Creating Change</span>
+    <h2 class="v-title">The Kotter Arc: From Urgency to Culture</h2>
+    <div class="v-body">
+      <p>We're using Kotter's eight-step change model as our organizing framework — not because we're management consultants, but because <em>changing how people relate to their technology is a genuine change management challenge.</em> It requires urgency, coalition, vision, short-term wins, and ultimately cultural shift. Each step is intentional.</p>
+    </div>
+    <div class="kotter-grid">
+      <div class="kotter-step">
+        <span class="ks-num">01</span>
+        <h4 class="ks-head">Create Urgency</h4>
+        <div class="ks-body">The extractive model is accelerating. AI subscriptions are the fastest-growing household expense. Open models are improving every 3–6 months. The window to act is open — but not indefinitely.</div>
+        <div class="ks-how">→ On our site: the real cost section, the intangibles, the swap math</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">02</span>
+        <h4 class="ks-head">Build a Guiding Coalition</h4>
+        <div class="ks-body">Organizers, technologists, educators, and community builders who believe in cooperative infrastructure. Not all the same type of person — a diverse coalition is harder to dismiss and easier to sustain.</div>
+        <div class="ks-how">→ Our participation tiers, our builder/steward roles, our governance model</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">03</span>
+        <h4 class="ks-head">Form a Clear Vision</h4>
+        <div class="ks-body">Community-owned, cooperative infrastructure that's as capable as corporate services but governed by the people who use it. Resilient when commercial infrastructure fails. Ruled by consent, not quarterly returns.</div>
+        <div class="ks-how">→ This document. The Farm. The Kitchen Sink. The long arc.</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">04</span>
+        <h4 class="ks-head">Communicate the Vision</h4>
+        <div class="ks-body">Plain language. Real costs. Honest tradeoffs. No techno-utopianism — just a clear description of what's possible and what it takes. The kitchen table is the frame because it's the right frame.</div>
+        <div class="ks-how">→ The main site, the 101 section, the swap sheet, this page</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">05</span>
+        <h4 class="ks-head">Remove Obstacles</h4>
+        <div class="ks-body">The main obstacle is complexity. The 101 explainers, the flip cards with step-by-step instructions, and the community onboarding all serve one purpose: making the first step achievable for anyone.</div>
+        <div class="ks-how">→ The 101 section, how-to flip cards, guides written for humans</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">06</span>
+        <h4 class="ks-head">Generate Short-Term Wins</h4>
+        <div class="ks-body">Cancel a subscription this weekend. Run your first local AI model in 15 minutes. Move your first folder to NextCloud. Every small win is evidence that the alternative works — and motivation to keep going.</div>
+        <div class="ks-how">→ Six Things Today, time estimates on every flip card, quick-start guide</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">07</span>
+        <h4 class="ks-head">Build on Change</h4>
+        <div class="ks-body">One service becomes two. One person becomes a pod. A pod becomes a community. Shared infrastructure becomes community identity. The distributed AI pod, the mesh network, the cooperative governance model — each step makes the next one easier.</div>
+        <div class="ks-how">→ Community AI pods, the mesh architecture, The Farm building upstream</div>
+      </div>
+      <div class="kotter-step">
+        <span class="ks-num">08</span>
+        <h4 class="ks-head">Anchor in Culture</h4>
+        <div class="ks-body">The end state isn't a product — it's a culture. Communities that see cooperative infrastructure as normal. Governance by consent as expected. Platform cooperativism as a model that's been proven to work. The Kitchen Sink as a reality, not a metaphor.</div>
+        <div class="ks-how">→ Community identity, About Us, the long game, The Kitchen Sink</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: THE WORLD WE WANT -->
+<div class="vision-section slate-bg" id="world">
+  <div class="inner">
+    <span class="section-num">04 — The World We're Building Toward</span>
+    <h2 class="v-title">What Fully Realized Looks Like</h2>
+    <div class="v-body">
+      <p>We don't want to replace corporations with a different set of corporations. We want to demonstrate a third model: <em>cooperative infrastructure, governed by consent, resilient by design, built to serve the communities that depend on it rather than extract value from them.</em></p>
+      <p>Here's what we're working toward — not as a fantasy, but as a trajectory. Each of these is achievable with technology that exists today. The gap is governance, community, and will.</p>
+    </div>
+    <div class="world-grid">
+      <div class="world-card">
+        <h4>🤖 AI That Knows Your Community</h4>
+        <p>Every neighborhood has a community AI pod — fine-tuned on local history, maintained by local governance, available to every member regardless of income. The AI knows your community's context because your community trained it. No corporate alignment team decided what it can say.</p>
+      </div>
+      <div class="world-card">
+        <h4>☁️ Infrastructure as Local Utility</h4>
+        <p>Your community's digital infrastructure is as expected as your water or electricity. Files, messages, photos, and calendars run on hardware your community owns. The cost is shared. The governance is democratic. The data is local.</p>
+      </div>
+      <div class="world-card">
+        <h4>📡 Resilient Comms by Default</h4>
+        <p>When the internet goes down, the community stays connected via mesh. LoRa radios bridge the gap. The commercial internet is a nice-to-have, not a life-dependency. Emergency communications run on community infrastructure, not corporate servers.</p>
+      </div>
+      <div class="world-card">
+        <h4>🏡 Homes That Work for People</h4>
+        <p>Home automation is local-first, community-standard. Your smart home doesn't report to Amazon or Google. The data about your home's energy use stays in your home. Smart devices interoperate through open standards, not proprietary ecosystems.</p>
+      </div>
+      <div class="world-card">
+        <h4>🏛️ Cooperative Governance Is Normal</h4>
+        <p>The communities that built this infrastructure have developed the governance muscles to run it. Sociocracy and consent-based decision-making are standard. Platform cooperativism is taught in schools as a viable model alongside corporations and nonprofits.</p>
+      </div>
+      <div class="world-card">
+        <h4>🌱 The Supply Chain Is Community-Owned</h4>
+        <p>The Farm provides open training data, governance templates, and hardware commons. The Kitchen Sink handles community health, energy, finance, and emergency systems. The full supply chain of digital infrastructure runs on cooperative principles.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: WHAT WE ARE AND AREN'T -->
+<div class="vision-section" id="identity">
+  <div class="inner">
+    <span class="section-num">05 — Our Identity</span>
+    <h2 class="v-title">What We Are. What We Are Not.</h2>
+    <div class="v-body">
+      <p>Being clear about identity is part of good governance. Here's ours.</p>
+    </div>
+    <div class="not-we">
+      <h3>Let's Be Honest About What This Is</h3>
+      <div class="not-we-grid">
+        <div class="nw-col nope">
+          <h5>We Are Not</h5>
+          <ul>
+            <li>A startup seeking investment or exit</li>
+            <li>A nonprofit that needs your charity</li>
+            <li>An anarchist movement opposed to all institutions</li>
+            <li>A purely technical project for enthusiasts</li>
+            <li>Anti-technology or anti-AI</li>
+            <li>Pretending this is always easier than the subscription alternative</li>
+            <li>Promising a perfect substitute for every corporate service on day one</li>
+            <li>Ideologically pure — we use Tailscale, which has central servers</li>
+          </ul>
+        </div>
+        <div class="nw-col yes">
+          <h5>We Are</h5>
+          <ul>
+            <li>A community cooperative governed by its members</li>
+            <li>Practically minded about what works and what doesn't</li>
+            <li>Committed to honest tradeoffs — we say when it's harder</li>
+            <li>Built for communities of 5–500, not millions</li>
+            <li>Pro-technology — specifically technology governed by the people who use it</li>
+            <li>Grounded in platform cooperativism and sociocracy</li>
+            <li>On a trajectory — better every year as open models and hardware improve</li>
+            <li>Willing to use imperfect tools on the way to better ones</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: GOVERNANCE -->
+<div class="vision-section light" id="governance">
+  <div class="inner">
+    <span class="section-num" style="color:var(--brick)">06 — How We Govern</span>
+    <h2 class="v-title" style="color:var(--ink)">Sociocracy and Platform Cooperativism</h2>
+    <div class="v-body">
+      <p>We use <em>sociocracy</em> — also called dynamic governance — as our internal decision-making framework. In sociocracy, decisions are made by the people they affect, using consent (not consensus). A proposal passes if no one has a paramount objection. This is faster than consensus and more equitable than hierarchy.</p>
+      <p>We apply <em>platform cooperativism</em> as our structural model. The platform — the infrastructure — is owned by its users. Members have governance rights proportional to their participation and contribution. No single entity controls more than the community allows. Profits (or savings) stay with members.</p>
+      <p><strong>Why this matters for technology:</strong> governance determines whose interests the platform serves. A VC-backed company serves its investors first, then its users. A cooperative serves its members first, always. The technology may be identical. The governance produces different outcomes — and those outcomes compound over time.</p>
+      <p>We're imperfect practitioners of these models. We're learning as we go. We document our governance decisions publicly, we invite challenge, and we change course when the evidence says we should. <em>That's what good governance looks like.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- MANIFESTO CLOSER -->
+<div class="manifesto-closer">
+  <h2 class="mc-title">The Time<br>Is <span>Now</span></h2>
+  <p class="mc-body">
+    The tools exist. The window is open. The communities are ready.
+    <strong>What's missing is the decision to start — made by enough people, at enough kitchen tables, that it becomes the normal thing to do.</strong>
+    We're not waiting for governments or markets to solve this. We're doing it ourselves, one node at a time, starting now.
+  </p>
+  <div>
+    <a href="index.html#join" class="btn-amber">Join the Cooperative</a>
+    <a href="index.html#today" class="btn-amber">Start This Weekend</a>
+    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" class="btn-ghost">Read the Technical Docs</a>
+  </div>
+</div>
+
+<footer>
+  <p>
+    Kitchen Table Cloud — <a href="index.html">Main Site</a> · 
+    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank">GitHub</a> · 
+    <a href="index.html#about">About Us</a> · 
+    Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+  </p>
+</footer>
+
+</body>
+</html>

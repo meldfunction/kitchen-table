@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Full Map — Kitchen Table Cloud</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #17140E;
+  color: #FDFAF5;
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ─── HEADER ─── */
+.page-header {
+  background: #17140E;
+  border-bottom: 3px solid #C8872C;
+  padding: 14px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; color: #FDFAF5; letter-spacing: 0.1em; }
+.logo span { color: #C8872C; }
+.back { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.back:hover { color: #C8872C; }
+
+/* ─── INTRO BAR ─── */
+.intro-bar {
+  background: #1E1A12;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 28px 40px;
+  text-align: center;
+}
+.intro-bar h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  color: #FDFAF5;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.intro-bar h1 span { color: #C8872C; }
+.intro-bar p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.stat-strip {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+}
+.stat-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: #C8872C;
+  display: block;
+  line-height: 1;
+}
+.stat-l { font-size: 0.62rem; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+/* ─── MAP WRAPPER ─── */
+.map-wrap {
+  padding: 20px 0 0;
+  overflow: visible;
+  position: relative;
+}
+#honeycomb {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* ─── HEX STYLES (inline SVG hover handled via JS) ─── */
+.hex-cell { cursor: pointer; transition: filter 0.15s; }
+.hex-cell:hover { filter: brightness(1.3); }
+.hex-cell.active { filter: brightness(1.4) drop-shadow(0 0 8px rgba(200,135,44,0.5)); }
+
+/* ─── TOOLTIP ─── */
+#tooltip {
+  position: fixed;
+  background: #1E1A12;
+  border: 2px solid #C8872C;
+  padding: 16px 20px;
+  max-width: 300px;
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0;
+  transition: opacity 0.15s;
+  transform: translate(12px, -50%);
+}
+#tooltip.show { opacity: 1; }
+#tooltip .tt-icon { font-size: 1.6rem; margin-bottom: 6px; display: block; }
+#tooltip .tt-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: #C8872C;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+#tooltip .tt-desc { font-size: 0.76rem; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 8px; }
+#tooltip .tt-tool { font-size: 0.65rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 7px; }
+
+/* ─── LEGEND ─── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 20px;
+  padding: 24px 40px 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: #1A1612;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+}
+
+/* ─── MISSING CALLOUT ─── */
+.missing-note {
+  background: #1E1A12;
+  border-top: 2px solid rgba(255,255,255,0.06);
+  padding: 24px 40px;
+  text-align: center;
+}
+.missing-note p {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.missing-note strong { color: rgba(255,255,255,0.65); }
+.missing-note a { color: #C8872C; text-decoration: none; }
+
+/* ─── FOOTER ─── */
+.page-footer {
+  background: #17140E;
+  border-top: 3px solid #C8872C;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.page-footer p { font-size: 0.68rem; color: rgba(255,255,255,0.28); }
+.page-footer a { color: #C8872C; text-decoration: none; font-size: 0.68rem; }
+
+@media(max-width:640px){
+  .intro-bar,.page-header,.missing-note,.legend{ padding-left:20px;padding-right:20px; }
+  .stat-strip { gap:24px; }
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="logo">Kitchen Table <span>Cloud</span></div>
+  <a href="index.html" class="back">← Main Site</a>
+</header>
+
+<div class="intro-bar">
+  <h1>Every Lever <span>You Can Take Back</span></h1>
+  <p>A complete map of the dimensions of community digital sovereignty — from the services you can run this weekend to the frontier infrastructure we're building toward. Every cell is something you currently rent from someone who doesn't have your interests at heart.</p>
+  <div class="stat-strip">
+    <div class="stat"><span class="stat-n">37</span><div class="stat-l">dimensions mapped</div></div>
+    <div class="stat"><span class="stat-n">8</span><div class="stat-l">categories</div></div>
+    <div class="stat"><span class="stat-n">3</span><div class="stat-l">rings of depth</div></div>
+    <div class="stat"><span class="stat-n">∞</span><div class="stat-l">subscriptions cancelled</div></div>
+  </div>
+</div>
+
+<div class="map-wrap">
+  <svg id="honeycomb" viewBox="0 0 1100 790" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div class="legend" id="legend"></div>
+
+<div class="missing-note">
+  <p>
+    <strong>Also on our radar (not yet mapped):</strong>
+    Self-hosted VPN (Headscale) · Network monitoring (Netdata/Grafana) · Push notifications (Gotify/ntfy) ·
+    Community mapping (OpenStreetMap contribution) · Podcast hosting · Document signing (DocuSeal) ·
+    Community weather & IoT sensors · Digital wallet / mutual credit.
+    <br><br>
+    <strong>The frontier is open.</strong> If a dimension matters to your community and isn't here,
+    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud/discussions" target="_blank">open a discussion</a> and help us map it.
+    Hover any cell for details. <strong>Tap on mobile.</strong>
+  </p>
+</div>
+
+<footer class="page-footer">
+  <p>Kitchen Table Cloud — Community Cooperative Infrastructure — <a href="index.html">Main Site</a> · <a href="vision.html">Vision</a> · <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank">GitHub</a></p>
+  <p><a href="index.html#join">Join the Cooperative →</a></p>
+</footer>
+
+<div id="tooltip">
+  <span class="tt-icon" id="tt-icon"></span>
+  <div class="tt-title" id="tt-title"></div>
+  <div class="tt-desc" id="tt-desc"></div>
+  <div class="tt-tool" id="tt-tool"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// HEX GRID DATA
+// ═══════════════════════════════════════════
+const CATS = {
+  core:       { label: 'The Center',         color: '#C8872C', textDark: true  },
+  ai:         { label: 'Intelligence & AI',  color: '#2A4860', textDark: false },
+  data:       { label: 'Your Data',          color: '#3A6B50', textDark: false },
+  comms:      { label: 'Communication',      color: '#7A3018', textDark: false },
+  home:       { label: 'Home & Life',        color: '#4A3B28', textDark: false },
+  infra:      { label: 'Infrastructure',     color: '#3A3A20', textDark: false },
+  community:  { label: 'Community',          color: '#4A2E6A', textDark: false },
+  resilience: { label: 'Resilience',         color: '#1E3A20', textDark: false },
+  frontier:   { label: 'Frontier',           color: '#16192A', textDark: false },
+  ecosystem:  { label: 'The Ecosystem',      color: '#7A5010', textDark: false },
+};
+
+const HEXES = [
+  // ── CENTER ──────────────────────────────────────────
+  { q:0, r:0,
+    icon:'🍳', l1:'Kitchen Table', l2:'Cloud', cat:'core',
+    desc:'Community cooperative infrastructure — owned, governed, and maintained by the people who use it. Every dimension you see here is a lever you take back.',
+    tool:'kitchentable.cloud' },
+
+  // ── RING 1 — Six core services ──────────────────────
+  { q:0,  r:-1, icon:'🤖', l1:'Community', l2:'AI', cat:'ai',
+    desc:'Open-weight AI models running on your hardware. No API key. No subscription. No prompts shipped to San Francisco. Works offline.',
+    tool:'Ollama · Phi-3.5 · Llama 3.x · Mistral' },
+  { q:1,  r:-1, icon:'📁', l1:'Your', l2:'Files', cat:'data',
+    desc:'Files, documents, calendar, and contacts synced across all your devices without Google or Apple seeing a single byte.',
+    tool:'NextCloud AIO · Collabora (docs)' },
+  { q:1,  r:0,  icon:'🎵', l1:'Your', l2:'Music', cat:'data',
+    desc:'Your collective music library, streamed to any device. Lossless audio, no ads, no algorithm, no Spotify profiling your listening.',
+    tool:'Navidrome · Subsonic API · Symfonium' },
+  { q:0,  r:1,  icon:'🏡', l1:'Smart', l2:'Home', cat:'home',
+    desc:'3,000+ device integrations running 100% locally. Your automations keep working when the internet goes down — because they never needed it.',
+    tool:'Home Assistant' },
+  { q:-1, r:1,  icon:'📸', l1:'Photos', l2:'& Video', cat:'data',
+    desc:'Your family photos and media library on hardware you own. No facial recognition trained on your kids. No content scanned for ads.',
+    tool:'Immich · Jellyfin' },
+  { q:-1, r:0,  icon:'💬', l1:'Chat &', l2:'Messaging', cat:'comms',
+    desc:'End-to-end encrypted messaging on a server your community controls. Nobody can ban your group. Bridges to WhatsApp, Discord, Signal.',
+    tool:'Matrix · Element · Synapse · mautrix bridges' },
+
+  // ── RING 2 — Extended stack ──────────────────────────
+  { q:0,  r:-2, icon:'📧', l1:'Your', l2:'Email', cat:'comms',
+    desc:'The most foundational piece of your digital identity — and the most overlooked to reclaim. Your email on your server, your domain, your rules.',
+    tool:'Mailcow · Stalwart · Migadu (managed)' },
+  { q:1,  r:-2, icon:'🔍', l1:'Anonymous', l2:'Search', cat:'comms',
+    desc:'Queries Google, Bing, DuckDuckGo and 15 others simultaneously without sending your identity to any of them. Zero profile, zero targeting.',
+    tool:'SearXNG' },
+  { q:2,  r:-2, icon:'🔒', l1:'Password', l2:'Vault', cat:'data',
+    desc:'Bitwarden-compatible vault on your hardware. Same apps — zero cloud exposure, zero corporate database to be hacked like LastPass was.',
+    tool:'Vaultwarden' },
+  { q:2,  r:-1, icon:'🧠', l1:'AI', l2:'Pod', cat:'ai',
+    desc:'Six nodes pooling 48GB of RAM collectively run models too large for any individual device. Distributed inference — smarter together.',
+    tool:'Petals protocol · llama.cpp' },
+  { q:2,  r:0,  icon:'🖥️', l1:'Home', l2:'OS', cat:'infra',
+    desc:'One browser dashboard for everything. Install services with a click, no command line required. Your app store — you own the store.',
+    tool:'CasaOS · Umbrel' },
+  { q:1,  r:1,  icon:'💻', l1:'Code', l2:'& Dev', cat:'infra',
+    desc:'Private code hosting with pull requests, issues, wikis, and CI/CD pipelines. GitHub — minus Microsoft\'s access to your repositories.',
+    tool:'Gitea · Woodpecker CI' },
+  { q:0,  r:2,  icon:'📹', l1:'Video', l2:'Calls', cat:'comms',
+    desc:'Self-hosted video conferencing. No Zoom account. No meeting data on someone else\'s servers. End-to-end encrypted, browser-based.',
+    tool:'Jitsi Meet' },
+  { q:-1, r:2,  icon:'📻', l1:'Community', l2:'Radio', cat:'comms',
+    desc:'Broadcast live audio to your community — news, music, talk, emergency announcements. Open source internet radio, community-run.',
+    tool:'AzuraCast' },
+  { q:-2, r:2,  icon:'📅', l1:'Events &', l2:'Calendar', cat:'community',
+    desc:'Shared community calendar and event coordination. Your events, your attendee data — not feeding behavioral profiles to Google.',
+    tool:'NextCloud Calendar · Mobilizon' },
+  { q:-2, r:1,  icon:'🛡️', l1:'DNS &', l2:'Privacy', cat:'infra',
+    desc:'Block ads and trackers at the network level for every device. Resolve DNS directly from root servers — no Google 8.8.8.8 middleman logging your queries.',
+    tool:'Pi-hole · Unbound' },
+  { q:-2, r:0,  icon:'💾', l1:'Backup &', l2:'Recovery', cat:'infra',
+    desc:'3-2-1 backup strategy: 3 copies, 2 different media types, 1 offsite. Your data survives drive failure, fire, or ransomware.',
+    tool:'Restic · Borgbackup · Syncthing' },
+  { q:-1, r:-1, icon:'📰', l1:'News', l2:'& RSS', cat:'comms',
+    desc:'Read the web without algorithmic feeds deciding what matters. Subscribe directly to sources. No engagement optimization. No outrage machine.',
+    tool:'FreshRSS · Miniflux' },
+
+  // ── RING 3 — Community, Resilience, Frontier ─────────
+  { q:0,  r:-3, icon:'🌾', l1:'The', l2:'Farm', cat:'ecosystem',
+    desc:'The upstream supply chain: open model training datasets, governance templates, hardware co-buying programs, and experimental research commons. Where the ingredients come from.',
+    tool:'The Farm — community cooperative R&D' },
+  { q:1,  r:-3, icon:'⚙️', l1:'Hardware', l2:'& Nodes', cat:'infra',
+    desc:'Raspberry Pi 5 ($80) + NVMe SSD ($45) + active cooler ($10) = ~$160 all-in. 5W idle. Runs real workloads 24/7 for ~$4/month in electricity.',
+    tool:'Raspberry Pi 5 · M.2 HAT+ · NVMe SSD' },
+  { q:2,  r:-3, icon:'📡', l1:'Off-Grid', l2:'Mesh', cat:'resilience',
+    desc:'LoRa radios the size of a deck of cards. ~5km range with no towers, no internet, no subscription. Works camping, during outages, in emergencies.',
+    tool:'Meshtastic · LoRa radios ~$35 each' },
+  { q:3,  r:-3, icon:'⚡', l1:'Power', l2:'Resilience', cat:'resilience',
+    desc:'A UPS keeps your node alive through short outages. 100W solar + 20Ah battery keeps it running indefinitely. Your node serves your household while the grid is down.',
+    tool:'UPS (~$40) · 100W solar · LiFePO4 battery' },
+  { q:3,  r:-2, icon:'🧬', l1:'Open AI', l2:'Models', cat:'ai',
+    desc:'Llama, Phi-3.5, Mistral, Qwen, Gemma — free, downloadable, offline-capable. Improving every 3–6 months. The gap with corporate AI closes constantly.',
+    tool:'Meta · Microsoft · Mistral AI · Alibaba · Google' },
+  { q:3,  r:-1, icon:'🎓', l1:'AI', l2:'Fine-Tuning', cat:'ai',
+    desc:'Train a model on your community\'s collective notes, docs, and workflows. The AI that knows your community\'s context — shaped by you, not a corporate alignment team.',
+    tool:'Unsloth · LoRA · Axolotl · llama.cpp' },
+  { q:3,  r:0,  icon:'🌐', l1:'AI', l2:'Translation', cat:'ai',
+    desc:'Real-time translation running on your hardware. No document uploaded to Google Translate. No sentence stored on someone else\'s servers.',
+    tool:'LibreTranslate · Argos Translate' },
+  { q:2,  r:1,  icon:'🕸️', l1:'Mesh', l2:'Network', cat:'resilience',
+    desc:'Encrypted private overlay connecting all your nodes across any ISP or NAT type. No public IPs required. Works across different households and cities.',
+    tool:'Tailscale · Yggdrasil · WireGuard' },
+  { q:1,  r:2,  icon:'🤝', l1:'Time', l2:'Banking', cat:'community',
+    desc:'Skills and hours as currency. A neighbor fixes your sink; you teach their kid to code. No money changes hands. Mutual aid with accounting.',
+    tool:'hOurworld · Community Weaver · custom' },
+  { q:0,  r:3,  icon:'🚰', l1:'The Kitchen', l2:'Sink', cat:'ecosystem',
+    desc:'The radical completeness statement: everything you were told you had to rent from someone else. All of it. Emergency comms, health data, energy, cooperative ISP — yes, including the sink.',
+    tool:'The long game — everything on community infrastructure' },
+  { q:-1, r:3,  icon:'🏥', l1:'Health', l2:'Records', cat:'frontier',
+    desc:'Your medical history under your control — not in a hospital database or insurance company\'s servers. Community health data governed by the community.',
+    tool:'OpenEMR · GNU Health · (frontier)' },
+  { q:-2, r:3,  icon:'🔋', l1:'Energy', l2:'Monitoring', cat:'frontier',
+    desc:'Track solar generation, battery state, and grid draw on your own hardware. Coordinate community micro-grids without utility company oversight.',
+    tool:'Home Assistant Energy · Grafana · (frontier)' },
+  { q:-3, r:3,  icon:'🛜', l1:'Cooperative', l2:'ISP', cat:'frontier',
+    desc:'Community-owned internet infrastructure. Cooperative ISPs already exist. Mesh networking technology is lowering the barrier every year. The long game.',
+    tool:'NYC Mesh · Detroit Community Technology Project · (frontier)' },
+  { q:-3, r:2,  icon:'🚨', l1:'Community', l2:'Alerts', cat:'community',
+    desc:'Emergency broadcast, neighborhood check-ins, and local alert systems — on infrastructure your community owns, not county government or private apps.',
+    tool:'Meshtastic + Matrix + AzuraCast integration' },
+  { q:-3, r:1,  icon:'🗳️', l1:'Governance', l2:'Tools', cat:'community',
+    desc:'Consent-based decision-making in software. Proposals, rounds, amendments, rationale tracking — sociocracy and platform cooperativism implemented.',
+    tool:'Loomio · Decidim · Polis' },
+  { q:-3, r:0,  icon:'📚', l1:'Learning &', l2:'Education', cat:'community',
+    desc:'Community education platform. Courses, workshops, skill sharing, certification tracking — without paying EdTech rent or feeding your learning to a surveillance company.',
+    tool:'Moodle · Open edX · H5P' },
+  { q:-2, r:-1, icon:'💰', l1:'Finance &', l2:'Mutual Aid', cat:'community',
+    desc:'Personal finance tracking and cooperative mutual aid ledgers — your numbers stay on your hardware. Community treasuries, shared expenses, mutual aid flows.',
+    tool:'Actual Budget · Firefly III · Kresus' },
+  { q:-1, r:-2, icon:'🪪', l1:'Digital', l2:'Identity', cat:'frontier',
+    desc:'Self-sovereign identity: you own your credentials, not a corporation. Verifiable, portable, interoperable — your identity, your keychain.',
+    tool:'W3C DID · Verifiable Credentials · (frontier)' },
+];
+
+// ═══════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════
+const SIZE = 58;   // circumradius (grid spacing unit)
+const VSIZE = 54;  // visual radius (slightly smaller → creates gap between hexes)
+const CX = 550;
+const CY = 395;
+
+function hexPos(q, r) {
+  return {
+    x: CX + SIZE * 1.5 * q,
+    y: CY + SIZE * (Math.sqrt(3) / 2 * q + Math.sqrt(3) * r)
+  };
+}
+
+function hexPoints(px, py, R) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (Math.PI / 180) * (60 * i); // flat-top: 0° = right
+    pts.push(`${(px + R * Math.cos(a)).toFixed(2)},${(py + R * Math.sin(a)).toFixed(2)}`);
+  }
+  return pts.join(' ');
+}
+
+const svg = document.getElementById('honeycomb');
+const tooltip = document.getElementById('tooltip');
+const ttIcon = document.getElementById('tt-icon');
+const ttTitle = document.getElementById('tt-title');
+const ttDesc = document.getElementById('tt-desc');
+const ttTool = document.getElementById('tt-tool');
+
+let activeHex = null;
+
+// Draw ring labels (decorative arcs — text hints)
+function drawRingLabel(r_dist, label, svg) {
+  const g = document.createElementNS('http://www.w3.org/2000/svg','text');
+  // Place to the right of each ring
+  const pos = hexPos(r_dist + 0.5, 0);
+  g.setAttribute('x', pos.x + SIZE);
+  g.setAttribute('y', pos.y + 4);
+  g.setAttribute('fill', 'rgba(255,255,255,0.08)');
+  g.setAttribute('font-family', 'Space Mono, monospace');
+  g.setAttribute('font-size', '9');
+  g.setAttribute('letter-spacing', '2');
+  g.textContent = label;
+  svg.appendChild(g);
+}
+
+// Draw the background glow for each ring
+function drawRingGlow(dist) {
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  const radius = dist * SIZE * Math.sqrt(3) + SIZE;
+  circle.setAttribute('cx', CX);
+  circle.setAttribute('cy', CY);
+  circle.setAttribute('r', radius);
+  circle.setAttribute('fill', 'none');
+  circle.setAttribute('stroke', 'rgba(200,135,44,0.04)');
+  circle.setAttribute('stroke-width', '1');
+  svg.appendChild(circle);
+}
+
+// Draw center glow
+const cGlow = document.createElementNS('http://www.w3.org/2000/svg','radialGradient');
+cGlow.setAttribute('id','centerGlow');
+cGlow.setAttribute('cx','50%');cGlow.setAttribute('cy','50%');cGlow.setAttribute('r','50%');
+const s1=document.createElementNS('http://www.w3.org/2000/svg','stop');
+s1.setAttribute('offset','0%');s1.setAttribute('stop-color','rgba(200,135,44,0.12)');
+const s2=document.createElementNS('http://www.w3.org/2000/svg','stop');
+s2.setAttribute('offset','100%');s2.setAttribute('stop-color','rgba(200,135,44,0)');
+cGlow.appendChild(s1);cGlow.appendChild(s2);
+const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+defs.appendChild(cGlow);
+svg.appendChild(defs);
+
+const glowCircle=document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+glowCircle.setAttribute('cx',CX);glowCircle.setAttribute('cy',CY);
+glowCircle.setAttribute('rx',280);glowCircle.setAttribute('ry',240);
+glowCircle.setAttribute('fill','url(#centerGlow)');
+svg.appendChild(glowCircle);
+
+// Ring indicators
+[1,2,3].forEach(d => drawRingGlow(d));
+
+// Draw hexes
+HEXES.forEach(hex => {
+  const { x, y } = hexPos(hex.q, hex.r);
+  const cat = CATS[hex.cat];
+  const isCenter = hex.q === 0 && hex.r === 0;
+  const isEcosystem = hex.cat === 'ecosystem';
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('class', 'hex-cell');
+  g.setAttribute('data-q', hex.q);
+  g.setAttribute('data-r', hex.r);
+
+  // Shadow polygon
+  const shadow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  shadow.setAttribute('points', hexPoints(x + 2, y + 3, VSIZE));
+  shadow.setAttribute('fill', 'rgba(0,0,0,0.4)');
+  g.appendChild(shadow);
+
+  // Main polygon
+  const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  poly.setAttribute('points', hexPoints(x, y, VSIZE));
+  poly.setAttribute('fill', cat.color);
+  poly.setAttribute('stroke', isCenter ? '#C8872C' : isEcosystem ? 'rgba(200,135,44,0.5)' : 'rgba(255,255,255,0.08)');
+  poly.setAttribute('stroke-width', isCenter ? '2.5' : '1');
+  g.appendChild(poly);
+
+  // Inner border for center
+  if (isCenter) {
+    const inner = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    inner.setAttribute('points', hexPoints(x, y, VSIZE - 5));
+    inner.setAttribute('fill', 'none');
+    inner.setAttribute('stroke', 'rgba(200,135,44,0.3)');
+    inner.setAttribute('stroke-width', '1');
+    g.appendChild(inner);
+  }
+
+  const textColor = cat.textDark ? '#17140E' : '#FDFAF5';
+  const fontSize = isCenter ? 9 : 9;
+  const iconSize = isCenter ? 20 : 16;
+
+  // Icon
+  const icon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  icon.setAttribute('x', x);
+  icon.setAttribute('y', y - (isCenter ? 8 : 6));
+  icon.setAttribute('text-anchor', 'middle');
+  icon.setAttribute('dominant-baseline', 'middle');
+  icon.setAttribute('font-size', iconSize);
+  icon.textContent = hex.icon;
+  g.appendChild(icon);
+
+  // Line 1
+  const t1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  t1.setAttribute('x', x);
+  t1.setAttribute('y', y + (isCenter ? 14 : 12));
+  t1.setAttribute('text-anchor', 'middle');
+  t1.setAttribute('font-family', 'Space Mono, monospace');
+  t1.setAttribute('font-size', fontSize);
+  t1.setAttribute('fill', textColor);
+  t1.setAttribute('font-weight', isCenter ? '700' : '400');
+  t1.setAttribute('letter-spacing', isCenter ? '1' : '0.3');
+  t1.textContent = hex.l1;
+  g.appendChild(t1);
+
+  // Line 2
+  const t2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  t2.setAttribute('x', x);
+  t2.setAttribute('y', y + (isCenter ? 25 : 22));
+  t2.setAttribute('text-anchor', 'middle');
+  t2.setAttribute('font-family', 'Space Mono, monospace');
+  t2.setAttribute('font-size', fontSize);
+  t2.setAttribute('fill', isCenter ? textColor : 'rgba(255,255,255,0.55)');
+  t2.setAttribute('letter-spacing', '0.3');
+  t2.textContent = hex.l2;
+  g.appendChild(t2);
+
+  // Hover ring 3+ — add subtle ring indicator dot
+  if (hex.cat === 'frontier') {
+    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    dot.setAttribute('cx', x + 18);
+    dot.setAttribute('cy', y - 24);
+    dot.setAttribute('r', 3);
+    dot.setAttribute('fill', 'rgba(255,255,255,0.15)');
+    g.appendChild(dot);
+    const dotT = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    dotT.setAttribute('x', x + 24);
+    dotT.setAttribute('y', y - 21);
+    dotT.setAttribute('font-size', '7');
+    dotT.setAttribute('fill', 'rgba(255,255,255,0.2)');
+    dotT.setAttribute('font-family', 'Space Mono, monospace');
+    dotT.textContent = '◆';
+    g.appendChild(dotT);
+  }
+
+  // Events
+  g.addEventListener('mouseenter', (e) => showTooltip(hex, e));
+  g.addEventListener('mousemove', moveTooltip);
+  g.addEventListener('mouseleave', hideTooltip);
+  g.addEventListener('click', (e) => {
+    if (activeHex) activeHex.classList.remove('active');
+    if (activeHex === g) { activeHex = null; hideTooltip(); }
+    else { g.classList.add('active'); activeHex = g; showTooltip(hex, e); }
+  });
+
+  svg.appendChild(g);
+});
+
+// Ring labels
+const ringLabels = [
+  { r: -1.5, label: 'RING 1 — CORE SERVICES' },
+  { r: -2.5, label: 'RING 2 — EXTENDED STACK' },
+  { r: -3.5, label: 'RING 3 — COMMUNITY & FRONTIER' },
+];
+// Place label text at bottom-right of each ring boundary
+[1,2,3].forEach(d => {
+  const pos = hexPos(0, d + 0.3);
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x', pos.x + 10);
+  t.setAttribute('y', pos.y);
+  t.setAttribute('fill','rgba(255,255,255,0.07)');
+  t.setAttribute('font-family','Space Mono,monospace');
+  t.setAttribute('font-size','8');
+  t.setAttribute('letter-spacing','2');
+  t.textContent = ['RING 1 — CORE','RING 2 — EXTENDED','RING 3 — COMMUNITY & FRONTIER'][d-1];
+  svg.appendChild(t);
+});
+
+// ═══════════════════════════════════════════
+// TOOLTIP
+// ═══════════════════════════════════════════
+function showTooltip(hex, e) {
+  ttIcon.textContent = hex.icon;
+  ttTitle.textContent = hex.l1 + ' ' + hex.l2;
+  ttDesc.textContent = hex.desc;
+  ttTool.textContent = hex.tool ? '↳ ' + hex.tool : '';
+  tooltip.classList.add('show');
+  moveTooltip(e);
+}
+
+function moveTooltip(e) {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const tw = 300 + 40; // tooltip max-width + offset
+  let lx = e.clientX + 14;
+  let ly = e.clientY;
+  if (lx + tw > vw) lx = e.clientX - tw + 14;
+  tooltip.style.left = lx + 'px';
+  tooltip.style.top = ly + 'px';
+}
+
+function hideTooltip() {
+  if (!activeHex) tooltip.classList.remove('show');
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.hex-cell')) {
+    if (activeHex) { activeHex.classList.remove('active'); activeHex = null; }
+    tooltip.classList.remove('show');
+  }
+});
+
+// ═══════════════════════════════════════════
+// LEGEND
+// ═══════════════════════════════════════════
+const legend = document.getElementById('legend');
+Object.entries(CATS).forEach(([key, cat]) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `
+    <svg class="legend-dot" width="14" height="14" viewBox="0 0 14 14">
+      <rect x="1" y="1" width="12" height="12" fill="${cat.color}" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+    </svg>
+    ${cat.label}
+  `;
+  legend.appendChild(item);
+});
+</script>
+</body>
+</html>
