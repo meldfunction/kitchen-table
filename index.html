@@ -1,1969 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kitchen Table Cloud — Community Infrastructure for Everyone</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Tech. Your Table. — Kitchen Table Cloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   DESIGN TOKENS — warm parchment × slate × brick
-   ═══════════════════════════════════════════════ */
-:root {
-  --bg:      #F3EFE8;
-  --paper:   #E8E3D5;
-  --ink:     #17140E;
-  --white:   #FDFAF5;
-  --brick:   #B54C2F;
-  --slate:   #2A4860;
-  --amber:   #C8872C;
-  --sage:    #3A6B50;
-  --sage-m:  #5D9478;
-  --muted:   #7A7068;
-  --baron:   #6F1A1A;
-  --baron-bg:rgba(111,26,26,0.06);
-  --robin:   #1A3D2B;
-}
 
+:root{
+  --bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;--white:#FDFAF5;
+  --brick:#B54C2F;--slate:#2A4860;--amber:#C8872C;--sage:#3A6B50;
+  --sage-m:#5D9478;--muted:#7A7068;--baron:#6F1A1A;--warm:#C4874A;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:'Libre Baskerville',serif;
-  font-size:17px;
-  line-height:1.75;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:9999;opacity:0.5;
-}
-
-/* TYPE */
+body{background:var(--bg);color:var(--ink);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.75;overflow-x:hidden}
 h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
-.mono{font-family:'Space Mono',monospace}
-
-/* UTILS */
-.inner{max-width:1160px;margin:0 auto}
-section{padding:80px 40px}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-
-/* EYEBROW SYSTEM */
-.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.eyebrow-tag{
-  font-family:'Space Mono',monospace;
-  font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;
-  padding:4px 12px;flex-shrink:0;
-}
+.inner{max-width:1100px;margin:0 auto}
+section{padding:72px 40px}
+.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.et{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:4px 12px;flex-shrink:0}
 .et-slate{background:var(--slate);color:var(--white)}
 .et-brick{background:var(--brick);color:var(--white)}
 .et-amber{background:var(--amber);color:var(--ink)}
 .et-sage{background:var(--sage);color:var(--white)}
-.et-baron{background:var(--baron);color:var(--white)}
 .et-ink{background:var(--ink);color:var(--white)}
-.eyebrow-line{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+.et-baron{background:var(--baron);color:var(--white)}
+.eline{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+.eline-light{flex:1;height:1px;background:rgba(255,255,255,0.12)}
+.stitle{font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:10px}
+.ssub{max-width:680px;font-size:1.02rem;color:var(--muted);line-height:1.78;margin-top:12px;margin-bottom:40px}
+.mono{font-family:'Space Mono',monospace}
+/* Safe link styles on dark backgrounds */
+a.dark-link{color:var(--sage-m);text-decoration:none}
+a.dark-link:hover{color:var(--amber)}
+.code-block{background:#111108;border-left:3px solid var(--sage);padding:20px;font-family:'Space Mono',monospace;font-size:0.74rem;color:#7DB87D;line-height:1.85;overflow-x:auto;margin:16px 0}
+.code-block .cm{color:rgba(255,255,255,0.38)}.code-block .cmd{color:var(--amber)}
+/* Code links always readable */
+.code-block a{color:var(--sage-m);text-decoration:none}.code-block a:hover{color:var(--amber)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
 
-.section-title{font-size:clamp(2.6rem,5vw,4.5rem);margin-bottom:10px}
-.section-sub{
-  max-width:680px;
-  font-size:1.05rem;color:var(--muted);
-  line-height:1.78;margin-top:14px;margin-bottom:44px;
-}
-
-/* ═══════════════════════════════════
-   HEADER
-   ═══════════════════════════════════ */
-.site-header{
-  background:var(--ink);
-  padding:13px 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:200;
-  border-bottom:3px solid var(--amber);
-}
+.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--amber)}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
 .logo span{color:var(--amber)}
-nav{display:flex;align-items:center;flex-wrap:wrap;gap:2px}
-nav a{
-  color:rgba(255,255,255,0.62);text-decoration:none;
-  font-family:'Space Mono',monospace;font-size:0.68rem;
-  letter-spacing:0.04em;padding:4px 10px;
-  transition:color 0.18s;white-space:nowrap;
-}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:1px}
+nav a{color:rgba(255,255,255,0.65);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.67rem;letter-spacing:0.04em;padding:4px 9px;transition:color 0.18s;white-space:nowrap}
 nav a:hover{color:var(--amber)}
-nav a.nav-cta{
-  background:var(--amber);color:var(--ink);
-  margin-left:6px;font-weight:700;
-}
-nav a.nav-cta:hover{background:var(--white)}
-nav a.nav-vision{border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.75)}
-nav a.nav-vision:hover{border-color:var(--amber);color:var(--amber)}
+nav a.nav-accent{background:var(--amber);color:var(--ink);font-weight:700;padding:5px 12px}
+nav a.nav-accent:hover{background:var(--white)}
+nav a.nav-dim{color:rgba(255,255,255,0.58)}
+nav a.nav-dim:hover{color:rgba(255,255,255,0.75)}
 
-/* ═══════════════════════════════════
-   HERO
-   ═══════════════════════════════════ */
-.hero{
-  background:var(--ink);
-  padding:96px 40px 84px;
-  position:relative;overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;
-  top:-40px;right:-80px;width:500px;height:500px;
-  background:radial-gradient(circle,rgba(200,135,44,0.08) 0%,transparent 70%);
-  pointer-events:none;
-}
-.hero::after{
-  content:'';position:absolute;bottom:-2px;left:0;right:0;height:44px;
-  background:var(--bg);
-  clip-path:polygon(0 100%,100% 100%,100% 0,78% 58%,55% 12%,30% 68%,0 14%);
-}
-.hero-inner{
-  max-width:1160px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 380px;gap:60px;align-items:center;
-}
-.hero-kicker{
-  font-family:'Space Mono',monospace;font-size:0.7rem;
-  letter-spacing:0.18em;color:var(--amber);text-transform:uppercase;
-  margin-bottom:18px;display:block;
-}
-.hero-hl{font-size:clamp(3.8rem,7.5vw,7rem);color:var(--white);line-height:0.91}
-.hero-hl .amber{color:var(--amber)}
-.hero-hl .dim{color:rgba(255,255,255,0.35)}
-.hero-sub{
-  color:rgba(255,255,255,0.55);font-size:1.1rem;
-  margin-top:26px;line-height:1.72;max-width:540px;
-}
+/* ── HERO ── */
+.hero{background:var(--ink);padding:100px 40px 86px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-100px;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(200,135,44,0.06) 0%,transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:44px;
+  background:var(--bg);clip-path:polygon(0 100%,100% 100%,100% 0,78% 58%,55% 12%,30% 68%,0 14%)}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center}
+.hero-kicker{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;
+  color:var(--amber);text-transform:uppercase;margin-bottom:16px;display:block}
+.hero-hl{font-size:clamp(3.8rem,7vw,7rem);color:var(--white);line-height:0.89;margin-bottom:22px}
+.hero-hl .amber{color:var(--amber)}.hero-hl .strike{text-decoration:line-through;color:rgba(255,255,255,0.28);font-size:0.8em}
+.hero-sub{color:rgba(255,255,255,0.68);font-size:1.08rem;line-height:1.72;max-width:520px;margin-bottom:28px}
 .hero-sub strong{color:var(--white)}
-.hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
-.btn-amber{
-  background:var(--amber);color:var(--ink);
-  font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.07em;
-  padding:13px 28px;text-decoration:none;border:3px solid var(--amber);transition:all 0.2s;
-}
-.btn-amber:hover{background:transparent;color:var(--amber)}
-.btn-ghost{
-  background:transparent;color:rgba(255,255,255,0.7);
-  font-family:'Space Mono',monospace;font-size:0.75rem;
-  padding:13px 20px;text-decoration:none;border:2px solid rgba(255,255,255,0.2);transition:all 0.2s;
-}
-.btn-ghost:hover{border-color:rgba(255,255,255,0.6);color:var(--white)}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-a{background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
+  letter-spacing:0.07em;padding:12px 26px;text-decoration:none;border:3px solid var(--amber);transition:all 0.2s}
+.btn-a:hover{background:transparent;color:var(--amber)}
+.btn-g{background:transparent;color:rgba(255,255,255,0.7);font-family:'Space Mono',monospace;font-size:0.74rem;
+  padding:12px 18px;text-decoration:none;border:2px solid rgba(255,255,255,0.22);transition:all 0.2s}
+.btn-g:hover{border-color:rgba(255,255,255,0.6);color:var(--white)}
+/* Hero bill box */
+.bill-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-left:4px solid var(--brick);padding:26px}
+.bill-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;
+  color:var(--brick);text-transform:uppercase;margin-bottom:18px}
+.bill-item{padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:baseline}
+.bill-item:last-child{border-bottom:none}
+.bill-svc{font-family:'Space Mono',monospace;font-size:0.74rem;color:rgba(255,255,255,0.65)}
+.bill-amt{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--brick);line-height:1}
+.bill-total{margin-top:14px;padding-top:14px;border-top:2px solid rgba(255,255,255,0.15);
+  display:flex;justify-content:space-between;align-items:baseline}
+.bill-total .bill-svc{color:var(--white);font-size:0.8rem}
+.bill-total .bill-amt{color:var(--amber);font-size:2rem}
+.bill-footnote{font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.58);
+  margin-top:10px;text-align:right}
 
-.hero-panel{
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.09);
-  border-left:4px solid var(--brick);padding:26px;
-}
-.hero-panel-label{
-  font-family:'Space Mono',monospace;font-size:0.62rem;
-  letter-spacing:0.14em;color:var(--brick);text-transform:uppercase;margin-bottom:18px;
-}
-.hero-stat{padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
-.hero-stat:last-child{border-bottom:none}
-.hero-stat-n{
-  font-family:'Bebas Neue',sans-serif;font-size:2.6rem;
-  color:var(--amber);display:block;line-height:1;
-}
-.hero-stat-l{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.38);margin-top:3px}
+/* ── MARQUEE ── */
+.mq{background:var(--brick);overflow:hidden;white-space:nowrap;padding:8px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.mq-t{display:inline-flex;animation:mq 40s linear infinite}
+.mq-t span{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.12em;color:var(--white);padding:0 18px}
+.mq-t .d{color:var(--amber)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ═══════════════════════════════════
-   MARQUEE
-   ═══════════════════════════════════ */
-.marquee-wrap{
-  background:var(--brick);overflow:hidden;
-  white-space:nowrap;padding:9px 0;
-  border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
-}
-.marquee-track{display:inline-flex;animation:marquee 40s linear infinite}
-.marquee-track span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;color:var(--white);padding:0 18px}
-.marquee-track .dot{color:var(--amber)}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* ── TAKEOUT SECTION ── */
+.takeout-section{background:var(--paper)}
+.takeout-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:44px}
+.takeout-col p{font-size:1.05rem;line-height:1.82;color:var(--ink);margin-bottom:16px}
+.takeout-col p strong{color:var(--slate)}
+.takeout-col p em{color:var(--brick);font-style:normal;font-weight:700}
+.receipt{background:var(--white);border:2px solid var(--ink);font-family:'Space Mono',monospace;overflow:hidden}
+.receipt-head{background:var(--ink);color:var(--white);padding:12px 18px;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.08em;display:flex;justify-content:space-between}
+.receipt-head span{font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.55);letter-spacing:0.04em;align-self:center}
+.receipt-row{display:flex;justify-content:space-between;padding:9px 18px;border-bottom:1px dashed rgba(0,0,0,0.1);font-size:0.78rem;color:var(--ink)}
+.receipt-row.sub{font-weight:700;border-top:2px solid var(--ink);border-bottom:none;background:rgba(0,0,0,0.04)}
+.r-bad{color:var(--baron);font-weight:700}
+.receipt-op{padding:4px 18px;font-size:0.68rem;color:var(--muted);display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.02)}
+.receipt-op .op{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;line-height:1}
+.op-minus{color:var(--sage)}.op-plus{color:var(--brick)}.op-eq{color:var(--amber)}
+.receipt-row.total{background:var(--sage);color:var(--white);border-bottom:none;font-size:0.9rem;font-weight:700}
+.receipt-row.total .r-bad{color:var(--amber)}
+.intang-note{background:var(--baron);color:var(--white);padding:18px 18px;font-size:0.75rem;line-height:1.7}
+.intang-note strong{color:var(--amber)}
+.intang-note a{color:var(--sage-m);text-decoration:none}
 
-/* ═══════════════════════════════════
-   WHY NOW — COST + INTANGIBLES
-   ═══════════════════════════════════ */
-.cost-section{background:var(--paper)}
-.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
-.deal-prose p{font-size:1.08rem;color:var(--ink);line-height:1.82;margin-bottom:18px}
-.deal-prose strong{color:var(--slate)}
-.callout-box{
-  background:var(--slate);color:var(--white);
-  padding:30px;margin-top:28px;position:relative;
-}
-.callout-box::before{
-  content:'"';font-family:'Bebas Neue',sans-serif;font-size:7rem;
-  color:rgba(255,255,255,0.07);position:absolute;top:-10px;left:14px;line-height:1;
-}
-.callout-box p{font-size:1.1rem;line-height:1.65;position:relative;z-index:1}
-.callout-box cite{display:block;margin-top:10px;font-family:'Space Mono',monospace;font-size:0.68rem;opacity:0.55;font-style:normal}
-
-/* cost table */
-.cost-table{width:100%;border-collapse:collapse;font-family:'Space Mono',monospace;font-size:0.79rem;margin-bottom:4px}
-.cost-table th{background:var(--ink);color:var(--white);padding:9px 14px;text-align:left;font-size:0.7rem;letter-spacing:0.06em}
-.cost-table td{padding:9px 14px;border-bottom:1px solid rgba(0,0,0,0.07);vertical-align:middle}
-.cost-table tr:nth-child(even) td{background:rgba(0,0,0,0.025)}
-.amt{text-align:right;color:var(--brick);font-weight:700}
-.cost-table .subtotal td{background:rgba(0,0,0,0.06)!important;border-top:2px solid rgba(0,0,0,0.15);font-weight:700}
-.cost-table .grand-total td{background:var(--baron)!important;color:var(--white);font-weight:700}
-.cost-table .grand-total .amt{color:var(--white)}
-.cost-table .ours td{background:var(--robin)!important;color:var(--white)}
-.cost-table .ours .amt{color:#A8D8B0}
-.cost-table .savings td{background:var(--sage)!important;color:var(--white);font-size:0.9rem;font-weight:700}
-.cost-table .savings .amt{color:var(--amber)}
-.op-row{
-  display:flex;align-items:center;gap:8px;
-  padding:5px 14px;font-family:'Space Mono',monospace;font-size:0.72rem;
-  color:var(--muted);background:rgba(0,0,0,0.03);margin:2px 0;
-  border-left:3px solid var(--muted);
-}
-.op-row .op{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--brick);line-height:1}
-.op-row .op.plus{color:var(--brick)}.op-row .op.minus{color:var(--sage)}.op-row .op.eq{color:var(--amber)}
-
-.intang-box{border:2px solid var(--baron);padding:26px;margin-top:28px;background:var(--baron-bg)}
-.intang-box h4{font-size:1.35rem;color:var(--baron);margin-bottom:14px}
-.intang-list{list-style:none}
-.intang-list li{
-  display:grid;grid-template-columns:1.4rem 1fr auto;
-  gap:10px;padding:8px 0;border-bottom:1px dashed rgba(111,26,26,0.18);
-  font-size:0.86rem;align-items:start;line-height:1.55;
-}
-.intang-list li:last-child{border-bottom:none}
-.itag{
-  font-family:'Space Mono',monospace;font-size:0.58rem;
-  background:var(--baron);color:var(--white);padding:2px 7px;
-  letter-spacing:0.08em;align-self:center;white-space:nowrap;
-}
-
-/* ═══════════════════════════════════
-   101 CONCEPTS — ACCORDION
-   ═══════════════════════════════════ */
-.concepts-section{background:var(--bg)}
-.accordion{border:2px solid var(--ink);margin-top:8px}
-.acc-item{border-bottom:1px solid rgba(0,0,0,0.1)}
-.acc-item:last-child{border-bottom:none}
-.acc-trigger{
-  width:100%;display:flex;align-items:center;justify-content:space-between;
-  padding:20px 24px;background:none;border:none;cursor:pointer;
-  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--ink);
-  letter-spacing:0.04em;text-align:left;transition:background 0.18s;
-}
-.acc-trigger:hover{background:rgba(0,0,0,0.03)}
-.acc-trigger.open{background:var(--slate);color:var(--white)}
-.acc-arrow{font-size:1.1rem;transition:transform 0.25s;flex-shrink:0;margin-left:14px;color:var(--amber)}
-.acc-trigger.open .acc-arrow{transform:rotate(180deg)}
-.acc-body{
-  max-height:0;overflow:hidden;transition:max-height 0.4s ease;
-  padding:0 24px;
-}
-.acc-body.open{max-height:800px;padding:24px 24px 28px}
-.acc-body p{font-size:0.96rem;line-height:1.78;margin-bottom:14px;color:var(--ink)}
-.acc-body p:last-child{margin-bottom:0}
-.acc-body strong{color:var(--slate)}
-.acc-body .compare-mini{
-  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;
-}
-.acc-mini-col{padding:16px;font-family:'Space Mono',monospace;font-size:0.76rem;line-height:1.65}
-.acc-mini-col.bad{background:var(--baron-bg);border-left:3px solid var(--baron);color:var(--baron)}
-.acc-mini-col.good{background:rgba(58,107,80,0.08);border-left:3px solid var(--sage);color:var(--robin)}
-.acc-mini-col h5{font-family:'Bebas Neue',sans-serif;font-size:1rem;margin-bottom:8px;letter-spacing:0.05em}
-.acc-mini-col.bad h5{color:var(--baron)}.acc-mini-col.good h5{color:var(--sage)}
-
-/* ═══════════════════════════════════
-   FLIP CARDS — SIX TODAY
-   ═══════════════════════════════════ */
-.today-section{background:var(--paper)}
-.flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:6px}
-.flip-card{height:330px;perspective:1200px;cursor:pointer}
+/* ── MENU CARDS ── */
+.menu-section{background:var(--bg)}
+.menu-kicker{font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+.flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.flip-card{height:320px;perspective:1200px;cursor:pointer}
 .flip-inner{position:relative;width:100%;height:100%;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d}
 .flip-card:hover .flip-inner,.flip-card.open .flip-inner{transform:rotateY(180deg)}
-.flip-f,.flip-b{
-  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  padding:26px 22px;border:2px solid var(--ink);display:flex;flex-direction:column;
-}
-.flip-b{transform:rotateY(180deg);background:var(--slate);border-color:var(--slate)}
-.flip-f{background:var(--bg)}
-.flip-f.ft-featured{background:var(--ink);border-color:var(--ink)}
-.flip-f.ft-featured h3{color:var(--amber)}
-.flip-f.ft-featured .card-tag{background:var(--amber);color:var(--ink)}
-.flip-f.ft-featured .ci{color:var(--amber)}
-.flip-f.ft-featured p{color:rgba(255,255,255,0.58)}
-.flip-f.ft-featured .card-hint{color:rgba(255,255,255,0.28)}
-.card-tag{
-  display:inline-block;font-family:'Space Mono',monospace;font-size:0.58rem;
-  letter-spacing:0.14em;text-transform:uppercase;background:var(--brick);
-  color:var(--white);padding:3px 9px;margin-bottom:12px;align-self:flex-start;
-}
-.card-tag.go{background:var(--sage)}.card-tag.amber{background:var(--amber);color:var(--ink)}
+.ff,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:26px 22px;border:2px solid var(--ink);display:flex;flex-direction:column}
+.fb{transform:rotateY(180deg);background:var(--slate);border-color:var(--slate)}
+.ff{background:var(--bg)}.ff.feat{background:var(--ink);border-color:var(--ink)}
+.ff.feat h3{color:var(--amber)}.ff.feat .ctag{background:var(--amber);color:var(--ink)}
+.ff.feat .ci{color:var(--amber)}.ff.feat p{color:rgba(255,255,255,0.6)}
+.ff.feat .chint{color:rgba(255,255,255,0.5)}
+.ctag{display:inline-block;font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;
+  text-transform:uppercase;background:var(--brick);color:var(--white);padding:3px 9px;margin-bottom:12px;align-self:flex-start}
+.ctag.go{background:var(--sage)}.ctag.am{background:var(--amber);color:var(--ink)}
 .ci{font-size:2rem;margin-bottom:10px;display:block;color:var(--sage)}
-.flip-f h3{font-size:1.85rem;color:var(--ink);margin-bottom:8px}
-.flip-f p{font-size:0.86rem;color:var(--muted);line-height:1.6;flex:1}
-.card-hint{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);opacity:0.6;margin-top:12px;text-align:right}
+.ff h3{font-size:1.8rem;color:var(--ink);margin-bottom:8px}
+.ff p{font-size:0.86rem;color:var(--muted);line-height:1.6;flex:1}
+.chint{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--muted);opacity:0.7;margin-top:10px;text-align:right}
 /* back */
-.flip-b h4{font-size:1.45rem;color:var(--amber);margin-bottom:14px;letter-spacing:0.04em}
-.how-steps{list-style:none;flex:1}
-.how-steps li{
-  font-family:'Space Mono',monospace;font-size:0.72rem;
-  color:rgba(255,255,255,0.82);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.1);
-  display:flex;gap:9px;align-items:flex-start;line-height:1.5;
-}
-.how-steps li:last-child{border-bottom:none}
-.sn{
-  font-size:0.65rem;background:rgba(255,255,255,0.12);color:var(--amber);
-  width:17px;height:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
-}
-.back-time{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--amber);margin-top:10px;letter-spacing:0.07em}
+.fb h4{font-size:1.4rem;color:var(--amber);margin-bottom:12px}
+.hw{list-style:none;flex:1}
+.hw li{font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.82);padding:5px 0;
+  border-bottom:1px solid rgba(255,255,255,0.1);display:flex;gap:9px;align-items:flex-start;line-height:1.5}
+.hw li:last-child{border-bottom:none}
+.sn{font-size:0.62rem;background:rgba(255,255,255,0.12);color:var(--amber);width:17px;height:17px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.bt{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--amber);margin-top:10px;letter-spacing:0.07em}
+.more-link{display:block;text-align:center;margin-top:20px;font-family:'Space Mono',monospace;font-size:0.78rem;
+  color:var(--slate);text-decoration:none;padding:10px;border:1px solid rgba(0,0,0,0.12);
+  transition:background 0.2s}
+.more-link:hover{background:var(--paper)}
 
-/* ═══════════════════════════════════
-   SWAP SHEET
-   ═══════════════════════════════════ */
-.swap-section{background:var(--bg)}
-.swap-table{width:100%;border-collapse:collapse;font-size:0.86rem}
-.swap-table thead th{
-  padding:12px 16px;text-align:left;
-  font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.06em;
-}
-.col-baron{background:var(--baron);color:var(--white)}
-.col-arrow{background:var(--ink);color:var(--muted);text-align:center;width:44px}
-.col-robin{background:var(--robin);color:var(--white)}
-.col-why{background:var(--slate);color:var(--white)}
-.swap-table tbody tr{border-bottom:1px solid rgba(0,0,0,0.08);transition:background 0.15s}
-.swap-table tbody tr:hover{background:rgba(0,0,0,0.025)}
-.swap-table td{padding:12px 16px;vertical-align:top}
-.baron-name{color:var(--baron);font-weight:700;font-family:'Space Mono',monospace;font-size:0.76rem;display:block;margin-bottom:3px;text-decoration:line-through;text-decoration-color:rgba(181,76,47,0.4)}
-.baron-brands{font-family:'Space Mono',monospace;font-size:0.66rem;color:var(--muted);font-style:italic}
-.arr-cell{text-align:center;color:var(--muted);font-size:1.1rem}
-.robin-name{color:var(--robin);font-weight:700;font-family:'Space Mono',monospace;font-size:0.76rem;display:block;margin-bottom:3px}
-.robin-brands{font-family:'Space Mono',monospace;font-size:0.66rem;color:var(--muted)}
-.why-cell{font-size:0.84rem;color:var(--ink);line-height:1.6}
-.why-cell strong{color:var(--slate)}
+/* ── PANTRY SWAP PREVIEW ── */
+.swap-prev-section{background:var(--paper)}
+.swap-prev-table{width:100%;border-collapse:collapse;font-size:0.86rem;margin-top:8px}
+.swap-prev-table thead th{padding:11px 14px;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.06em}
+.col-b{background:var(--baron);color:var(--white)}
+.col-ar{background:var(--ink);color:var(--muted);text-align:center;width:44px}
+.col-r{background:var(--sage);color:var(--white)}
+.col-w{background:var(--slate);color:var(--white)}
+.swap-prev-table tbody tr{border-bottom:1px solid rgba(0,0,0,0.08)}
+.swap-prev-table tbody tr:hover{background:rgba(0,0,0,0.025)}
+.swap-prev-table td{padding:11px 14px;vertical-align:top}
+.bn{color:var(--baron);font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;display:block;margin-bottom:2px;text-decoration:line-through;text-decoration-color:rgba(181,76,47,0.4)}
+.bb{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);font-style:italic}
+.rn{color:var(--sage);font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;display:block;margin-bottom:2px}
+.rb{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted)}
+.wc{font-size:0.84rem;color:var(--ink);line-height:1.6}
+.wc strong{color:var(--slate)}
+.see-all{display:inline-block;margin-top:20px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
+  letter-spacing:0.07em;color:var(--slate);text-decoration:none;padding:10px 22px;
+  border:2px solid var(--slate);transition:all 0.2s}
+.see-all:hover{background:var(--slate);color:var(--white)}
 
-/* ═══════════════════════════════════
-   OFFLINE & RESILIENT
-   ═══════════════════════════════════ */
-.offline-section{background:var(--ink);color:var(--white);padding:80px 40px}
-.offline-section .section-title{color:var(--white)}
-.offline-section .section-sub{color:rgba(255,255,255,0.5)}
-.offline-section .eyebrow-line{background:rgba(255,255,255,0.1)}
+/* ── COOKING TOGETHER ── */
+.together-section{background:var(--ink);color:var(--white);padding:72px 40px}
+.together-section .stitle{color:var(--white)}
+.together-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,0.08);margin-top:44px}
+.together-card{background:rgba(255,255,255,0.03);padding:28px 22px}
+.together-card h4{font-size:1.4rem;color:var(--amber);margin-bottom:10px}
+.together-card p{font-size:0.88rem;color:rgba(255,255,255,0.65);line-height:1.7}
+.together-card p strong{color:var(--white)}
+.together-pull{background:var(--brick);padding:32px 40px;text-align:center;margin-top:44px}
+.together-pull p{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3.5vw,2.8rem);
+  color:var(--white);line-height:1.1;letter-spacing:0.02em}
+.together-pull p span{color:var(--amber)}
+.together-pull a{display:inline-block;margin-top:18px;font-family:'Space Mono',monospace;
+  font-size:0.78rem;color:var(--sage-m);text-decoration:none}
+.together-pull a:hover{color:var(--amber)}
 
-.resilience-arc{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:0;margin-top:48px;border:1px solid rgba(255,255,255,0.1);
-}
-.arc-step{padding:28px 22px;border-right:1px solid rgba(255,255,255,0.08)}
-.arc-step:last-child{border-right:none}
-.arc-n{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(255,255,255,0.07);display:block;line-height:1;margin-bottom:8px}
-.arc-step h4{font-size:1.4rem;color:var(--amber);margin-bottom:8px}
-.arc-step p{font-size:0.86rem;color:rgba(255,255,255,0.5);line-height:1.65}
-.arc-step ul{list-style:none;margin-top:10px}
-.arc-step ul li{
-  font-family:'Space Mono',monospace;font-size:0.72rem;
-  color:rgba(255,255,255,0.45);padding:5px 0;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  display:flex;gap:8px;align-items:flex-start;
-}
-.arc-step ul li::before{content:'→';color:var(--sage-m);flex-shrink:0}
-
-.offline-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px}
-.offline-card{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  padding:26px;
-}
-.offline-card h4{font-size:1.4rem;color:var(--amber);margin-bottom:10px}
-.offline-card p{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:14px}
-.offline-card ul{list-style:none}
-.offline-card ul li{font-family:'Space Mono',monospace;font-size:0.73rem;color:rgba(255,255,255,0.55);padding:5px 0;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:8px}
-.offline-card ul li::before{content:'→';color:var(--sage-m);flex-shrink:0}
-
-.from-to{
-  margin-top:48px;padding:36px;
-  background:rgba(200,135,44,0.06);border:2px solid rgba(200,135,44,0.2);
-}
-.from-to h3{font-size:2rem;color:var(--amber);margin-bottom:20px}
-.from-to-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch}
-.ft-col{padding:20px 24px}
-.ft-col.from{background:rgba(111,26,26,0.3);border-left:3px solid var(--baron)}
-.ft-col.to{background:rgba(58,107,80,0.25);border-left:3px solid var(--sage)}
-.ft-col h5{font-size:1.2rem;margin-bottom:14px}
-.ft-col.from h5{color:rgba(255,255,255,0.5)}
-.ft-col.to h5{color:var(--sage-m)}
-.ft-col ul{list-style:none}
-.ft-col ul li{font-family:'Space Mono',monospace;font-size:0.75rem;color:rgba(255,255,255,0.55);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
-.ft-col ul li:last-child{border-bottom:none}
-.ft-arrow{
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--amber);
-  padding:0 20px;background:rgba(200,135,44,0.06);
-}
-
-/* ═══════════════════════════════════
-   DISTRIBUTED AI
-   ═══════════════════════════════════ */
-.distai-section{background:var(--paper);padding:80px 40px}
-.pod-intro{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;margin-bottom:48px}
-.pod-intro-text p{font-size:1.06rem;line-height:1.82;color:var(--ink);margin-bottom:16px}
-.pod-intro-text strong{color:var(--slate)}
-.pod-before-after{display:grid;grid-template-columns:1fr auto 1fr;gap:0;border:2px solid var(--ink)}
-.pba-col{padding:22px 20px}
-.pba-col.before{background:var(--baron-bg);border-right:1px solid var(--ink)}
-.pba-col.after{background:rgba(58,107,80,0.07)}
-.pba-col h5{font-size:1.1rem;margin-bottom:14px}
-.pba-col.before h5{color:var(--baron)}
-.pba-col.after h5{color:var(--sage)}
-.pba-col ul{list-style:none}
-.pba-col ul li{
-  font-family:'Space Mono',monospace;font-size:0.73rem;
-  color:var(--muted);padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.07);
-  display:flex;gap:7px;line-height:1.5;
-}
-.pba-col ul li:last-child{border-bottom:none}
-.pba-col.after ul li{color:var(--ink)}
-.pba-col ul li::before{flex-shrink:0;margin-top:1px}
-.pba-col.before ul li::before{content:'✕';color:var(--baron)}
-.pba-col.after ul li::before{content:'✓';color:var(--sage)}
-.pba-arrow{display:flex;align-items:center;justify-content:center;padding:0 18px;background:rgba(0,0,0,0.03);font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--amber)}
-
-/* Pod AI architecture diagram */
-.pod-diagram{
-  background:var(--ink);padding:40px;margin-top:0;
-}
-.pod-diagram-title{
-  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--amber);
-  letter-spacing:0.06em;margin-bottom:24px;text-align:center;
-}
-.pod-svg{width:100%;height:auto;display:block}
-
-.pod-capabilities{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:16px;margin-top:40px;
-}
-.pod-cap{
-  background:var(--white);border:2px solid var(--ink);
-  padding:22px 18px;transition:transform 0.2s,box-shadow 0.2s;
-}
-.pod-cap:hover{transform:translate(-3px,-3px);box-shadow:3px 3px 0 var(--ink)}
-.pod-cap h4{font-size:1.3rem;color:var(--slate);margin-bottom:8px}
-.pod-cap p{font-family:'Space Mono',monospace;font-size:0.73rem;color:var(--muted);line-height:1.6}
-
-/* ═══════════════════════════════════
-   WHAT WE'RE MISSING
-   ═══════════════════════════════════ */
-.missing-section{background:var(--bg)}
-.missing-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:1px;background:rgba(0,0,0,0.1);
-  margin-top:12px;border:1px solid rgba(0,0,0,0.1);
-}
-.missing-card{
-  background:var(--bg);padding:22px 18px;
-  transition:background 0.18s;
-}
-.missing-card:hover{background:var(--paper)}
-.mc-icon{font-size:1.8rem;display:block;margin-bottom:10px}
-.mc-status{
-  display:inline-block;font-family:'Space Mono',monospace;
-  font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;
-  padding:2px 8px;margin-bottom:10px;
-}
-.mc-status.soon{background:var(--amber);color:var(--ink)}
-.mc-status.now{background:var(--sage);color:var(--white)}
-.mc-status.future{background:var(--slate);color:var(--white)}
-.missing-card h4{font-size:1.25rem;color:var(--ink);margin-bottom:6px}
-.missing-card p{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);line-height:1.6}
-
-/* ═══════════════════════════════════
-   PULL QUOTE
-   ═══════════════════════════════════ */
-.pull-quote{background:var(--brick);padding:60px 40px;text-align:center}
-.pull-quote blockquote{
-  max-width:820px;margin:0 auto;
-  font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);
-  color:var(--white);line-height:1.05;letter-spacing:0.02em;
-}
-.pull-quote .hl{color:var(--amber)}
-.pull-quote cite{display:block;font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.5);font-style:normal;margin-top:20px;letter-spacing:0.1em}
-
-/* ═══════════════════════════════════
-   WHAT COMMUNITY MEANS
-   ═══════════════════════════════════ */
-.community-section{background:var(--slate);color:var(--white);padding:80px 40px}
-.community-section .section-title{color:var(--white)}
-.community-section .section-sub{color:rgba(255,255,255,0.5)}
-.community-section .eyebrow-line{background:rgba(255,255,255,0.1)}
-.community-manifesto{
-  max-width:820px;margin:0 auto;text-align:center;padding:48px 0 20px;
-}
-.community-manifesto p{
-  font-size:1.2rem;line-height:1.85;color:rgba(255,255,255,0.75);
-  margin-bottom:22px;
-}
-.community-manifesto p strong{color:var(--white)}
-.community-manifesto p em{color:var(--amber);font-style:normal}
-.community-pillars{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:rgba(255,255,255,0.1);margin-top:48px;
-}
-.pillar{background:rgba(255,255,255,0.03);padding:32px 26px}
-.pillar h3{font-size:1.6rem;color:var(--amber);margin-bottom:12px}
-.pillar p{font-size:0.9rem;color:rgba(255,255,255,0.55);line-height:1.7}
-.pillar p strong{color:rgba(255,255,255,0.85)}
-.society-problem{
-  margin-top:48px;padding:36px 40px;
-  background:rgba(200,135,44,0.08);border:2px solid rgba(200,135,44,0.2);
-}
-.society-problem h3{font-size:2rem;color:var(--amber);margin-bottom:16px}
-.society-problem p{font-size:1rem;color:rgba(255,255,255,0.65);line-height:1.78;margin-bottom:14px}
-.society-problem p strong{color:var(--white)}
-.society-problem p:last-child{margin-bottom:0}
-
-/* ═══════════════════════════════════
-   THE FARM & THE SINK — BRANDS
-   ═══════════════════════════════════ */
-.brands-section{background:var(--bg);padding:80px 40px}
-.brands-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:12px}
-.brand-card{border:3px solid var(--ink);padding:40px;position:relative;overflow:hidden}
-.brand-card::before{
-  font-family:'Bebas Neue',sans-serif;font-size:9rem;
-  position:absolute;bottom:-30px;right:-10px;line-height:1;
-  color:rgba(0,0,0,0.04);
-}
-.brand-card.farm::before{content:'FARM'}
-.brand-card.sink::before{content:'SINK'}
-.brand-card.farm{background:var(--paper)}
-.brand-card.sink{background:var(--ink);border-color:var(--amber);color:var(--white)}
-.brand-tag{
-  display:inline-block;font-family:'Space Mono',monospace;font-size:0.6rem;
-  letter-spacing:0.15em;text-transform:uppercase;padding:3px 10px;
-  margin-bottom:16px;
-}
-.brand-card.farm .brand-tag{background:var(--sage);color:var(--white)}
-.brand-card.sink .brand-tag{background:var(--amber);color:var(--ink)}
-.brand-card h3{font-size:3.5rem;margin-bottom:8px;color:var(--ink)}
-.brand-card.sink h3{color:var(--amber)}
-.brand-sub{
-  font-family:'Space Mono',monospace;font-size:0.78rem;
-  color:var(--muted);letter-spacing:0.06em;margin-bottom:18px;display:block;
-}
-.brand-card.sink .brand-sub{color:rgba(255,255,255,0.4)}
-.brand-card p{font-size:0.96rem;line-height:1.75;color:var(--ink);margin-bottom:14px;position:relative;z-index:1}
-.brand-card p:last-child{margin-bottom:0}
-.brand-card.sink p{color:rgba(255,255,255,0.65)}
-.brand-card strong{color:var(--slate)}
-.brand-card.sink strong{color:var(--amber)}
-.brand-items{list-style:none;margin-top:16px;position:relative;z-index:1}
-.brand-items li{
-  font-family:'Space Mono',monospace;font-size:0.74rem;
-  color:var(--muted);padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.08);
-  display:flex;gap:8px;
-}
-.brand-card.sink .brand-items li{color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.08)}
-.brand-items li::before{content:'→';color:var(--sage);flex-shrink:0}
-.brand-card.sink .brand-items li::before{color:var(--amber)}
-
-/* ═══════════════════════════════════
-   INSPIRATION
-   ═══════════════════════════════════ */
-.inspiration-section{background:var(--paper);padding:80px 40px}
-.insp-intro{
-  max-width:640px;font-size:1.05rem;line-height:1.78;
-  color:var(--muted);margin-top:14px;margin-bottom:44px;
-}
-.insp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.insp-card{
-  background:var(--bg);border:2px solid transparent;
-  padding:26px 22px;transition:border-color 0.2s,transform 0.2s;
-}
-.insp-card:hover{border-color:var(--ink);transform:translateY(-3px)}
-.insp-card a{text-decoration:none;color:inherit}
-.insp-type{
-  font-family:'Space Mono',monospace;font-size:0.6rem;
-  letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
-  margin-bottom:8px;display:block;
-}
-.insp-card h4{font-size:1.5rem;color:var(--ink);margin-bottom:8px}
-.insp-card p{font-size:0.86rem;color:var(--muted);line-height:1.65}
-.insp-card strong{color:var(--slate)}
-.insp-lesson{
-  font-family:'Space Mono',monospace;font-size:0.7rem;
-  color:var(--sage);margin-top:12px;display:block;border-top:1px solid rgba(0,0,0,0.08);padding-top:10px;
-}
-
-/* ═══════════════════════════════════
-   PARTICIPATION TIERS
-   ═══════════════════════════════════ */
-.join-section{background:var(--bg);padding:80px 40px}
-.tiers-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:2px solid var(--ink);margin-top:44px}
-.tier{padding:28px 20px;border-right:2px solid var(--ink);position:relative}
+/* ── JOIN / TIERS ── */
+.join-section{background:var(--paper);padding:72px 40px}
+.tiers-wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:2px solid var(--ink);margin-top:44px}
+.tier{padding:26px 18px;border-right:2px solid var(--ink);position:relative}
 .tier:last-child{border-right:none}
-.tier.hl{background:var(--sage);color:var(--white)}
-.tier-n{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:rgba(0,0,0,0.06);position:absolute;top:10px;right:12px;line-height:1}
-.tier.hl .tier-n{color:rgba(255,255,255,0.08)}
-.tier-icon{font-size:1.7rem;display:block;margin-bottom:10px}
-.tier h3{font-size:1.4rem;color:var(--ink);margin-bottom:8px}
+.tier.hl{background:var(--sage)}
+.tn{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(0,0,0,0.06);position:absolute;top:8px;right:10px;line-height:1}
+.tier.hl .tn{color:rgba(255,255,255,0.08)}
+.tier-icon{font-size:1.7rem;display:block;margin-bottom:8px}
+.tier h3{font-size:1.35rem;color:var(--ink);margin-bottom:6px}
 .tier.hl h3{color:var(--amber)}
-.tier-price{font-family:'Space Mono',monospace;font-size:0.69rem;color:var(--sage);display:block;margin-bottom:10px;letter-spacing:0.04em}
-.tier.hl .tier-price{color:var(--amber)}
+.tier-role{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--sage);display:block;margin-bottom:8px;letter-spacing:0.05em;font-style:italic}
+.tier.hl .tier-role{color:var(--amber)}
 .tier p{font-size:0.84rem;color:var(--muted);line-height:1.6}
-.tier.hl p{color:rgba(255,255,255,0.72)}
-.tier-perks{margin-top:12px;list-style:none}
-.tier-perks li{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);padding:4px 0;border-bottom:1px dashed rgba(0,0,0,0.1);display:flex;gap:5px;align-items:flex-start}
-.tier-perks li::before{content:'→';color:var(--sage);flex-shrink:0}
-.tier.hl .tier-perks li{color:rgba(255,255,255,0.65);border-color:rgba(255,255,255,0.1)}
-.tier.hl .tier-perks li::before{color:var(--amber)}
+.tier.hl p{color:rgba(255,255,255,0.75)}
+.tier-ps{margin-top:10px;list-style:none}
+.tier-ps li{font-family:'Space Mono',monospace;font-size:0.67rem;color:var(--muted);padding:4px 0;
+  border-bottom:1px dashed rgba(0,0,0,0.1);display:flex;gap:5px;align-items:flex-start}
+.tier-ps li::before{content:'→';color:var(--sage);flex-shrink:0}
+.tier.hl .tier-ps li{color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.12)}
+.tier.hl .tier-ps li::before{color:var(--amber)}
 
-/* ═══════════════════════════════════
-   TECH / FOR NERDS
-   ═══════════════════════════════════ */
-.tech-section{background:#111108;color:var(--white);border-top:4px solid var(--amber);padding:80px 40px}
-.tech-section .section-title{color:var(--white)}
-.tech-section .eyebrow-line{background:rgba(255,255,255,0.08)}
-.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
-.tech-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:24px}
-.tech-card h4{font-size:1.4rem;color:var(--amber);margin-bottom:9px}
-.tech-card p{font-family:'Space Mono',monospace;font-size:0.74rem;color:rgba(255,255,255,0.38);line-height:1.7;margin-bottom:12px}
-.tech-links{list-style:none}
-.tech-links li{border-top:1px solid rgba(255,255,255,0.06);padding:6px 0}
-.tech-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--sage-m);text-decoration:none;transition:color 0.2s}
-.tech-links a:hover{color:var(--amber)}
-.code-block{
-  background:rgba(0,0,0,0.5);border-left:3px solid var(--sage);
-  padding:20px;margin-top:32px;font-family:'Space Mono',monospace;
-  font-size:0.74rem;color:var(--sage-m);line-height:1.85;overflow-x:auto;
-}
-.code-block .cm{color:rgba(255,255,255,0.22)}.code-block .cmd{color:var(--amber)}
-.repo-cta{
-  margin-top:44px;padding:34px 38px;
-  background:rgba(200,135,44,0.06);border:2px solid rgba(200,135,44,0.2);
-  display:flex;align-items:center;justify-content:space-between;gap:28px;
-}
-.repo-cta h3{font-size:1.9rem;color:var(--white);margin-bottom:6px}
-.repo-cta p{color:rgba(255,255,255,0.4);font-size:0.86rem;line-height:1.6}
-.btn-repo{
-  background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;
-  font-size:1.15rem;letter-spacing:0.07em;padding:14px 28px;text-decoration:none;
-  display:inline-flex;align-items:center;gap:9px;flex-shrink:0;
-  border:3px solid var(--amber);transition:all 0.2s;
-}
-.btn-repo:hover{background:transparent;color:var(--amber)}
+/* ── EXPLORE BAR ── */
+.explore-bar{background:var(--slate);padding:36px 40px}
+.explore-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.explore-bar h3{font-size:2rem;color:var(--white);margin-bottom:6px}
+.explore-bar p{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.55);line-height:1.65;max-width:480px}
+.explore-links{display:flex;gap:10px;flex-wrap:wrap}
+.el{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--sage-m);text-decoration:none;
+  padding:8px 14px;border:1px solid rgba(93,148,120,0.35);transition:all 0.2s;white-space:nowrap}
+.el:hover{background:rgba(93,148,120,0.12);color:var(--amber);border-color:rgba(200,135,44,0.4)}
 
-/* ═══════════════════════════════════
-   ABOUT US
-   ═══════════════════════════════════ */
-.about-section{background:var(--paper);padding:80px 40px}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-.about-prose p{font-size:1.06rem;line-height:1.82;color:var(--ink);margin-bottom:18px}
-.about-prose strong{color:var(--slate)}
-.about-manifesto{
-  background:var(--slate);color:var(--white);padding:36px;
+@media(max-width:900px){
+  .hero-inner,.takeout-grid,.together-grid{grid-template-columns:1fr}
+  .bill-box{display:none}.flip-grid{grid-template-columns:1fr 1fr}
+  .tiers-wrap{grid-template-columns:1fr 1fr}
+  .explore-inner{flex-direction:column;align-items:flex-start}
 }
-.about-manifesto h3{font-size:2.2rem;color:var(--amber);margin-bottom:16px}
-.about-manifesto p{font-size:1rem;line-height:1.78;color:rgba(255,255,255,0.68);margin-bottom:14px}
-.about-manifesto p:last-child{margin-bottom:0}
-.about-manifesto strong{color:var(--white)}
-.about-values{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(0,0,0,0.1);margin-top:28px}
-.av-item{background:var(--bg);padding:18px}
-.av-item h5{font-size:1.1rem;color:var(--slate);margin-bottom:6px}
-.av-item p{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);line-height:1.6}
+@media(max-width:560px){.flip-grid{grid-template-columns:1fr}.tiers-wrap{grid-template-columns:1fr}}
 
-/* ═══════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════ */
-footer{background:var(--ink);color:var(--white);padding:60px 40px 36px;border-top:4px solid var(--amber)}
-.footer-grid{
-  max-width:1160px;margin:0 auto;
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;
-  padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:24px;
-}
-.footer-brand p{color:rgba(255,255,255,0.45);font-size:0.86rem;line-height:1.65;margin-top:10px}
-.footer-col h5{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0.1em;color:var(--amber);margin-bottom:12px}
-.footer-col ul{list-style:none}
-.footer-col ul li{margin-bottom:8px}
-.footer-col ul li a{color:rgba(255,255,255,0.45);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.73rem;transition:color 0.2s}
-.footer-col ul li a:hover{color:var(--white)}
-.footer-bottom{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-.footer-bottom p{font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.28)}
-.footer-bottom span{color:var(--amber)}
-
-/* ═══════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════ */
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.hero-hl{animation:fadeUp 0.8s ease both}
-.hero-sub{animation:fadeUp 0.8s ease 0.14s both}
-.hero-ctas{animation:fadeUp 0.8s ease 0.26s both}
-
-/* ═══════════════════════════════════
-   RESPONSIVE
-   ═══════════════════════════════════ */
-@media(max-width:1020px){
-  .hero-inner{grid-template-columns:1fr}
-  .hero-panel{display:none}
-  .cost-grid,.pod-intro,.about-grid,.brands-grid,.offline-grid{grid-template-columns:1fr}
-  .flip-grid{grid-template-columns:1fr 1fr}
-  .pod-capabilities{grid-template-columns:1fr 1fr}
-  .resilience-arc{grid-template-columns:1fr 1fr}
-  .tiers-grid{grid-template-columns:1fr 1fr}
-  .tech-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-  .community-pillars{grid-template-columns:1fr}
-  .insp-grid{grid-template-columns:1fr 1fr}
-  .missing-grid{grid-template-columns:1fr 1fr}
-  section{padding:60px 24px}
-  .site-header{padding:12px 24px}
-}
-@media(max-width:620px){
-  .flip-grid{grid-template-columns:1fr}
-  .tiers-grid{grid-template-columns:1fr}
-  nav{display:none}
-  .repo-cta{flex-direction:column}
-  .acc-mini-col,compare-mini{grid-template-columns:1fr}
-  .insp-grid,.missing-grid{grid-template-columns:1fr}
-  .from-to-grid{grid-template-columns:1fr}
-  .ft-arrow{display:none}
-  .pod-capabilities{grid-template-columns:1fr}
-  .resilience-arc{grid-template-columns:1fr}
-  .about-values{grid-template-columns:1fr}
-}
+@media(max-width:900px){section{padding:52px 24px}.site-header{padding:12px 24px}nav{display:none}}
 </style>
 </head>
 <body>
-
-<!-- ══════════════════════════════════════
-     HEADER
-     ══════════════════════════════════════ -->
 <header class="site-header">
   <div class="logo">Kitchen Table <span>Cloud</span></div>
-  <nav>
-    <a href="#costs">Why Now</a>
-    <a href="#101">101</a>
-    <a href="#today">Do It Today</a>
-    <a href="#swap">Swap Sheet</a>
-    <a href="#offline">Go Offline</a>
-    <a href="#distai">Community AI</a>
-    <a href="#community">Community</a>
-    <a href="#brands">The Farm &amp; Sink</a>
-    <a href="map.html" class="nav-vision">Full Map ↗</a>
-    <a href="vision.html" class="nav-vision">Vision ↗</a>
-    <a href="#join" class="nav-cta">Join</a>
-    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" style="color:rgba(255,255,255,0.4);margin-left:6px">GitHub ↗</a>
-  </nav>
+  <nav><a href="index.html" class="nav-active">Home</a>
+    <a href="start.html">Get Started</a>
+    <a href="openclaw.html">AI Agent</a>
+    <a href="swap.html">Swap Sheet</a>
+    <a href="map.html" class="nav-dim">Full Map</a>
+    <a href="community.html">Community</a>
+    <a href="vision.html" class="nav-dim">Vision</a>
+    <a href="security.html">Security</a>
+    <a href="index.html#join" class="nav-accent">Join</a>
+    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" class="nav-dim">GitHub ↗</a></nav>
 </header>
 
-<!-- ══════════════════════════════════════
-     HERO
-     ══════════════════════════════════════ -->
+<!-- ═══ HERO ═══ -->
 <section class="hero" id="home">
   <div class="hero-inner">
     <div>
-      <span class="hero-kicker">Community Infrastructure — Open, Local, Resilient</span>
+      <span class="hero-kicker">Community Infrastructure · Open Source · No Rent</span>
       <h1 class="hero-hl">
-        Bring Tech<br>
-        <span class="amber">Back to the</span><br>
-        Kitchen Table
+        You've Been<br>
+        Ordering <span class="amber">Takeout</span><br>
+        Long Enough.
       </h1>
       <p class="hero-sub">
-        Tech was supposed to connect us. Instead, it trapped us into subscriptions, sold our data, 
-        and made us dependent on corporations whose interests are not our interests.
-        <strong>There's another way — and it starts with a small group of people who decide to own their stack together.</strong>
+        Every subscription you pay is dinner from a restaurant that spies on you, charges more 
+        every year, and owns the kitchen. <strong>What if your community owned the kitchen?</strong>
+        AI, music, files, messaging, photos — cooked from scratch, on hardware you hold, 
+        governed by the people eating at the table.
       </p>
       <div class="hero-ctas">
-        <a href="#today" class="btn-amber">Six Things You Can Do Today</a>
-        <a href="#101" class="btn-ghost">I'm new to this — explain it to me</a>
+        <a href="start.html" class="btn-a">Get the Recipe →</a>
+        <a href="#menu" class="btn-g">See Tonight's Menu</a>
       </div>
     </div>
     <div>
-      <div class="hero-panel">
-        <div class="hero-panel-label">// What you're currently paying</div>
-        <div class="hero-stat">
-          <span class="hero-stat-n">$67–109</span>
-          <div class="hero-stat-l">per month in tech subscriptions per person</div>
+      <div class="bill-box">
+        <div class="bill-label">// Your monthly takeout bill</div>
+        <div class="bill-item"><span class="bill-svc">AI (ChatGPT / Claude)</span><span class="bill-amt">$20–40</span></div>
+        <div class="bill-item"><span class="bill-svc">Music (Spotify)</span><span class="bill-amt">$11</span></div>
+        <div class="bill-item"><span class="bill-svc">Cloud storage</span><span class="bill-amt">$3–10</span></div>
+        <div class="bill-item"><span class="bill-svc">Office suite</span><span class="bill-amt">$8</span></div>
+        <div class="bill-item"><span class="bill-svc">Password manager</span><span class="bill-amt">$4</span></div>
+        <div class="bill-total">
+          <span class="bill-svc">Monthly total</span>
+          <span class="bill-amt">$46–73</span>
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-n">100%</span>
-          <div class="hero-stat-l">of your data analyzed, sold, or used to train AI</div>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-n">$0</span>
-          <div class="hero-stat-l">monthly cost after community hardware setup</div>
-        </div>
+        <div class="bill-footnote">That's $552–876/yr · before the next price hike</div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>OWN YOUR AI</span><span class="dot">✦</span><span>OWN YOUR FILES</span><span class="dot">✦</span><span>OWN YOUR MUSIC</span><span class="dot">✦</span><span>OWN YOUR CHAT</span><span class="dot">✦</span><span>OWN YOUR SEARCH</span><span class="dot">✦</span><span>RESILIENT WHEN OFFLINE</span><span class="dot">✦</span><span>RULED BY USERS NOT SHAREHOLDERS</span><span class="dot">✦</span><span>THE TIME IS NOW</span><span class="dot">✦</span>
-    <span>OWN YOUR AI</span><span class="dot">✦</span><span>OWN YOUR FILES</span><span class="dot">✦</span><span>OWN YOUR MUSIC</span><span class="dot">✦</span><span>OWN YOUR CHAT</span><span class="dot">✦</span><span>OWN YOUR SEARCH</span><span class="dot">✦</span><span>RESILIENT WHEN OFFLINE</span><span class="dot">✦</span><span>RULED BY USERS NOT SHAREHOLDERS</span><span class="dot">✦</span><span>THE TIME IS NOW</span><span class="dot">✦</span>
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-t">
+    <span>COOK FROM SCRATCH</span><span class="d">✦</span><span>OWN YOUR PANTRY</span><span class="d">✦</span><span>SET THE MENU</span><span class="d">✦</span><span>FEED YOUR COMMUNITY</span><span class="d">✦</span><span>NO MORE TAKEOUT</span><span class="d">✦</span><span>THE TABLE IS YOURS</span><span class="d">✦</span><span>PULL UP A CHAIR</span><span class="d">✦</span>
+    <span>COOK FROM SCRATCH</span><span class="d">✦</span><span>OWN YOUR PANTRY</span><span class="d">✦</span><span>SET THE MENU</span><span class="d">✦</span><span>FEED YOUR COMMUNITY</span><span class="d">✦</span><span>NO MORE TAKEOUT</span><span class="d">✦</span><span>THE TABLE IS YOURS</span><span class="d">✦</span><span>PULL UP A CHAIR</span><span class="d">✦</span>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     § 01 — WHY NOW
-     ══════════════════════════════════════ -->
-<section class="cost-section" id="costs">
+<!-- ═══ THE TAKEOUT PROBLEM ═══ -->
+<section class="takeout-section" id="why">
   <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-baron">§ 01 — Why Now</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">You're Paying More Than You Think</h2>
-
-    <div class="cost-grid">
-      <div class="deal-prose">
-        <p>You know how your landlord owns the building but you're the one who makes it a home?
-        <strong>That's your relationship with every tech subscription you pay for.</strong></p>
-        <p>They own the servers. They own the data about you. They can raise prices, change terms, 
-        sell to a competitor, or comply with a government subpoena — and you have no say.
-        You are a tenant in your own digital life. And the rent keeps going up.</p>
-        <p>The moment that changes is the moment enough people decide to own the table instead of renting a seat at it.
-        <strong>That moment is now.</strong> The hardware is cheap enough. The software is good enough.
-        The community model makes it possible for everyone.</p>
-        <div class="callout-box">
-          <p>"Every decade, the cost of compute drops enough that something previously only possible at institutional scale becomes possible at the kitchen table. The 2020s are giving us personal infrastructure."</p>
-          <cite>— The window is open. It won't stay open forever.</cite>
-        </div>
-
-        <div class="intang-box">
-          <h4>⚠️ The Costs That Don't Show On Your Bill</h4>
-          <ul class="intang-list">
-            <li><span>🧠</span><span>Your prompts and conversations train their AI models. You are unpaid R&amp;D labor — permanently.</span><span class="itag">IP Loss</span></li>
-            <li><span>👁️</span><span>Your search history, listening habits, file names, and location are sold to data brokers and advertisers you'll never meet.</span><span class="itag">Surveillance</span></li>
-            <li><span>📈</span><span>Prices increase whenever they want. ChatGPT went from $20 to $200/mo. Spotify raised prices three times in two years. No negotiation.</span><span class="itag">Rent-Seeking</span></li>
-            <li><span>🔒</span><span>They can lock your account, delete your library, or hand your data to governments — no appeal, no warning.</span><span class="itag">Platform Risk</span></li>
-            <li><span>🏦</span><span>Billions in monthly subscriptions fund lobbying against the very data-privacy laws that would protect you.</span><span class="itag">Political Cost</span></li>
-            <li><span>💔</span><span>If they shut down or get acquired, you lose your playlists, photos, and documents — typically with 30 days notice.</span><span class="itag">Existential Risk</span></li>
-          </ul>
-        </div>
+    <div class="eyebrow"><span class="et et-baron">The Takeout Problem</span><div class="eline"></div></div>
+    <h2 class="stitle">You Don't Know What's In It</h2>
+    <div class="takeout-grid">
+      <div class="takeout-col">
+        <p>Takeout is convenient. We're not going to pretend otherwise. But takeout comes with
+        costs that don't show up on the receipt — <em>your listening history profiled and sold,
+        your prompts used to train models you'll pay for again later,</em> your files scanned
+        for ad signals, your conversations stored on servers in jurisdictions you've never considered.</p>
+        <p>The restaurant raises prices when it wants. It decides what's on the menu. It can close
+        at any time and take your order history with it. And it's been doing this so long
+        that <strong>most people don't even imagine the alternative.</strong></p>
+        <p>The alternative is a kitchen. Your kitchen. Or better yet — a kitchen shared with
+        neighbors who each bring something different: hardware, recipes, ingredients, expertise.
+        The feast that comes out is better than anything any one of you could have cooked alone.</p>
+        <p>That's the premise. The math is real, the technology is ready, and the community
+        model is how it becomes sustainable.</p>
       </div>
-
       <div>
-        <table class="cost-table">
-          <thead><tr><th>What You're Currently Paying For</th><th style="text-align:right">Monthly</th></tr></thead>
-          <tbody>
-            <tr><td>AI (ChatGPT / Claude / Gemini)</td><td class="amt">$20–40</td></tr>
-            <tr><td>Spotify or Apple Music</td><td class="amt">$11</td></tr>
-            <tr><td>Google One / iCloud+</td><td class="amt">$3–10</td></tr>
-            <tr><td>Microsoft 365</td><td class="amt">$8</td></tr>
-            <tr><td>Dropbox / Box</td><td class="amt">$10–15</td></tr>
-          </tbody>
-          <tbody>
-            <tr class="subtotal"><td>Subtotal — Core Services</td><td class="amt">$52–84</td></tr>
-          </tbody>
-          <tbody>
-            <tr><td>Password manager (1Password)</td><td class="amt">$3–5</td></tr>
-            <tr><td>Notes / Sync (Notion, Obsidian)</td><td class="amt">$8–16</td></tr>
-            <tr><td>GitHub Pro / Figma / tools</td><td class="amt">$8–16</td></tr>
-          </tbody>
-          <tbody>
-            <tr class="subtotal"><td>Subtotal — Productivity</td><td class="amt">$19–37</td></tr>
-          </tbody>
-        </table>
-        <div class="op-row"><span class="op plus">+</span><span>Total, one person</span></div>
-        <table class="cost-table">
-          <tbody>
-            <tr class="grand-total"><td>Monthly Total Per Person</td><td class="amt">$71–121</td></tr>
-            <tr class="grand-total"><td>That's Per Year</td><td class="amt">$852–1,452</td></tr>
-          </tbody>
-        </table>
-        <div class="op-row" style="border-left-color:var(--sage)"><span class="op minus">−</span><span>Our one-time community hardware: ~$160 per person</span></div>
-        <table class="cost-table">
-          <tbody>
-            <tr class="ours"><td>Kitchen Table Cloud hardware (one-time)</td><td class="amt">~$160</td></tr>
-            <tr class="ours"><td>Electricity per node per month</td><td class="amt">~$4</td></tr>
-          </tbody>
-        </table>
-        <div class="op-row" style="border-left-color:var(--amber)"><span class="op eq">=</span><span>Year-one savings (group of 4 splitting costs)</span></div>
-        <table class="cost-table">
-          <tbody>
-            <tr class="savings"><td>💰 Money That Stays With You</td><td class="amt">$700–1,200/yr</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     § 02 — 101 CONCEPTS
-     ══════════════════════════════════════ -->
-<section class="concepts-section" id="101">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-slate">§ 02 — The 101</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">New Words. Old Idea.</h2>
-    <p class="section-sub">The concepts powering this are simple. You've seen them before — just not applied to your digital life. Click any question to expand.</p>
-
-    <div class="accordion" id="acc">
-
-      <div class="acc-item">
-        <button class="acc-trigger" onclick="toggle(this)">
-          What is Decentralized AI — and how is it different from ChatGPT?
-          <span class="acc-arrow">▼</span>
-        </button>
-        <div class="acc-body">
-          <p><strong>Centralized AI (what you use now):</strong> You type a prompt. It travels over the internet to a server farm in Virginia or Texas. A corporation's computer processes it. The response comes back. Your prompt is logged, potentially used for training, and governed by their terms of service — which change whenever they want.</p>
-          <p><strong>Decentralized AI (what we're building):</strong> You type a prompt. It goes to a computer in your home, or a neighbor's home, or your community's shared hardware. An open-weight AI model — weights that Meta, Microsoft, or Mistral have released publicly — processes it locally. Nothing leaves your network. No logging. No terms. No bill.</p>
-          <div class="compare-mini">
-            <div class="acc-mini-col bad"><h5>☁️ Their Cloud AI</h5>Your prompts leave your device. Their servers process your requests. Your conversations may train their models. They decide what it can say. Prices go up. The model gets "aligned" to corporate interests. You can be cut off.</div>
-            <div class="acc-mini-col good"><h5>🏡 Your Local AI</h5>Runs on hardware you own. Never phones home. Doesn't train anyone's model. Open weights you can inspect. No rate limits. No subscription. No "we updated our terms." Available when the internet is down.</div>
+        <div class="receipt">
+          <div class="receipt-head">Your Current Bill <span>monthly estimates</span></div>
+          <div class="receipt-row"><span>AI subscriptions</span><span class="r-bad">$20–40</span></div>
+          <div class="receipt-row"><span>Music + podcasts</span><span class="r-bad">$11</span></div>
+          <div class="receipt-row"><span>Cloud storage</span><span class="r-bad">$3–10</span></div>
+          <div class="receipt-row"><span>Office + notes</span><span class="r-bad">$8–16</span></div>
+          <div class="receipt-row"><span>Passwords + security</span><span class="r-bad">$4</span></div>
+          <div class="receipt-row sub"><span>Subtotal</span><span>$46–81 / month</span></div>
+          <div class="receipt-op"><span class="op op-minus">−</span><span>Community hardware (one-time, ~$160 shared)</span></div>
+          <div class="receipt-op"><span class="op op-minus">−</span><span>Monthly electricity per node (~$4)</span></div>
+          <div class="receipt-op"><span class="op op-eq">=</span><span>Year-one savings per person</span></div>
+          <div class="receipt-row total"><span>💰 Back in your pocket</span><span class="r-bad">$500–900/yr</span></div>
+          <div class="intang-note">
+            <strong>Not on the receipt:</strong> your prompts training their models ·
+            your music profile sold · your searches tracked · your photos analyzed ·
+            price hikes you can't opt out of.
+            <br><a href="swap.html">See the full cost breakdown →</a>
           </div>
-          <p style="margin-top:16px">The quality tradeoff is real but closing fast. Today's 8B open model handles 80% of what people use ChatGPT for. In 12 months, that number will be higher. <strong>The question isn't whether open models are good enough — it's whether you want to start building now or wait until the gap is even smaller.</strong></p>
         </div>
       </div>
-
-      <div class="acc-item">
-        <button class="acc-trigger" onclick="toggle(this)">
-          What is a "node" and why does my group need more than one?
-          <span class="acc-arrow">▼</span>
-        </button>
-        <div class="acc-body">
-          <p>A <strong>node</strong> is just a computer that's part of a network. In our context, it's usually a Raspberry Pi — a $80 credit-card-sized computer — sitting on a shelf in your home, running 24/7 on 5 watts of power (less than a phone charger).</p>
-          <p>One node can serve one person. <strong>Multiple nodes connected together serve the whole group and can collectively run things no single node could do alone.</strong> A group of 6 people each contributing a node creates 48GB of collective RAM — enough to run an AI model that no individual Pi could run by itself.</p>
-          <p>Think of it like a neighborhood water tower vs. everyone drilling their own well. The shared infrastructure is more capable, more resilient, and cheaper per person than anything each household could build alone.</p>
-        </div>
-      </div>
-
-      <div class="acc-item">
-        <button class="acc-trigger" onclick="toggle(this)">
-          What is a mesh network — and why does it matter when the internet goes down?
-          <span class="acc-arrow">▼</span>
-        </button>
-        <div class="acc-body">
-          <p>A <strong>mesh network</strong> is a web of devices that can communicate directly with each other — without depending on a central server or internet connection. Instead of all traffic going through one hub (like your ISP's router), every device in a mesh can relay messages for every other device.</p>
-          <p>Why this matters: <strong>most "decentralized" systems still depend on the internet.</strong> If your ISP goes down, your VPN goes down, your cloud backup goes down. A true mesh doesn't care. It works over Wi-Fi, Bluetooth, or even radio signals between devices in range.</p>
-          <p>For community resilience: your local files, chat, and even AI inference can keep working when a storm takes out the internet, when you're camping, or when commercial infrastructure fails. <strong>The commercial internet becomes a nice-to-have, not a life-dependency.</strong></p>
-        </div>
-      </div>
-
-      <div class="acc-item">
-        <button class="acc-trigger" onclick="toggle(this)">
-          What is a cooperative — and what does governance have to do with technology?
-          <span class="acc-arrow">▼</span>
-        </button>
-        <div class="acc-body">
-          <p>A <strong>cooperative</strong> is an organization owned and governed by the people who use it. Your local credit union is a cooperative. REI is a cooperative. In a cooperative, members vote on decisions, share profits (or savings), and have a say in how things run.</p>
-          <p><strong>Platform cooperativism</strong> applies this to technology: the platform is owned by its users, not venture capitalists. The governance is democratic. The benefits flow to members, not to a board room in San Francisco.</p>
-          <p>We use <strong>sociocracy</strong> as our governance model — a consent-based decision-making system where decisions are made by the people they affect, and nobody has unilateral authority. It's neither a dictatorship nor a chaotic democracy. It's structured consent.</p>
-          <p>Why does this matter for tech? Because <strong>who controls the infrastructure controls what you can do with it.</strong> Technology that's governed by its users will always make different choices than technology governed by shareholders seeking quarterly returns.</p>
-        </div>
-      </div>
-
-      <div class="acc-item">
-        <button class="acc-trigger" onclick="toggle(this)">
-          What is "local-first" software — and why do Obsidian and Anytype use it?
-          <span class="acc-arrow">▼</span>
-        </button>
-        <div class="acc-body">
-          <p><strong>Local-first</strong> software stores your data on your device first, syncs to other devices second, and never requires a cloud service to function. You can work offline. Your data is yours by default, not the company's.</p>
-          <p>Obsidian (notes), Anytype (knowledge base), and a growing number of products are building this way because users are demanding it. They're proof that you can build beautiful, powerful, professional software that respects user ownership — and that people will pay for it without being surveilled.</p>
-          <p><strong>We admire this approach deeply.</strong> Kitchen Table Cloud extends local-first from individual tools to community infrastructure — not just "your data on your device" but "your community's infrastructure on your community's hardware." The philosophy scales.</p>
-        </div>
-      </div>
-
-      <div class="acc-item">
-        <button class="acc-trigger" onclick="toggle(this)">
-          Do I need to be technical to participate?
-          <span class="acc-arrow">▼</span>
-        </button>
-        <div class="acc-body">
-          <p>It depends on what role you want to play. <strong>Using the community services requires zero technical knowledge</strong> — you log in the same way you'd log into Google Drive or Spotify, just at a different address.</p>
-          <p>Setting up your own node requires comfort following step-by-step instructions and copying commands into a terminal window. If you can follow a recipe, you can do this. Our guides are written for exactly this level of comfort.</p>
-          <p>Being a Builder or technical contributor requires actual skill — but there's plenty of non-technical contribution too: writing documentation, helping onboard new members, translating guides, or simply being the person in your community who explains why this matters.</p>
-          <p><strong>The most important thing is not technical skill — it's caring about who controls your digital life.</strong></p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     § 03 — SIX THINGS TODAY
-     ══════════════════════════════════════ -->
-<section class="today-section" id="today">
+<!-- ═══ TONIGHT'S MENU ═══ -->
+<section class="menu-section" id="menu">
   <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-sage">§ 03 — Do This Today</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">Six Things You Can Do Right Now</h2>
-    <p class="section-sub">Not future promises. Not pilot projects. <strong>Each of these works this weekend</strong>, on hardware you might already own. Hover or tap any card to see exactly how.</p>
+    <div class="eyebrow"><span class="et et-sage">Tonight's Menu</span><div class="eline"></div></div>
+    <div class="menu-kicker">Six dishes you can cook this weekend. Hover or tap for the recipe.</div>
+    <h2 class="stitle">What's Cooking</h2>
 
     <div class="flip-grid">
       <div class="flip-card" onclick="this.classList.toggle('open')">
         <div class="flip-inner">
-          <div class="flip-f ft-featured">
-            <span class="card-tag amber">Start Here</span>
+          <div class="ff feat">
+            <span class="ctag am">Start Here</span>
             <span class="ci">🤖</span>
-            <h3>Run Your Own AI</h3>
-            <p>A private AI that lives on your hardware. Your conversations never leave your device. Cancel the subscription tonight.</p>
-            <div class="card-hint">tap to see how →</div>
+            <h3>Community AI</h3>
+            <p>An AI assistant that runs on your hardware. Private, offline-capable, yours forever. Cancel the subscription tonight.</p>
+            <div class="chint">tap for the recipe →</div>
           </div>
-          <div class="flip-b">
-            <h4>Run Your Own AI</h4>
-            <ul class="how-steps">
+          <div class="fb">
+            <h4>The Recipe</h4>
+            <ul class="hw">
               <li><span class="sn">1</span>Install Ollama: <code>curl -fsSL https://ollama.com/install.sh | sh</code></li>
               <li><span class="sn">2</span>Pull a free model: <code>ollama pull phi3.5:3.8b-mini-instruct-q4_K_M</code></li>
-              <li><span class="sn">3</span>Run it: <code>ollama run phi3.5... "Hello, are you mine now?"</code></li>
+              <li><span class="sn">3</span>Talk to it — it's yours now</li>
               <li><span class="sn">4</span>Cancel ChatGPT or Claude subscription</li>
-              <li><span class="sn">5</span>Works on any laptop, old desktop, or Raspberry Pi 5</li>
+              <li><span class="sn">5</span>Invite your community — share the kitchen</li>
             </ul>
-            <div class="back-time">⏱ First message in ~15 minutes</div>
+            <div class="bt">⏱ First serving: ~15 minutes</div>
           </div>
         </div>
       </div>
 
       <div class="flip-card" onclick="this.classList.toggle('open')">
         <div class="flip-inner">
-          <div class="flip-f">
-            <span class="card-tag go">Most Loved</span>
+          <div class="ff">
+            <span class="ctag go">The Pantry</span>
             <span class="ci">📁</span>
-            <h3>Own Your Files</h3>
-            <p>Documents, photos, and calendar synced across all your devices — without Google or Apple seeing a single byte.</p>
-            <div class="card-hint">tap to see how →</div>
+            <h3>Your Files</h3>
+            <p>Documents, photos, calendar, contacts — in your own pantry. Nobody rummaging through your shelves for ad data.</p>
+            <div class="chint">tap for the recipe →</div>
           </div>
-          <div class="flip-b">
-            <h4>Own Your Files</h4>
-            <ul class="how-steps">
-              <li><span class="sn">1</span>Install CasaOS: <code>curl -fsSL https://get.casaos.io | sudo bash</code></li>
-              <li><span class="sn">2</span>Install NextCloud AIO from CasaOS app store (one click)</li>
-              <li><span class="sn">3</span>Install NextCloud desktop app on your computer</li>
-              <li><span class="sn">4</span>Move your active folder first — don't rush the whole archive</li>
-              <li><span class="sn">5</span>Calendar + Contacts come free with NextCloud too</li>
+          <div class="fb">
+            <h4>The Recipe</h4>
+            <ul class="hw">
+              <li><span class="sn">1</span>Install CasaOS (your kitchen dashboard): <code>curl -fsSL https://get.casaos.io | sudo bash</code></li>
+              <li><span class="sn">2</span>Install NextCloud from the app store — one click</li>
+              <li><span class="sn">3</span>Install the desktop client — starts syncing immediately</li>
+              <li><span class="sn">4</span>Move your active folder first, archive later</li>
+              <li><span class="sn">5</span>Calendar and contacts come free with the pantry</li>
             </ul>
-            <div class="back-time">⏱ One weekend to fully migrate</div>
+            <div class="bt">⏱ One weekend to fully stock</div>
           </div>
         </div>
       </div>
 
       <div class="flip-card" onclick="this.classList.toggle('open')">
         <div class="flip-inner">
-          <div class="flip-f">
-            <span class="card-tag">Easy Win</span>
+          <div class="ff">
+            <span class="ctag">Potluck</span>
             <span class="ci">🎵</span>
-            <h3>Pool Your Music</h3>
-            <p>Your group's collective library on a shared server. Better than any playlist. Zero algorithm. Lossless audio if you want it.</p>
-            <div class="card-hint">tap to see how →</div>
+            <h3>Pool the Music</h3>
+            <p>Everyone in the group brings their library. The collective pantry beats any playlist. Lossless quality. No algorithm.</p>
+            <div class="chint">tap for the recipe →</div>
           </div>
-          <div class="flip-b">
-            <h4>Pool Your Music</h4>
-            <ul class="how-steps">
-              <li><span class="sn">1</span>Install Navidrome from CasaOS or via Docker</li>
-              <li><span class="sn">2</span>Point it at a shared music folder on your server</li>
-              <li><span class="sn">3</span>Everyone adds their library to the shared folder</li>
-              <li><span class="sn">4</span>Stream from phone: Symfonium (Android) or Amperfy (iOS)</li>
-              <li><span class="sn">5</span>Cancel Spotify. Enjoy lossless, no ads, collective taste.</li>
+          <div class="fb">
+            <h4>The Recipe</h4>
+            <ul class="hw">
+              <li><span class="sn">1</span>Install Navidrome — the community jukebox</li>
+              <li><span class="sn">2</span>Everyone adds their library to the shared folder</li>
+              <li><span class="sn">3</span>Stream from any phone: Symfonium (Android) or Amperfy (iOS)</li>
+              <li><span class="sn">4</span>Share playlists between members — a real collaborative pantry</li>
+              <li><span class="sn">5</span>Cancel Spotify. Enjoy what you actually own.</li>
             </ul>
-            <div class="back-time">⏱ One afternoon to set up</div>
+            <div class="bt">⏱ One afternoon to set up</div>
           </div>
         </div>
       </div>
 
       <div class="flip-card" onclick="this.classList.toggle('open')">
         <div class="flip-inner">
-          <div class="flip-f">
-            <span class="card-tag">Private</span>
+          <div class="ff">
+            <span class="ctag">Private</span>
             <span class="ci">💬</span>
-            <h3>Actually Private Chat</h3>
-            <p>A messaging server that belongs to your group. Nobody can ban you. Nobody can read your messages. Bridges to apps your people already use.</p>
-            <div class="card-hint">tap to see how →</div>
+            <h3>Your Table Talk</h3>
+            <p>A chat server that belongs to your community. End-to-end encrypted. Nobody can read the table conversation except those at it.</p>
+            <div class="chint">tap for the recipe →</div>
           </div>
-          <div class="flip-b">
-            <h4>Actually Private Chat</h4>
-            <ul class="how-steps">
-              <li><span class="sn">1</span>Install Matrix Synapse via CasaOS or Docker</li>
-              <li><span class="sn">2</span>Everyone downloads Element app on their devices</li>
-              <li><span class="sn">3</span>Point the app at your homeserver's address</li>
-              <li><span class="sn">4</span>Add bridges for WhatsApp/Telegram/Discord so nobody cold-switches</li>
-              <li><span class="sn">5</span>End-to-end encrypted. Your server. Your rules. Always.</li>
+          <div class="fb">
+            <h4>The Recipe</h4>
+            <ul class="hw">
+              <li><span class="sn">1</span>Install Matrix Synapse — the homeserver everyone connects to</li>
+              <li><span class="sn">2</span>Everyone downloads Element — points it at your server</li>
+              <li><span class="sn">3</span>Add bridges so friends on WhatsApp/Discord can join gradually</li>
+              <li><span class="sn">4</span>End-to-end encrypted. Your kitchen, your rules.</li>
             </ul>
-            <div class="back-time">⏱ One weekend + gradual migration</div>
+            <div class="bt">⏱ One weekend + gradual migration</div>
           </div>
         </div>
       </div>
 
       <div class="flip-card" onclick="this.classList.toggle('open')">
         <div class="flip-inner">
-          <div class="flip-f">
-            <span class="card-tag">30 Minutes</span>
+          <div class="ff">
+            <span class="ctag">30 Min</span>
             <span class="ci">🔍</span>
-            <h3>Search Without Being Tracked</h3>
-            <p>Query Google, Bing, and a dozen others simultaneously — without telling any of them who you are.</p>
-            <div class="card-hint">tap to see how →</div>
+            <h3>Anonymous Search</h3>
+            <p>Queries Google and a dozen others simultaneously — without telling any of them who's asking. No ingredient list for their ad machine.</p>
+            <div class="chint">tap for the recipe →</div>
           </div>
-          <div class="flip-b">
-            <h4>Search Without Being Tracked</h4>
-            <ul class="how-steps">
-              <li><span class="sn">1</span>Run: <code>docker run -d -p 8888:8080 searxng/searxng</code></li>
-              <li><span class="sn">2</span>Open your browser at your-ip:8888</li>
-              <li><span class="sn">3</span>Set it as your browser's default search engine</li>
-              <li><span class="sn">4</span>Results from Google + Bing + DDG combined</li>
-              <li><span class="sn">5</span>Zero tracking. Zero profile. Zero ad targeting.</li>
+          <div class="fb">
+            <h4>The Recipe</h4>
+            <ul class="hw">
+              <li><span class="sn">1</span><code>docker run -d -p 8888:8080 searxng/searxng</code></li>
+              <li><span class="sn">2</span>Open browser at your-ip:8888</li>
+              <li><span class="sn">3</span>Set as default search engine</li>
+              <li><span class="sn">4</span>Results from multiple engines. Zero profile built on you.</li>
             </ul>
-            <div class="back-time">⏱ Thirty minutes, including the Docker install</div>
+            <div class="bt">⏱ 30 minutes start to finish</div>
           </div>
         </div>
       </div>
 
       <div class="flip-card" onclick="this.classList.toggle('open')">
         <div class="flip-inner">
-          <div class="flip-f">
-            <span class="card-tag go">Foundation</span>
+          <div class="ff">
+            <span class="ctag go">The Kitchen</span>
             <span class="ci">🏡</span>
             <h3>Your Home OS</h3>
-            <p>One dashboard that manages everything above. Install apps with a click. No terminal required. An app store — but you own the store.</p>
-            <div class="card-hint">tap to see how →</div>
+            <p>One dashboard to manage it all. Install services with a click. It's an app store — but you own the store and know every ingredient.</p>
+            <div class="chint">tap for the recipe →</div>
           </div>
-          <div class="flip-b">
-            <h4>Your Home OS</h4>
-            <ul class="how-steps">
+          <div class="fb">
+            <h4>The Recipe</h4>
+            <ul class="hw">
               <li><span class="sn">1</span>Install CasaOS: <code>curl -fsSL https://get.casaos.io | sudo bash</code></li>
-              <li><span class="sn">2</span>Open dashboard at your machine's local IP in a browser</li>
-              <li><span class="sn">3</span>Browse the app store — 1-click installs for everything above</li>
-              <li><span class="sn">4</span>Monitor storage, manage users, control access remotely</li>
-              <li><span class="sn">5</span>Works on any x86 PC, old laptop, or Raspberry Pi 5</li>
+              <li><span class="sn">2</span>Open dashboard at your local IP in a browser</li>
+              <li><span class="sn">3</span>Browse the community app store — everything above, one click</li>
+              <li><span class="sn">4</span>Monitor storage, manage who's at the table</li>
+              <li><span class="sn">5</span>Works on any PC, laptop, or Raspberry Pi 5</li>
             </ul>
-            <div class="back-time">⏱ Under an hour to install + first apps</div>
+            <div class="bt">⏱ Under an hour to the first dish</div>
           </div>
         </div>
       </div>
     </div>
+    <a href="start.html" class="more-link">→ Full step-by-step recipes with time estimates, commands, and a progress checklist</a>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     § 04 — SWAP SHEET
-     ══════════════════════════════════════ -->
-<section class="swap-section" id="swap">
+<!-- ═══ PANTRY SWAP PREVIEW ═══ -->
+<section class="swap-prev-section" id="swap-preview">
   <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-baron">§ 04 — The Swap Sheet</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">Robber Barons → Robin Hoods</h2>
-    <p class="section-sub">Every subscription was built to extract maximum value from you. Every alternative below was built to give it back — plus explain the real reason the swap matters.</p>
-    <table class="swap-table">
+    <div class="eyebrow"><span class="et et-baron">The Pantry Swap</span><div class="eline"></div></div>
+    <h2 class="stitle">Swap the Packaged Goods</h2>
+    <p class="ssub">Every corporate ingredient has a community alternative — usually better quality, 
+    definitely cheaper, and you know exactly what's in it.</p>
+
+    <table class="swap-prev-table">
       <thead>
         <tr>
-          <th class="col-baron">🏰 The Robber Baron<br><small style="font-size:0.6rem;opacity:0.65;font-weight:normal">What's taking from you</small></th>
-          <th class="col-arrow"></th>
-          <th class="col-robin">🏹 The Robin Hood<br><small style="font-size:0.6rem;opacity:0.65;font-weight:normal">Community alternative</small></th>
-          <th class="col-why">💬 Why It Actually Matters</th>
+          <th class="col-b">🏰 What They Sell You<br><small style="font-size:0.58rem;opacity:0.65;font-weight:normal">Pre-packaged, overpriced, surveilled</small></th>
+          <th class="col-ar"></th>
+          <th class="col-r">🏹 What You Can Make<br><small style="font-size:0.58rem;opacity:0.65;font-weight:normal">Community ingredient, open recipe</small></th>
+          <th class="col-w">Why It Matters</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><span class="baron-name">AI Subscriptions</span><span class="baron-brands">OpenAI, Anthropic, Google, Microsoft</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Ollama + open models</span><span class="robin-brands">Llama, Phi-3.5, Mistral, Qwen2.5 — offline-capable, forever free</span></td>
-          <td class="why-cell">Your prompts train their models. <strong>You are unpaid R&amp;D labor.</strong> Local AI means conversations stay on your hardware and the models keep improving without costing you more.</td>
+          <td><span class="bn">AI Subscriptions</span><span class="bb">OpenAI · Anthropic · Google · Microsoft</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Ollama + open models</span><span class="rb">Llama · Phi-3.5 · Mistral — offline-capable</span></td>
+          <td class="wc">Your prompts train their models. <strong>You're the unpaid chef.</strong></td>
         </tr>
         <tr>
-          <td><span class="baron-name">Cloud Storage &amp; Docs</span><span class="baron-brands">Google Drive/Workspace, OneDrive/365, Dropbox, iCloud</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">NextCloud + Collabora</span><span class="robin-brands">Files, calendar, contacts, docs — self-hosted, open source</span></td>
-          <td class="why-cell">Google scans your documents for ad signals. <strong>Microsoft Recall literally screenshots everything you do.</strong> NextCloud is your full workspace — on your hardware, full stop.</td>
+          <td><span class="bn">Cloud Files &amp; Docs</span><span class="bb">Google Drive · OneDrive · Dropbox · iCloud</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">NextCloud + Collabora</span><span class="rb">Files · calendar · docs — self-hosted</span></td>
+          <td class="wc">Google scans your docs. <strong>Microsoft Recall screenshots everything you do.</strong></td>
         </tr>
         <tr>
-          <td><span class="baron-name">Music Streaming</span><span class="baron-brands">Spotify, Apple Music, Amazon Music, YouTube Music</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Navidrome</span><span class="robin-brands">Self-hosted, Subsonic API, all major clients supported</span></td>
-          <td class="why-cell">Spotify pays artists $0.003 per stream and builds a behavioral profile from your listening. <strong>Your library, your server, lossless audio, no algorithm deciding what you hear next.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">Group Chat &amp; Messaging</span><span class="baron-brands">WhatsApp (Meta), Discord, Telegram, Slack, iMessage</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Matrix + Element</span><span class="robin-brands">Federated, E2E encrypted, bridges to all platforms</span></td>
-          <td class="why-cell">Meta harvests WhatsApp metadata constantly. Discord mines server activity. <strong>Matrix runs on your server, bridges to everything, and no platform can ban your community.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">Photo Backup</span><span class="baron-brands">Google Photos, iCloud Photos, Amazon Photos</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Immich</span><span class="robin-brands">Face recognition, auto-backup from phone, album sharing</span></td>
-          <td class="why-cell">Google Photos analyzes your family photos for object recognition and location data to improve ad targeting. <strong>Your family's memories should not train a surveillance platform.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">Home Automation</span><span class="baron-brands">Google Nest, Amazon Echo/Alexa, Apple HomeKit, Ring</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Home Assistant</span><span class="robin-brands">Works with 3,000+ devices, fully local, no cloud required</span></td>
-          <td class="why-cell">Your smart home devices send behavioral data to corporate clouds 24/7. Amazon has shared Alexa recordings with law enforcement. <strong>Home Assistant runs entirely locally — all automations, zero cloud dependency.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">Video Streaming Library</span><span class="baron-brands">Plex (cloud-dependent), Netflix, Max, Disney+</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Jellyfin</span><span class="robin-brands">100% free, no account, streams your media library to any device</span></td>
-          <td class="why-cell">Netflix removes titles you've already "purchased." Plex requires account creation and sends your library metadata to their servers. <strong>Jellyfin is Plex — minus the surveillance, minus the account, minus the fee.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">Password Management</span><span class="baron-brands">1Password, LastPass (hacked 2022), Dashlane</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Vaultwarden</span><span class="robin-brands">Self-hosted Bitwarden server, all Bitwarden clients work</span></td>
-          <td class="why-cell">LastPass was hacked and 25M encrypted vaults leaked in 2022. Cloud password managers are high-value targets. <strong>Your vault on your hardware: same apps, zero cloud exposure.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">Web Search</span><span class="baron-brands">Google, Bing, Yahoo, even most "private" alternatives</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">SearXNG</span><span class="robin-brands">Queries all engines simultaneously with zero identity leakage</span></td>
-          <td class="why-cell">Google correlates your searches across every device you've ever used. <strong>SearXNG asks multiple engines your question without telling any of them who you are.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="baron-name">DNS Resolution</span><span class="baron-brands">Google 8.8.8.8, Cloudflare 1.1.1.1, ISP default</span></td>
-          <td class="arr-cell">→</td>
-          <td><span class="robin-name">Pi-hole + Unbound</span><span class="robin-brands">Network-wide ad blocking + direct root server resolution</span></td>
-          <td class="why-cell">Every DNS query tells Google or Cloudflare every domain you visit, tied to your IP. <strong>Pi-hole blocks ads network-wide. Unbound resolves DNS directly — no middleman, no logs.</strong></td>
+          <td><span class="bn">Music Streaming</span><span class="bb">Spotify · Apple Music · Amazon Music</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Navidrome</span><span class="rb">Your library · lossless · zero algorithm</span></td>
+          <td class="wc">Spotify pays artists $0.003/stream and builds a <strong>detailed behavioral profile from your listening.</strong></td>
         </tr>
       </tbody>
     </table>
+    <a href="swap.html" class="see-all">See the Full Pantry Swap — 10 ingredients →</a>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     § 05 — OFFLINE & RESILIENT
-     ══════════════════════════════════════ -->
-<section class="offline-section" id="offline">
+<!-- ═══ COOKING TOGETHER ═══ -->
+<section class="together-section" id="together">
   <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-amber">§ 05 — Offline &amp; Resilient</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">What Happens When the Internet Goes Down?</h2>
-    <p class="section-sub">The honest answer for most setups: everything stops. That's not resilience. That's just renting your redundancy from a different landlord. We're building something that keeps working when the commercial layer fails.</p>
+    <div class="eyebrow"><span class="et et-amber">Cooking Together</span><div class="eline-light"></div></div>
+    <h2 class="stitle">The Feast Is Better When Everyone Brings Something</h2>
+    <p class="ssub" style="color:rgba(255,255,255,0.55)">Tech companies became powerful by sharing infrastructure costs — they just kept the benefits. 
+    Your community can do the same thing. Keep the benefits.</p>
 
-    <div class="resilience-arc">
-      <div class="arc-step">
-        <span class="arc-n">01</span>
-        <h4>Your Local Node</h4>
-        <p>Everything runs locally first. AI inference, files, music, chat — none of it requires internet to function within your home network.</p>
-        <ul>
-          <li>AI runs on-device, offline-capable</li>
-          <li>Files sync within LAN, no WAN needed</li>
-          <li>Music streams on local WiFi</li>
-          <li>Home Assistant automations local-only</li>
-        </ul>
+    <div class="together-grid">
+      <div class="together-card">
+        <h4>📉 Shared Costs</h4>
+        <p>Six people sharing one kitchen setup pay a fraction of the cost each. 
+        <strong>More people → lower cost per person</strong> → better infrastructure for everyone. 
+        That's cooperative economics. Tech companies have always used it. Now you can too.</p>
       </div>
-      <div class="arc-step">
-        <span class="arc-n">02</span>
-        <h4>Community Mesh</h4>
-        <p>Your neighborhood or pod stays connected via Tailscale or Yggdrasil even when upstream internet is spotty or slow.</p>
-        <ul>
-          <li>Tailscale encrypted mesh across homes</li>
-          <li>Matrix chat works on mesh only</li>
-          <li>Shared AI pool accessible on mesh</li>
-          <li>Ansible pushes updates across mesh</li>
-        </ul>
+      <div class="together-card">
+        <h4>🧠 Collective Intelligence</h4>
+        <p>Six Raspberry Pi 5s pooled together hold 48GB of RAM. <strong>That's enough to run an 
+        8B AI model that no single Pi could handle alone.</strong> The community's AI is 
+        smarter than any individual's AI. Same principle as any good kitchen brigade.</p>
       </div>
-      <div class="arc-step">
-        <span class="arc-n">03</span>
-        <h4>Off-Grid Comms</h4>
-        <p>Meshtastic LoRa radios connect people across kilometers without any internet or cell infrastructure at all.</p>
-        <ul>
-          <li>Meshtastic: ~5km range, no towers</li>
-          <li>Works camping, during outages, emergencies</li>
-          <li>Text, GPS location, basic data</li>
-          <li>Reticulum protocol for longer range</li>
-        </ul>
-      </div>
-      <div class="arc-step">
-        <span class="arc-n">04</span>
-        <h4>Commercial as Fallback</h4>
-        <p>Your phone signal and home internet become optional upgrades — not load-bearing infrastructure. They enhance but don't sustain.</p>
-        <ul>
-          <li>Internet = bonus bandwidth, not lifeline</li>
-          <li>Phone signal = external comms bridge</li>
-          <li>Solar + UPS keeps nodes running</li>
-          <li>You choose when to use commercial infra</li>
-        </ul>
+      <div class="together-card">
+        <h4>🛡️ Resilient by Design</h4>
+        <p>When your solo server goes down, everything stops. When one node in a mesh goes 
+        offline, <strong>the others route around it.</strong> A shared kitchen doesn't close 
+        because one stove breaks. Distributed infrastructure is more durable than isolated.</p>
       </div>
     </div>
 
-    <div class="offline-grid">
-      <div class="offline-card">
-        <h4>📡 Meshtastic — Your Off-Grid Radio Mesh</h4>
-        <p>LoRa radios the size of a deck of cards, ~$35 each. No subscription. No towers. ~5km range (longer on good terrain). Works when everything else fails.</p>
-        <ul>
-          <li>Text messages between group members with no infrastructure</li>
-          <li>GPS location sharing for hiking, emergencies, community events</li>
-          <li>Bridges to your Matrix chat when mesh and internet meet</li>
-          <li>Community-maintained, open source, available on Amazon</li>
-        </ul>
-      </div>
-      <div class="offline-card">
-        <h4>🗺️ Offline Maps &amp; Navigation</h4>
-        <p>OsmAnd and Organic Maps download entire regions for offline use. OpenStreetMap data — community-maintained, more accurate than Google in many places.</p>
-        <ul>
-          <li>Full offline navigation without Google or Apple</li>
-          <li>Community editable — if a trail is wrong, you can fix it</li>
-          <li>Works when you're camping, abroad, or in a signal dead zone</li>
-          <li>No location data sent anywhere. Ever.</li>
-        </ul>
-      </div>
-      <div class="offline-card">
-        <h4>⚡ Power Resilience for Your Node</h4>
-        <p>A Raspberry Pi 5 draws ~5–15W. A small UPS keeps it running through short outages. A 100W solar panel and battery keeps it running indefinitely.</p>
-        <ul>
-          <li>UPS protects against brief power outages (~$40)</li>
-          <li>100W solar + 20Ah battery: ~3 days without sun</li>
-          <li>Your node keeps serving your household while commercial infra is down</li>
-          <li>Community node runners get stipend to offset power costs</li>
-        </ul>
-      </div>
-      <div class="offline-card">
-        <h4>🏠 Home Assistant — Local Smart Home</h4>
-        <p>Home Assistant runs 100% locally. Your automations work when the internet is down. Your devices don't phone home to Amazon or Google.</p>
-        <ul>
-          <li>3,000+ device integrations, most work fully local</li>
-          <li>Automations run on your hardware — no cloud dependency</li>
-          <li>Open source, community-maintained, no subscription</li>
-          <li>Replaces Google Nest, Amazon Echo, Apple HomeKit cloud</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="from-to">
-      <h3>From → To: How Resilience Actually Works</h3>
-      <div class="from-to-grid">
-        <div class="ft-col from">
-          <h5>❌ Where You Start</h5>
-          <ul>
-            <li>Internet goes down → everything stops</li>
-            <li>Phone is your only offline tool</li>
-            <li>Smart home requires Alexa/Google servers</li>
-            <li>Can't reach your community without commercial infrastructure</li>
-            <li>AI requires API key + internet connection</li>
-            <li>Files live in a data center you'll never see</li>
-            <li>Camping = cut off from your digital life</li>
-          </ul>
-        </div>
-        <div class="ft-arrow">→</div>
-        <div class="ft-col to">
-          <h5>✓ Where You End Up</h5>
-          <ul>
-            <li>Internet goes down → local services keep running</li>
-            <li>Meshtastic radios connect your group off-grid</li>
-            <li>Home automations run fully local, offline-capable</li>
-            <li>Mesh network keeps community connected without ISP</li>
-            <li>AI runs on your hardware, no connection required</li>
-            <li>Files live on your shelf, accessible on your LAN</li>
-            <li>Camping = optional disconnection, not forced isolation</li>
-          </ul>
-        </div>
-      </div>
+    <div class="together-pull">
+      <p>"Tech needs to connect us. <span>Not entrap us.</span><br>That's been the modern mistake."</p>
+      <a href="community.html">Read our philosophy on community, cooperation, and what this is really about →</a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     § 06 — DISTRIBUTED COMMUNITY AI
-     ══════════════════════════════════════ -->
-<section class="distai-section" id="distai">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-slate">§ 06 — Community AI</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">What Happens When Your AI Belongs to All of You?</h2>
-    <p class="section-sub">A solo node running a 3B model is useful. A community pod of six nodes running a distributed 13B model — trained on your collective knowledge — is something fundamentally different. This is where things get interesting.</p>
-
-    <div class="pod-intro">
-      <div class="pod-intro-text">
-        <p>Every major tech company runs AI on shared infrastructure. Google's AI doesn't run on one server — it runs across thousands, distributing the work, sharing the load, achieving capabilities no single machine could. <strong>There's no reason a community of friends and neighbors can't do the same thing.</strong></p>
-        <p>The Petals protocol lets multiple nodes — each contributing a portion of a model's "layers" — collectively run an AI that's too large for any single device. A group of 6 people with Raspberry Pi 5s creates 48GB of collective RAM. That's enough to run Llama 3.1 8B at full precision: a model that handles tasks the small Pi models struggle with.</p>
-        <p>But the <em>really</em> interesting part isn't just raw capability. <strong>It's what becomes possible when the AI knows your community's context</strong> — fine-tuned on your collective knowledge, maintained by your pod, shaped by your values and not a corporate alignment team.</p>
-      </div>
-      <div>
-        <div class="pba-col" style="padding:0">
-          <div style="background:var(--baron-bg);border-left:3px solid var(--baron);padding:18px 20px;border-bottom:2px solid rgba(0,0,0,0.08)">
-            <h5 style="font-size:1.1rem;color:var(--baron);font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;margin-bottom:10px">❌ Working in Isolation</h5>
-            <ul style="list-style:none">
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--baron)">✕</span>3B model — limited reasoning on hard tasks</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--baron)">✕</span>AI that knows nothing about your community</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--baron)">✕</span>Node goes down → service stops</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--baron)">✕</span>One model for everything</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--baron)">✕</span>Costs split unevenly or not at all</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;display:flex;gap:7px"><span style="color:var(--baron)">✕</span>No community governance over the AI</li>
-            </ul>
-          </div>
-          <div style="background:rgba(58,107,80,0.07);border-left:3px solid var(--sage);padding:18px 20px">
-            <h5 style="font-size:1.1rem;color:var(--sage);font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;margin-bottom:10px">✓ Your Community Pod</h5>
-            <ul style="list-style:none">
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--sage)">✓</span>8–13B model collectively via Petals protocol</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--sage)">✓</span>Fine-tuned on your community's knowledge</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--sage)">✓</span>One node fails → pod routes around it</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--sage)">✓</span>Specialized nodes: code / writing / research</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--ink);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;gap:7px"><span style="color:var(--sage)">✓</span>Costs split across all members proportionally</li>
-              <li style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--ink);padding:5px 0;display:flex;gap:7px"><span style="color:var(--sage)">✓</span>Your community governs what the AI does</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pod Architecture Diagram -->
-    <div class="pod-diagram">
-      <div class="pod-diagram-title">A Community AI Pod — Six Nodes, One Collective Brain</div>
-      <svg class="pod-svg" viewBox="0 0 1080 420" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker id="ga" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#C8872C"/></marker>
-          <marker id="gs" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#5D9478"/></marker>
-        </defs>
-
-        <!-- Center: Community AI -->
-        <rect x="390" y="160" width="300" height="100" rx="6" fill="rgba(42,72,96,0.4)" stroke="#2A4860" stroke-width="2"/>
-        <text x="540" y="196" font-family="'Bebas Neue',sans-serif" font-size="15" fill="#C8872C" text-anchor="middle" letter-spacing="1.5">COMMUNITY AI POOL</text>
-        <text x="540" y="216" font-family="'Space Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">Petals distributed inference</text>
-        <text x="540" y="232" font-family="'Space Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">Llama 3.1 8B · 48GB collective RAM</text>
-        <text x="540" y="248" font-family="'Space Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.5)" text-anchor="middle">fine-tuned on community knowledge</text>
-
-        <!-- Node 1: Code Specialist -->
-        <rect x="40" y="40" width="130" height="90" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <text x="105" y="65" font-family="'Space Mono',monospace" font-size="8.5" fill="#C8872C" text-anchor="middle">Node A</text>
-        <text x="105" y="80" font-family="'Space Mono',monospace" font-size="7.5" fill="rgba(255,255,255,0.45)" text-anchor="middle">Code specialist</text>
-        <text x="105" y="95" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">Qwen2.5 Coder</text>
-        <text x="105" y="110" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">+ Petals layers 1–8</text>
-        <line x1="170" y1="85" x2="388" y2="200" stroke="#C8872C" stroke-width="1.5" marker-end="url(#ga)"/>
-
-        <!-- Node 2: Research -->
-        <rect x="40" y="170" width="130" height="90" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <text x="105" y="195" font-family="'Space Mono',monospace" font-size="8.5" fill="#C8872C" text-anchor="middle">Node B</text>
-        <text x="105" y="210" font-family="'Space Mono',monospace" font-size="7.5" fill="rgba(255,255,255,0.45)" text-anchor="middle">Research + search</text>
-        <text x="105" y="225" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">Phi-3.5 Mini</text>
-        <text x="105" y="240" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">+ Petals layers 9–16</text>
-        <line x1="170" y1="215" x2="388" y2="215" stroke="#C8872C" stroke-width="1.5" marker-end="url(#ga)"/>
-
-        <!-- Node 3: Writing -->
-        <rect x="40" y="300" width="130" height="90" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <text x="105" y="325" font-family="'Space Mono',monospace" font-size="8.5" fill="#C8872C" text-anchor="middle">Node C</text>
-        <text x="105" y="340" font-family="'Space Mono',monospace" font-size="7.5" fill="rgba(255,255,255,0.45)" text-anchor="middle">Writing + editing</text>
-        <text x="105" y="355" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">Llama 3.2 3B</text>
-        <text x="105" y="370" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">+ Petals layers 17–24</text>
-        <line x1="170" y1="330" x2="388" y2="240" stroke="#C8872C" stroke-width="1.5" marker-end="url(#ga)"/>
-
-        <!-- Node 4 -->
-        <rect x="910" y="40" width="130" height="90" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <text x="975" y="65" font-family="'Space Mono',monospace" font-size="8.5" fill="#C8872C" text-anchor="middle">Node D</text>
-        <text x="975" y="80" font-family="'Space Mono',monospace" font-size="7.5" fill="rgba(255,255,255,0.45)" text-anchor="middle">Services host</text>
-        <text x="975" y="95" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">Files · Music · Chat</text>
-        <text x="975" y="110" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">+ Petals layers 25–32</text>
-        <line x1="910" y1="85" x2="692" y2="200" stroke="#5D9478" stroke-width="1.5" marker-end="url(#gs)"/>
-
-        <!-- Node 5 -->
-        <rect x="910" y="170" width="130" height="90" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <text x="975" y="195" font-family="'Space Mono',monospace" font-size="8.5" fill="#C8872C" text-anchor="middle">Node E</text>
-        <text x="975" y="210" font-family="'Space Mono',monospace" font-size="7.5" fill="rgba(255,255,255,0.45)" text-anchor="middle">Agents + tasks</text>
-        <text x="975" y="225" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">Always-on agents</text>
-        <text x="975" y="240" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">+ Petals layers 33–40</text>
-        <line x1="910" y1="215" x2="692" y2="215" stroke="#5D9478" stroke-width="1.5" marker-end="url(#gs)"/>
-
-        <!-- Node 6 -->
-        <rect x="910" y="300" width="130" height="90" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <text x="975" y="325" font-family="'Space Mono',monospace" font-size="8.5" fill="#C8872C" text-anchor="middle">Node F</text>
-        <text x="975" y="340" font-family="'Space Mono',monospace" font-size="7.5" fill="rgba(255,255,255,0.45)" text-anchor="middle">Gateway + relay</text>
-        <text x="975" y="355" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">Mesh bridge</text>
-        <text x="975" y="370" font-family="'Space Mono',monospace" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle">+ Petals layers 41–48</text>
-        <line x1="910" y1="330" x2="692" y2="240" stroke="#5D9478" stroke-width="1.5" marker-end="url(#gs)"/>
-
-        <!-- Members at bottom -->
-        <rect x="330" y="340" width="420" height="50" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,3"/>
-        <text x="540" y="362" font-family="'Space Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)" text-anchor="middle">📱 Any member · Any device · Anywhere</text>
-        <text x="540" y="378" font-family="'Space Mono',monospace" font-size="8" fill="rgba(255,255,255,0.3)" text-anchor="middle">access via Tailscale encrypted mesh — works on LAN or internet</text>
-        <line x1="540" y1="340" x2="540" y2="262" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="3,3"/>
-
-        <!-- Labels -->
-        <text x="200" y="15" font-family="'Space Mono',monospace" font-size="8" fill="rgba(200,135,44,0.6)" text-anchor="middle">each node contributes model layers</text>
-        <text x="860" y="15" font-family="'Space Mono',monospace" font-size="8" fill="rgba(93,148,120,0.6)" text-anchor="middle">costs and load distributed across all</text>
-      </svg>
-    </div>
-
-    <div class="pod-capabilities">
-      <div class="pod-cap">
-        <h4>🧠 Models Too Large for Any Single Node</h4>
-        <p>Six Pi 5s pooling 48GB of RAM can run Llama 3.1 8B at full precision — something no individual node could do alone. The collective is smarter than any individual.</p>
-      </div>
-      <div class="pod-cap">
-        <h4>🌙 Always-On Agents</h4>
-        <p>Tasks that would drain your laptop's battery can run 24/7 across the pod. Morning briefings, research summaries, monitoring tasks — processed while you sleep.</p>
-      </div>
-      <div class="pod-cap">
-        <h4>📚 Community-Fine-Tuned Model</h4>
-        <p>Train the AI on your group's collective notes, documents, and knowledge. The AI that knows your community's context, history, and language — shaped by you, not a corporate alignment team.</p>
-      </div>
-      <div class="pod-cap">
-        <h4>🛡️ Governed by the People Who Use It</h4>
-        <p>The pod decides what the AI does, what it won't do, and how costs are shared. Using sociocracy and consent-based decisions — not a product roadmap written in a boardroom.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     § 07 — WHAT WE'RE MISSING
-     ══════════════════════════════════════ -->
-<section class="missing-section" id="missing">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-amber">§ 07 — What's Still Missing</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">The Full Stack We're Building Toward</h2>
-    <p class="section-sub">These are the categories that matter if we're serious about full community self-sufficiency. Some are ready now. Some are nearly there. Some are the frontier. <a href='map.html' style='color:var(--amber);text-decoration:none;font-family:Space Mono,monospace;font-size:0.82rem'>→ See all 37 dimensions mapped as an interactive honeycomb</a></p>
-
-    <div class="missing-grid">
-      <div class="missing-card"><span class="mc-icon">🏠</span><span class="mc-status now">Ready Now</span><h4>Smart Home Automation</h4><p>Home Assistant. 3,000+ device integrations, 100% local. Replaces Alexa, Google Nest, and Ring cloud dependencies entirely.</p></div>
-      <div class="missing-card"><span class="mc-icon">📺</span><span class="mc-status now">Ready Now</span><h4>Video Library</h4><p>Jellyfin. Your movies and TV shows streamed to any device. No Plex account. No metadata sent anywhere. 100% free.</p></div>
-      <div class="missing-card"><span class="mc-icon">📚</span><span class="mc-status now">Ready Now</span><h4>Book &amp; Reading Library</h4><p>Calibre-Web serves your ebook library. Komga for comics and graphic novels. Community lending built in.</p></div>
-      <div class="missing-card"><span class="mc-icon">💰</span><span class="mc-status now">Ready Now</span><h4>Personal Finance</h4><p>Actual Budget or Firefly III. Track spending, set budgets, share reports — without giving Mint or YNAB your bank credentials.</p></div>
-      <div class="missing-card"><span class="mc-icon">🍲</span><span class="mc-status now">Ready Now</span><h4>Recipe &amp; Meal Planning</h4><p>Mealie or Tandoor. Community recipe books, shared meal plans, grocery lists — self-hosted, collaboratively built.</p></div>
-      <div class="missing-card"><span class="mc-icon">📻</span><span class="mc-status now">Ready Now</span><h4>Community Radio</h4><p>AzuraCast. Broadcast a live stream to your community — news, music, talk. Open source community radio, no license for internet streaming.</p></div>
-      <div class="missing-card"><span class="mc-icon">🗳️</span><span class="mc-status now">Ready Now</span><h4>Community Governance</h4><p>Loomio or Decidim. Decision-making tools built for cooperatives. Consent voting, proposals, rationale tracking — sociocracy in software.</p></div>
-      <div class="missing-card"><span class="mc-icon">📋</span><span class="mc-status now">Ready Now</span><h4>Task &amp; Project Coordination</h4><p>Vikunja (tasks) or Wekan (Kanban). Community project management without paying Asana or Monday.com.</p></div>
-      <div class="missing-card"><span class="mc-icon">🏥</span><span class="mc-status soon">Coming</span><h4>Personal Health Records</h4><p>Open-source health record systems that keep your medical data under your control — not in a hospital system's database or insurance company's servers.</p></div>
-      <div class="missing-card"><span class="mc-icon">⚡</span><span class="mc-status soon">Coming</span><h4>Local Energy Monitoring</h4><p>Track solar generation, battery state, and grid usage on your own hardware. Community energy micro-grids coordinated without utility company oversight.</p></div>
-      <div class="missing-card"><span class="mc-icon">📡</span><span class="mc-status soon">Coming</span><h4>Community Alert System</h4><p>Emergency broadcast, neighborhood notifications, community check-ins — on infrastructure the community owns, not county government or private apps.</p></div>
-      <div class="missing-card"><span class="mc-icon">🛜</span><span class="mc-status future">Frontier</span><h4>Cooperative ISP</h4><p>The long game: community-owned internet infrastructure. Cooperative ISPs exist. Mesh networking technologies are making the barrier lower every year.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- PULL QUOTE -->
-<div class="pull-quote">
-  <blockquote>
-    "Tech needs to connect us. <span class="hl">Not entrap us.</span><br>That's been the modern mistake. We're fixing it — at the kitchen table."
-  </blockquote>
-  <cite>— The time is now. The tools are here. The community is you.</cite>
-</div>
-
-<!-- ══════════════════════════════════════
-     § 08 — COMMUNITY
-     ══════════════════════════════════════ -->
-<section class="community-section" id="community">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-amber">§ 08 — What Community Means To Us</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title" style="color:var(--white)">We're Not Customers. We're Stewards.</h2>
-
-    <div class="community-manifesto">
-      <p>Patagonia says: <em>"We're in business to save our home planet."</em> Everything they make either serves that mission or doesn't get made. The mission isn't marketing. It's load-bearing structure.</p>
-      <p>We're saying something similar about technology: <strong>we exist to demonstrate that digital infrastructure can be governed by the people who depend on it.</strong> Not as an ideological position. As a practical fact, proved one working service at a time.</p>
-      <p>The problem society isn't solving is this: <em>the infrastructure that mediates modern life — communication, information, memory, intelligence — is privately owned and extractively operated.</em> Governments regulate it poorly. Markets optimize it for profit. Users adapt to it. Nobody governs it for community benefit.</p>
-      <p><strong>That's the gap we're standing in.</strong> Not to replace governments or markets — but to prove, at human scale, that communities can own and operate the infrastructure that serves them.</p>
-    </div>
-
-    <div class="community-pillars">
-      <div class="pillar">
-        <h3>Infrastructure as Commons</h3>
-        <p>Water was once privately controlled. So was the road network. Public pressure, over decades, made them into commons — governed for collective benefit. <strong>We believe digital infrastructure is the next commons waiting to happen.</strong> We're not waiting for governments to do it. We're doing it ourselves, first.</p>
-      </div>
-      <div class="pillar">
-        <h3>Participation, Not Consumption</h3>
-        <p>Every tech company wants you to be a better customer. We want you to be a better participant. <strong>There's a meaningful difference between someone who uses a platform and someone who stewards one.</strong> Stewardship builds judgment, relationships, and resilience. Consumption extracts it.</p>
-      </div>
-      <div class="pillar">
-        <h3>Open Source as Civic Act</h3>
-        <p>Open-source software is a form of commons-building — code that belongs to everyone, maintained by anyone, improved collectively. <strong>We see contributing to this ecosystem the same way previous generations saw voting, volunteering, or organizing.</strong> It's how you participate in the shape of your digital world.</p>
-      </div>
-    </div>
-
-    <div class="society-problem">
-      <h3>The Problem Society Doesn't Solve</h3>
-      <p>Governments regulate tech slowly and often in service of the companies they're supposed to regulate. Markets optimize for quarterly returns, not community wellbeing. Nonprofits orbit the edges without structural power to change the center.</p>
-      <p><strong>What's missing is the cooperative layer.</strong> Organizations owned by their users, governed by consent, accountable to members rather than shareholders. This model — proven in banking (credit unions), retail (REI), agriculture, and housing — has never been systematically applied to digital infrastructure.</p>
-      <p>Kitchen Table Cloud is a bet that it should be. We're small enough to move fast, principled enough to stay honest, and practical enough to know that <strong>the best argument for cooperative infrastructure is cooperative infrastructure that actually works.</strong></p>
-      <p>We want to change minds by changing what's possible. One working service at a time. One community at a time. Starting here.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     § 09 — THE FARM & THE SINK
-     ══════════════════════════════════════ -->
-<section class="brands-section" id="brands">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-ink">§ 09 — The Extended Family</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">From Farm to Table to Sink</h2>
-    <p class="section-sub">Kitchen Table Cloud is the main event. But every kitchen has a supply chain and an aftermath. Meet the ecosystem.</p>
-
-    <div class="brands-grid">
-      <div class="brand-card farm">
-        <span class="brand-tag">Upstream Supply Chain</span>
-        <h3>The Farm</h3>
-        <span class="brand-sub">Where the ingredients come from</span>
-        <p>Every kitchen table needs ingredients. <strong>The Farm is the upstream cooperative R&amp;D commons</strong> — the place where we cultivate the ideas, models, governance templates, and hardware guides that eventually show up on your table.</p>
-        <p>Think of it as an open seed library for technology: community-maintained training datasets, governance blueprints you can fork, hardware co-buying programs, and the experimental models that become tomorrow's standard tools. If Kitchen Table Cloud is the restaurant, The Farm grows the food.</p>
-        <ul class="brand-items">
-          <li>Open-weight model fine-tuning datasets for community contexts</li>
-          <li>Hardware co-buying programs: bulk Pi orders, group pricing</li>
-          <li>Governance template library: sociocracy docs, consent protocols</li>
-          <li>Experimental tech: early research into what comes after Petals</li>
-          <li>Community knowledge base: what works, what doesn't, why</li>
-        </ul>
-      </div>
-
-      <div class="brand-card sink">
-        <span class="brand-tag">End of the Supply Chain</span>
-        <h3>The Kitchen Sink</h3>
-        <span class="brand-sub">Yes, we put that in here too</span>
-        <p>The kitchen sink is where you throw everything in. <strong>The Kitchen Sink is our radical completeness statement</strong> — the vision of what community infrastructure looks like when it actually replaces the full commercial stack.</p>
-        <p>It's the serious version of the joke: yes, we want everything in here. Emergency communications. Community health data. Local energy grids. Cooperative ISPs. The question "what should a community be able to operate for itself?" — answered fully, not partially.</p>
-        <ul class="brand-items">
-          <li>Community emergency broadcast &amp; alert systems</li>
-          <li>Cooperative health record infrastructure</li>
-          <li>Neighborhood energy monitoring and micro-grid coordination</li>
-          <li>Community-owned internet infrastructure (the long game)</li>
-          <li>Mutual aid ledgers, time banks, local exchange systems</li>
-          <li>Everything you were told you had to rent from someone else</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     § 10 — INSPIRATION
-     ══════════════════════════════════════ -->
-<section class="inspiration-section" id="inspiration">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-sage">§ 10 — Who We Admire</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">We Didn't Invent This. We Assembled It.</h2>
-    <p class="insp-intro">These are the projects, companies, and communities whose work proves that another approach is possible. We build on their shoulders — and we want you to know their names.</p>
-
-    <div class="insp-grid">
-      <div class="insp-card">
-        <span class="insp-type">Local-First Software</span>
-        <h4>Obsidian</h4>
-        <p>Markdown notes that live on your device. No server, no subscription, no syncing your thoughts to someone else's cloud. A thriving ecosystem of 1,000+ community plugins. Proved that <strong>local-first + open extension model</strong> creates more value than subscription lock-in.</p>
-        <span class="insp-lesson">→ What we learned: user-owned data + community plugins beats the subscription model</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Local-First Knowledge</span>
-        <h4>Anytype</h4>
-        <p>A knowledge base that's end-to-end encrypted by design, synced across your devices, and exportable forever. Built on the "user owns their data" principle from the ground up. <strong>Privacy as architecture, not feature.</strong></p>
-        <span class="insp-lesson">→ What we learned: design for ownership first; sync is an implementation detail</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Honest AI Tools</span>
-        <h4>Elicit</h4>
-        <p>An AI research assistant for scientists that's transparent about its limitations, shows its sources, and doesn't confabulate. Proves that <strong>honest, specialized AI tools</strong> beat generic ones for the people who actually need them.</p>
-        <span class="insp-lesson">→ What we learned: AI that knows what it doesn't know is more trustworthy than AI that pretends otherwise</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Design Philosophy</span>
-        <h4>Calm Tech Institute</h4>
-        <p>Amber Case's work on technology that serves human attention rather than harvesting it. Technology that <strong>informs without demanding</strong>. A counterpoint to the engagement-maximizing model that has made most apps addictive by design.</p>
-        <span class="insp-lesson">→ What we learned: good technology works in the background; it doesn't demand the foreground</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Community Hardware</span>
-        <h4>Raspberry Pi Foundation</h4>
-        <p>A $35 computer that changed what "institutional scale" means. Proved that serious workloads — including AI inference — don't require data-center hardware. <strong>Democratized compute one Pi at a time.</strong></p>
-        <span class="insp-lesson">→ What we learned: cheap, capable hardware in enough hands changes the math entirely</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Open AI Infrastructure</span>
-        <h4>Petals &amp; llama.cpp</h4>
-        <p>Petals proved large AI models can be split across commodity hardware across the internet. llama.cpp proved frontier-class AI runs on CPU. Together they made <strong>distributed community AI inference real</strong> — not theoretical.</p>
-        <span class="insp-lesson">→ What we learned: the open AI ecosystem moves faster than most people realize</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Cooperative Business</span>
-        <h4>Patagonia</h4>
-        <p>Mission-driven to the point of giving the company away. Proves that <strong>values can be structural</strong>, not just messaging. Their "we're in business to save our home planet" isn't a tagline — it's a governance constraint.</p>
-        <span class="insp-lesson">→ What we learned: when the mission is load-bearing, every decision gets easier</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Distributed Comms</span>
-        <h4>Meshtastic Community</h4>
-        <p>A global community building off-grid LoRa mesh networks with $35 radios. No subscription, no towers, no corporation. <strong>Resilient comms by design.</strong> Used by hikers, emergency responders, and people who just think network sovereignty matters.</p>
-        <span class="insp-lesson">→ What we learned: the most resilient infrastructure is the simplest one that works without permission</span>
-      </div>
-      <div class="insp-card">
-        <span class="insp-type">Self-Hosting Community</span>
-        <h4>r/selfhosted</h4>
-        <p>Over a million people sharing configs, troubleshooting setups, and documenting what they've built. The largest repository of practical knowledge on running your own services. <strong>Community knowledge base as infrastructure.</strong></p>
-        <span class="insp-lesson">→ What we learned: documentation and community support are as important as the software itself</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     § 11 — JOIN
-     ══════════════════════════════════════ -->
+<!-- ═══ JOIN / KITCHEN BRIGADE ═══ -->
 <section class="join-section" id="join">
   <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-sage">§ 11 — Join the Cooperative</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">There's a Spot For You</h2>
-    <p class="section-sub">This is a cooperative, not a startup. Nobody's getting rich. People contribute what they can — time, money, hardware, or expertise — and everyone gets access to infrastructure worth far more than what they put in.</p>
+    <div class="eyebrow"><span class="et et-sage">The Kitchen Brigade</span><div class="eline"></div></div>
+    <h2 class="stitle">Find Your Role at the Table</h2>
+    <p class="ssub">A kitchen runs on different skills. Some people grow the ingredients, some cook, 
+    some serve, some wash up. All of it matters. Here's where you fit.</p>
 
-    <div class="tiers-grid">
+    <div class="tiers-wrap">
       <div class="tier">
-        <span class="tier-n">01</span>
+        <span class="tn">01</span>
         <span class="tier-icon">📣</span>
-        <h3>Supporter</h3>
-        <span class="tier-price">Free — just show up</span>
-        <p>Tell people this exists. Come to community calls. Communities run on attention as much as money.</p>
-        <ul class="tier-perks">
-          <li>Community chat &amp; updates</li>
-          <li>Learning resources + guides</li>
-          <li>Bring someone in, make it stronger</li>
-        </ul>
+        <h3>Guest</h3>
+        <span class="tier-role">Show up, spread the word</span>
+        <p>Tell people this exists. Come to community calls. The table grows when guests become regulars.</p>
+        <ul class="tier-ps"><li>Community chat access</li><li>Learning resources</li></ul>
       </div>
       <div class="tier">
-        <span class="tier-n">02</span>
+        <span class="tn">02</span>
         <span class="tier-icon">💸</span>
-        <h3>Member</h3>
-        <span class="tier-price">Pay-what-you-can / sliding scale</span>
-        <p>Cover real costs: electricity, internet, hardware maintenance. Full access to community-run systems.</p>
-        <ul class="tier-perks">
-          <li>Shared AI inference pool</li>
-          <li>File storage on community servers</li>
-          <li>Music, chat, search, home automation</li>
-          <li>New services as we add them</li>
-        </ul>
+        <h3>Regular</h3>
+        <span class="tier-role">Cover your plate</span>
+        <p>Contribute to real costs: electricity, internet, hardware. Full access to everything the kitchen produces.</p>
+        <ul class="tier-ps"><li>AI inference pool</li><li>File storage</li><li>Music, chat, search</li></ul>
       </div>
       <div class="tier hl">
-        <span class="tier-n">03</span>
+        <span class="tn">03</span>
         <span class="tier-icon">🖥️</span>
-        <h3>Node Runner</h3>
-        <span class="tier-price">Hardware contribution</span>
-        <p>Your Pi at home becomes community infrastructure. Priority access and electricity stipend in return.</p>
-        <ul class="tier-perks">
-          <li>Your hardware = community capacity</li>
-          <li>Priority AI inference access</li>
-          <li>Power the whole community</li>
-          <li>Electricity stipend toward costs</li>
-        </ul>
+        <h3>Line Cook</h3>
+        <span class="tier-role">Run a node at home</span>
+        <p>Your Pi is a community burner. Your hardware becomes community capacity. Electricity stipend included.</p>
+        <ul class="tier-ps"><li>Hardware = infrastructure</li><li>Priority AI access</li><li>Power for all</li></ul>
       </div>
       <div class="tier">
-        <span class="tier-n">04</span>
+        <span class="tn">04</span>
         <span class="tier-icon">🔧</span>
-        <h3>Builder</h3>
-        <span class="tier-price">Skill contribution</span>
-        <p>Tech, writing, teaching, design — help members get set up. Your expertise is infrastructure too.</p>
-        <ul class="tier-perks">
-          <li>Onboard new members</li>
-          <li>Write guides, improve docs</li>
-          <li>Vote on technical decisions</li>
-          <li>Public credit for contributions</li>
-        </ul>
+        <h3>Sous Chef</h3>
+        <span class="tier-role">Tech, writing, teaching</span>
+        <p>Your expertise is an ingredient too. Help others get set up, write guides, improve the recipes.</p>
+        <ul class="tier-ps"><li>Onboard new members</li><li>Write guides</li><li>Vote on decisions</li></ul>
       </div>
       <div class="tier">
-        <span class="tier-n">05</span>
+        <span class="tn">05</span>
         <span class="tier-icon">🌱</span>
-        <h3>Steward</h3>
-        <span class="tier-price">Governance + funding</span>
-        <p>Keep it alive financially and organizationally. Shape decisions. Sponsor nodes for members who can't afford hardware.</p>
-        <ul class="tier-perks">
-          <li>Vote on co-op governance</li>
-          <li>Sponsor nodes for others</li>
-          <li>Shape what gets built next</li>
-          <li>Annual transparency report</li>
-        </ul>
+        <h3>Head Chef</h3>
+        <span class="tier-role">Governance + funding</span>
+        <p>Keep the kitchen running. Shape decisions. Sponsor nodes for members who can't afford the hardware.</p>
+        <ul class="tier-ps"><li>Co-op governance</li><li>Sponsor nodes</li><li>Shape the menu</li></ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════
-     TECH SECTION
-     ══════════════════════════════════════ -->
-<section class="tech-section" id="tech">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-amber">§ 12 — For the Technically Curious</span>
-      <div class="eyebrow-line"></div>
+<!-- ═══ EXPLORE BAR ═══ -->
+<div class="explore-bar">
+  <div class="explore-inner">
+    <div>
+      <h3>Hungry for More?</h3>
+      <p>The kitchen has a lot of rooms. Here's what's cooking in each one.</p>
     </div>
-    <h2 class="section-title">The Stack</h2>
-    <p class="section-sub" style="color:rgba(255,255,255,0.4)">If these words mean something to you, welcome home. If not — skip to the repo, where we have guides written for humans.</p>
-
-    <div class="tech-grid">
-      <div class="tech-card">
-        <h4>🤖 AI Inference Layer</h4>
-        <p>Ollama serves quantized open-weight models via OpenAI-compatible API. Petals enables distributed inference across mesh nodes. llama.cpp for benchmarking and fine-tuning prep. Unsloth for Pi-friendly fine-tuning on group data.</p>
-        <ul class="tech-links">
-          <li><a href="https://ollama.com" target="_blank">→ ollama.com — primary model runtime</a></li>
-          <li><a href="https://petals.dev" target="_blank">→ petals.dev — distributed inference protocol</a></li>
-          <li><a href="https://github.com/ggerganov/llama.cpp" target="_blank">→ llama.cpp — CPU-optimized inference engine</a></li>
-        </ul>
-      </div>
-      <div class="tech-card">
-        <h4>🌐 Mesh &amp; Config</h4>
-        <p>Tailscale (WireGuard) encrypted overlay across all nodes regardless of ISP or NAT. Yggdrasil for fully trustless mesh with zero central authority. Ansible pushes config to all nodes in one command.</p>
-        <ul class="tech-links">
-          <li><a href="https://tailscale.com" target="_blank">→ tailscale.com — encrypted mesh network</a></li>
-          <li><a href="https://yggdrasil-network.github.io" target="_blank">→ yggdrasil — fully decentralized mesh</a></li>
-          <li><a href="https://docs.ansible.com" target="_blank">→ ansible — config push to all nodes</a></li>
-        </ul>
-      </div>
-      <div class="tech-card">
-        <h4>📦 Self-Hosted Services</h4>
-        <p>CasaOS Docker app store. NextCloud AIO. Navidrome via Subsonic API. Jellyfin for video. Matrix/Synapse federated messaging. Home Assistant for automation. SearXNG meta-search. Vaultwarden password vault. Pi-hole + Unbound DNS.</p>
-        <ul class="tech-links">
-          <li><a href="https://casaos.io" target="_blank">→ casaos.io — home server dashboard</a></li>
-          <li><a href="https://nextcloud.com" target="_blank">→ nextcloud.com — files, calendar, photos</a></li>
-          <li><a href="https://www.home-assistant.io" target="_blank">→ home-assistant.io — local smart home</a></li>
-        </ul>
-      </div>
-      <div class="tech-card">
-        <h4>📡 Off-Grid Comms</h4>
-        <p>Meshtastic LoRa radios (~$35) for text mesh with no internet or towers. ~5km range, longer on open terrain. Reticulum network stack for cryptographic mesh over any medium. OsmAnd for offline maps.</p>
-        <ul class="tech-links">
-          <li><a href="https://meshtastic.org" target="_blank">→ meshtastic.org — off-grid radio mesh</a></li>
-          <li><a href="https://reticulum.network" target="_blank">→ reticulum.network — cryptographic mesh protocol</a></li>
-          <li><a href="https://osmand.net" target="_blank">→ osmand.net — offline maps</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="code-block">
-<span class="cm"># The three commands that start everything</span>
-<span class="cm"># Run these. Cancel a subscription. Join the community.</span>
-
-<span class="cm"># 1. Install the AI runtime on your machine</span>
-<span class="cmd">curl -fsSL https://ollama.com/install.sh | sh</span>
-
-<span class="cm"># 2. Pull a capable free model (2.4GB — less than one month of ChatGPT Plus)</span>
-<span class="cmd">ollama pull phi3.5:3.8b-mini-instruct-q4_K_M</span>
-
-<span class="cm"># 3. Talk to it. On your hardware. Privately. Forever.</span>
-<span class="cmd">ollama run phi3.5:3.8b-mini-instruct-q4_K_M "Hello. Are you mine now?"</span>
-
-<span class="cm"># It says: Yes. Completely.</span>
-    </div>
-
-    <div class="repo-cta">
-      <div>
-        <h3>Everything else is in the repo.</h3>
-        <p>Full setup guides written for humans. Hardware recommendations. Ansible playbooks for onboarding new members. Model selection guide. Exit strategy for each subscription. Pod architecture configs. Meshtastic setup.</p>
-      </div>
-      <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" class="btn-repo">📂 GitHub Repo</a>
+    <div class="explore-links">
+      <a href="start.html" class="el">📋 Full Recipes (Getting Started)</a>
+      <a href="openclaw.html" class="el">🤖 What Is a Community AI Agent</a>
+      <a href="swap.html" class="el">🔄 Full Pantry Swap (10 ingredients)</a>
+      <a href="map.html" class="el">🍯 The Honeycomb Map (37 dimensions)</a>
+      <a href="community.html" class="el">🏡 What Community Means to Us</a>
+      <a href="vision.html" class="el">🔭 The Vision &amp; Roadmap</a>
+      <a href="security.html" class="el">🔒 Security Before You Go Live</a>
+      <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" class="el">📂 GitHub Repo + Full Guides</a>
     </div>
   </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     ABOUT US
-     ══════════════════════════════════════ -->
-<section class="about-section" id="about">
-  <div class="inner">
-    <div class="eyebrow">
-      <span class="eyebrow-tag et-slate">§ 13 — About Us</span>
-      <div class="eyebrow-line"></div>
-    </div>
-    <h2 class="section-title">We Built This Because We Need It</h2>
-
-    <div class="about-grid">
-      <div class="about-prose">
-        <p>Kitchen Table Cloud is not a startup. It's not funded by venture capital. It doesn't have a growth target or an exit strategy. <strong>It exists because a small group of people looked at the digital infrastructure they depended on and didn't like what they saw.</strong></p>
-        <p>We come from different backgrounds — organizing, technology, design, education, community cooperative development. What we share is a conviction that the extractive model of digital services is not inevitable, and that building the alternative is more useful than criticizing the status quo.</p>
-        <p>We're inspired by <strong>Obsidian's commitment to local-first data</strong>, <strong>Anytype's privacy-as-architecture philosophy</strong>, <strong>Elicit's honesty about what AI can and cannot do</strong>, and <strong>the Calm Tech Institute's insistence that technology should serve human attention rather than harvest it</strong>.</p>
-        <p>We're trying to build at the intersection of platform cooperativism, sociocracy, and practical open-source technology. The governance model is consent-based. The economics are cooperative. The technology is open. <strong>The community is the product — and the product belongs to the community.</strong></p>
-        <p>If this resonates with you, the best thing you can do is show up. Open a discussion. Ask a question. Tell someone this exists. Or just run the three commands above and cancel a subscription. Every lever you take back matters.</p>
-      </div>
-      <div>
-        <div class="about-manifesto">
-          <h3>What We Believe</h3>
-          <p><strong>Technology that connects without entrapping is possible.</strong> The extractive model is a design choice, not a law of nature.</p>
-          <p><strong>Cooperative governance produces better infrastructure</strong> than corporate governance — for the people who actually use it.</p>
-          <p><strong>The kitchen table is the right metaphor.</strong> Not the server room. Not the boardroom. The place where communities make decisions together.</p>
-          <p><strong>The time is now.</strong> Open models are capable. Hardware is cheap. The window between "impossible for individuals" and "captured by corporations" is open. It won't stay open forever.</p>
-        </div>
-        <div class="about-values">
-          <div class="av-item"><h5>Open Source</h5><p>Everything we build is open. Everything we use is open. Transparency isn't a feature — it's the model.</p></div>
-          <div class="av-item"><h5>Cooperative</h5><p>Governed by members, for members. Decisions by consent. Benefits stay with the community.</p></div>
-          <div class="av-item"><h5>Local-First</h5><p>Data lives close to the people it belongs to. Cloud is optional. Resilience is structural.</p></div>
-          <div class="av-item"><h5>Human Scale</h5><p>We build for communities of 5–500 people. Not millions. Depth over breadth.</p></div>
-        </div>
-        <div style="margin-top:20px;text-align:center">
-          <a href="vision.html" class="btn-amber" style="display:inline-block;margin-right:12px">Read Our Vision ↗</a>
-          <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud/discussions" target="_blank" class="btn-amber" style="display:inline-block;background:transparent;color:var(--slate);border-color:var(--slate)">Start a Discussion ↗</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     FOOTER
-     ══════════════════════════════════════ -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="logo">Kitchen Table <span>Cloud</span></div>
-      <p>Community cooperative infrastructure for people who'd rather own their technology than rent it. No VC. No ads. No algorithm. Built by people, governed by people, for people.</p>
-      <p style="margin-top:10px;font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.25)">Also: The Farm (upstream commons) · The Kitchen Sink (the long game)</p>
-    </div>
-    <div class="footer-col">
-      <h5>Get Started</h5>
-      <ul>
-        <li><a href="#101">The 101 Explainer</a></li>
-        <li><a href="#today">Six Things Today</a></li>
-        <li><a href="#swap">The Swap Sheet</a></li>
-        <li><a href="#offline">Go Offline</a></li>
-        <li><a href="vision.html">Our Vision</a></li>
-        <li><a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank">Full Guides (GitHub)</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>The Stack</h5>
-      <ul>
-        <li><a href="https://ollama.com" target="_blank">Ollama (AI)</a></li>
-        <li><a href="https://nextcloud.com" target="_blank">NextCloud (Files)</a></li>
-        <li><a href="https://www.home-assistant.io" target="_blank">Home Assistant</a></li>
-        <li><a href="https://matrix.org" target="_blank">Matrix (Chat)</a></li>
-        <li><a href="https://jellyfin.org" target="_blank">Jellyfin (Video)</a></li>
-        <li><a href="https://meshtastic.org" target="_blank">Meshtastic (Offline)</a></li>
-        <li><a href="https://casaos.io" target="_blank">CasaOS (Home OS)</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Community</h5>
-      <ul>
-        <li><a href="#join">Join the Co-op</a></li>
-        <li><a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud/discussions" target="_blank">Discussions</a></li>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#inspiration">Who We Admire</a></li>
-        <li><a href="https://reddit.com/r/selfhosted" target="_blank">r/selfhosted</a></li>
-        <li><a href="https://reddit.com/r/localllama" target="_blank">r/LocalLLaMA</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>Kitchen Table Cloud — Open Source. <span>Community Governed.</span> No Ads. No VC. The time is now.</p>
-    <p><a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" style="color:rgba(255,255,255,0.28);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.68rem">⭐ Star on GitHub</a></p>
-  </div>
+</div>
+<footer style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55)">
+    Kitchen Table Cloud · Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+  </p>
+  <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank"
+     style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage-m);text-decoration:none">
+    ⭐ Star on GitHub
+  </a>
 </footer>
-
-<script>
-function toggle(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = btn.classList.contains('open');
-  // close all
-  document.querySelectorAll('.acc-trigger.open').forEach(b => {
-    b.classList.remove('open');
-    b.nextElementSibling.classList.remove('open');
-  });
-  if (!isOpen) {
-    btn.classList.add('open');
-    body.classList.add('open');
-  }
-}
-</script>
 </body>
 </html>

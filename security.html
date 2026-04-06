@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security & Trust — Kitchen Table Cloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+
+:root{--bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;--white:#FDFAF5;
+  --brick:#B54C2F;--slate:#2A4860;--amber:#C8872C;--sage:#3A6B50;
+  --sage-m:#5D9478;--muted:#7A7068;--baron:#6F1A1A;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.75;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
+.inner{max-width:1100px;margin:0 auto}
+section{padding:72px 40px}
+.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.et{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:4px 12px;flex-shrink:0}
+.et-slate{background:var(--slate);color:var(--white)}
+.et-brick{background:var(--brick);color:var(--white)}
+.et-amber{background:var(--amber);color:var(--ink)}
+.et-sage{background:var(--sage);color:var(--white)}
+.et-ink{background:var(--ink);color:var(--white)}
+.eline{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+.stitle{font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:10px}
+.ssub{max-width:660px;font-size:1.02rem;color:var(--muted);line-height:1.78;margin-top:12px;margin-bottom:40px}
+.mono{font-family:'Space Mono',monospace}
+.code-block{background:#111108;border-left:3px solid var(--sage);padding:20px;font-family:'Space Mono',monospace;font-size:0.74rem;color:#7DB87D;line-height:1.85;overflow-x:auto;margin:16px 0}
+.code-block .cm{color:rgba(255,255,255,0.65)}.code-block .cmd{color:var(--amber)}
+
+
+.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--amber)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
+.logo span{color:var(--amber)}
+nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.67rem;letter-spacing:0.04em;padding:4px 9px;transition:color 0.18s;white-space:nowrap}
+nav a:hover{color:var(--amber)}
+nav a.nav-vision{border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65)}
+nav a.nav-active{color:var(--amber);border-bottom:2px solid var(--amber)}
+nav a.nav-cta{background:var(--amber);color:var(--ink);font-weight:700}
+nav a.nav-cta:hover{background:var(--white)}
+
+
+.hero-sec{background:var(--baron);padding:80px 40px 70px;border-bottom:3px solid var(--amber)}
+.hero-sec h1{font-size:clamp(3.5rem,7vw,6rem);color:var(--white);line-height:0.9;margin-bottom:20px}
+.hero-sec h1 span{color:var(--amber)}
+.hero-sec p{color:rgba(255,255,255,0.6);font-size:1.08rem;max-width:580px;line-height:1.72}
+.hero-sec p strong{color:var(--white)}
+.cve-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.cve-card{background:rgba(111,26,26,0.08);border:2px solid rgba(111,26,26,0.3);padding:24px}
+.cve-card h4{font-size:1.3rem;color:var(--baron);margin-bottom:8px}
+.cve-card .cve-id{font-family:'Space Mono',monospace;font-size:0.68rem;background:var(--baron);color:var(--white);padding:2px 8px;display:inline-block;margin-bottom:10px;letter-spacing:0.08em}
+.cve-card p{font-family:'Space Mono',monospace;font-size:0.74rem;color:var(--muted);line-height:1.65;margin-bottom:8px}
+.cve-card .cve-fix{color:var(--sage);font-weight:700}
+.sec-checklist{list-style:none;margin-top:8px}
+.sec-checklist li{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;border-bottom:1px solid rgba(0,0,0,0.07);font-size:0.9rem;line-height:1.55;cursor:pointer;transition:background 0.15s}
+.sec-checklist li:hover{background:rgba(0,0,0,0.025)}
+.sec-checklist li.done{opacity:0.5}
+.sec-checklist li.done .sec-text{text-decoration:line-through;color:var(--muted)}
+.sec-box{font-family:'Space Mono',monospace;font-size:0.7rem;background:rgba(0,0,0,0.04);border-left:3px solid var(--muted);padding:2px 8px;color:var(--muted);flex-shrink:0;align-self:flex-start;margin-top:3px}
+.sec-box.critical{border-color:var(--baron);color:var(--baron);background:rgba(111,26,26,0.06)}
+.sec-box.high{border-color:var(--brick);color:var(--brick)}
+.sec-box.med{border-color:var(--amber);color:var(--amber)}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.1);margin-top:8px}
+.trust-card{background:var(--bg);padding:24px 20px}
+.trust-card h4{font-size:1.25rem;color:var(--slate);margin-bottom:8px}
+.trust-card p{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);line-height:1.6}
+@media(max-width:900px){.cve-grid,.trust-grid{grid-template-columns:1fr}}
+
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
+@media(max-width:900px){section{padding:52px 24px}.site-header{padding:12px 24px}nav{display:none}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo">Kitchen Table <span>Cloud</span></div>
+  <nav><a href="index.html#costs">Why Now</a>
+    <a href="index.html#101">101</a>
+    <a href="index.html#today">Do It Today</a>
+    <a href="start.html">Get Started</a>
+    <a href="openclaw.html">AI Agent</a>
+    <a href="index.html#swap">Swap Sheet</a>
+    <a href="index.html#offline">Offline</a>
+    <a href="map.html" class="nav-vision">Full Map ↗</a>
+    <a href="vision.html" class="nav-vision">Vision ↗</a>
+    <a href="security.html" class="nav-active">Security</a>
+    <a href="index.html#join">Join</a>
+    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" class="nav-vision">GitHub ↗</a></nav>
+</header>
+
+<div class="hero-sec">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-amber">Security & Trust</span></div>
+    <h1>Trust Is Not <span>Optional</span><br>in Community Infrastructure</h1>
+    <p>Community AI means more people have access to powerful systems. 
+    <strong>That makes security more important, not less.</strong> 
+    This page covers what went wrong in the past, what you must do before opening access, 
+    and the ongoing hygiene that keeps a community setup trustworthy.</p>
+  </div>
+</div>
+
+<section style="background:var(--paper)">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-baron">§ What Went Wrong</span><div class="eline"></div></div>
+    <h2 class="stitle">The CVE History You Need to Know</h2>
+    <p class="ssub">The January–February 2026 OpenClaw security crisis was real. 
+    Understanding it is how you make sure it doesn't happen to your community.</p>
+    <div class="cve-grid">
+      <div class="cve-card">
+        <h4>CVE-2026-25253</h4>
+        <span class="cve-id">Patched: v2026.1.29 · CRITICAL</span>
+        <p>Gateway exposure on 0.0.0.0 (all interfaces) instead of Tailscale-only IP allowed unauthenticated 
+        access to the OpenClaw gateway from the local network. Attackers on the same LAN could send 
+        arbitrary commands to your AI agent without authentication.</p>
+        <p class="cve-fix">Fix: Bind gateway to Tailscale IP only. Rotate all API keys and OAuth tokens 
+        if your gateway was public before this patch. Run openclaw doctor --fix.</p>
+      </div>
+      <div class="cve-card">
+        <h4>Windows SMB Credential Leak</h4>
+        <span class="cve-id">Patched: v2026.3.22 · HIGH</span>
+        <p>Windows gateway hosts on older versions could leak SMB credentials via a crafted tool call. 
+        Windows users who ran gateways before this patch should rotate all Windows credentials accessible 
+        from the gateway host, not just OpenClaw tokens.</p>
+        <p class="cve-fix">Fix: Update immediately. Rotate credentials. Audit tool call logs for 
+        unexpected SMB activity in the weeks before patching.</p>
+      </div>
+      <div class="cve-card">
+        <h4>ClawHavoc Campaign</h4>
+        <span class="cve-id">Ongoing · 1,400+ malicious skills</span>
+        <p>A coordinated campaign of malicious skills on ClawHub that passed VirusTotal scans by 
+        using delayed execution and prompt injection. Once installed, skills could exfiltrate context, 
+        read files, and relay information to external servers.</p>
+        <p class="cve-fix">Fix: Verified sources only. Never install from unverified publishers. 
+        Watch new skills for 3 days before trusting them. Check OpenClaw security advisories regularly.</p>
+      </div>
+      <div class="cve-card">
+        <h4>Prompt Injection via Web Content</h4>
+        <span class="cve-id">Ongoing · Design challenge</span>
+        <p>When an agent with web search reads a malicious page, that page can contain instructions 
+        that the agent may follow — treating external content as trusted commands. This is a fundamental 
+        LLM challenge, not just an OpenClaw one.</p>
+        <p class="cve-fix">Mitigate: Never grant web-search agents destructive permissions. 
+        Require approval for any action taken after web content retrieval. Audit logs regularly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg)">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-slate">§ The Checklist</span><div class="eline"></div></div>
+    <h2 class="stitle">Before You Open Access to Anyone</h2>
+    <p class="ssub">Work through this checklist after initial setup and after every major update. 
+    Your progress saves in the browser. Critical items must be done before sharing gateway access with your community.</p>
+    
+      <div style="margin-bottom:24px">
+        <div style="background:var(--slate);color:var(--white);padding:12px 18px;margin-bottom:0">
+          <h4 style="font-size:1.25rem;letter-spacing:0.04em">Gateway Security</h4>
+          <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65);margin-top:3px">Critical — do before sharing access with anyone</p>
+        </div>
+        <ul class="sec-checklist" style="border:2px solid var(--ink);border-top:none">
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Gateway bound to Tailscale IP only — NOT 0.0.0.0</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">If your gateway is on 0.0.0.0, you are exposed to your entire local network. CVE-2026-25253 exploited exactly this.</span>
+          </div>
+          <span class="sec-box critical">CRITICAL</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Auth tokens generated per user</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">openssl rand -hex 32 for each member. Never share tokens between people.</span>
+          </div>
+          <span class="sec-box critical">CRITICAL</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">openclaw doctor shows no critical warnings</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Run after every version update and before opening access to new members.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Skills locked to verified sources only</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">"allowSources": ["clawhub:verified"] in config. Unverified skills can inject malicious prompts.</span>
+          </div>
+          <span class="sec-box critical">CRITICAL</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Group approval required for all new skill installs</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">One person's curiosity shouldn't install something for everyone. Review for 3 days.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li></ul>
+      </div>
+      <div style="margin-bottom:24px">
+        <div style="background:var(--slate);color:var(--white);padding:12px 18px;margin-bottom:0">
+          <h4 style="font-size:1.25rem;letter-spacing:0.04em">Per-User Safety</h4>
+          <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65);margin-top:3px">Each person who has access to the gateway</p>
+        </div>
+        <ul class="sec-checklist" style="border:2px solid var(--ink);border-top:none">
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Action approvals enabled for destructive operations</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">delete, move, shell exec — require explicit confirmation. Set in settings.json permissionMode.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">SOUL.md written with explicit never-do boundaries</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">The "NEVER" section prevents your agent from doing things you didn't intend. Non-negotiable.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Workspace isolation configured</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">No cross-user memory bleed. Each person's agent operates in isolation by default.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Rate limits set per user</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Prevent runaway tasks from consuming all node resources or making unexpected API calls.</span>
+          </div>
+          <span class="sec-box med">MED</span>
+        </li></ul>
+      </div>
+      <div style="margin-bottom:24px">
+        <div style="background:var(--slate);color:var(--white);padding:12px 18px;margin-bottom:0">
+          <h4 style="font-size:1.25rem;letter-spacing:0.04em">Network Security</h4>
+          <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65);margin-top:3px">The mesh that connects everything</p>
+        </div>
+        <ul class="sec-checklist" style="border:2px solid var(--ink);border-top:none">
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Pi-hole running — no DNS to Google or Cloudflare</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Every DNS query tells someone what you're accessing. Pi-hole + Unbound resolves directly.</span>
+          </div>
+          <span class="sec-box med">MED</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Tailscale ACLs restrict service access by node</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Not every node should reach every service. Write ACLs that match your trust model.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">No services exposed on public IPs</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Tailscale only. Ever. If you can reach it without Tailscale, so can someone else.</span>
+          </div>
+          <span class="sec-box critical">CRITICAL</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Ollama API port 11434 not accessible outside mesh</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Ollama has no authentication by default. Expose it only on your Tailscale interface.</span>
+          </div>
+          <span class="sec-box critical">CRITICAL</span>
+        </li></ul>
+      </div>
+      <div style="margin-bottom:24px">
+        <div style="background:var(--slate);color:var(--white);padding:12px 18px;margin-bottom:0">
+          <h4 style="font-size:1.25rem;letter-spacing:0.04em">Ongoing Hygiene</h4>
+          <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65);margin-top:3px">Weekly habits for whoever runs the gateway</p>
+        </div>
+        <ul class="sec-checklist" style="border:2px solid var(--ink);border-top:none">
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">openclaw doctor run weekly</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Catches config drift, version mismatches, and warning conditions before they become incidents.</span>
+          </div>
+          <span class="sec-box med">MED</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Version updates applied within 1 week of release</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Security patches are in changelog. Don't let versions drift more than 2 behind.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">Logs reviewed at ~/.openclaw/logs/ if behaviour seems off</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">Agent behaviour that feels wrong is usually visible in logs before it becomes a problem.</span>
+          </div>
+          <span class="sec-box med">MED</span>
+        </li>
+        <li onclick="this.classList.toggle('done')">
+          <div style="width:18px;height:18px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all 0.2s" class="sec-cb">✓</div>
+          <div class="sec-text" style="flex:1">
+            <strong style="font-family:'Space Mono',monospace;font-size:0.82rem;display:block;margin-bottom:3px">New skills watched for 3 days before trusting</strong>
+            <span style="font-size:0.82rem;color:var(--muted)">ClawHavoc showed that even VirusTotal-clean skills can carry delayed payload. Watch before trusting.</span>
+          </div>
+          <span class="sec-box high">HIGH</span>
+        </li></ul>
+      </div>
+  </div>
+</section>
+
+<section style="background:var(--paper)">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-sage">§ The Trust Model</span><div class="eline"></div></div>
+    <h2 class="stitle">Why This Makes Community AI Safer Than Corporate AI</h2>
+    <p class="ssub">Done right, community-operated AI infrastructure is more trustworthy than corporate alternatives — 
+    not less. Here's why.</p>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <h4>🏠 Your Threat Surface Is Smaller</h4>
+        <p>A corporate AI service is a high-value target with millions of users' data. Your community node 
+        holds data for 5–50 people and is invisible from the public internet. 
+        Smaller target = smaller attack surface = lower risk of mass breach.</p>
+      </div>
+      <div class="trust-card">
+        <h4>👁️ You Can Audit Everything</h4>
+        <p>Every action your community AI takes is logged at ~/.openclaw/logs/. Every config decision 
+        is visible and auditable. Every model is inspectable. With corporate AI, you have no visibility 
+        into what happens to your data after you send it.</p>
+      </div>
+      <div class="trust-card">
+        <h4>🗳️ You Govern the Rules</h4>
+        <p>Your community decides what the AI can access, what it can do, and what it cannot. 
+        Those rules are encoded in config you control. Corporate AI services can change their 
+        rules, capabilities, and policies at any time, with no community input.</p>
+      </div>
+      <div class="trust-card">
+        <h4>🔒 No Central Database to Breach</h4>
+        <p>There's no database of 25 million users' data to leak — like LastPass in 2022. 
+        Your community's data is distributed across nodes in members' homes. 
+        Breaching one node doesn't compromise the whole community.</p>
+      </div>
+      <div class="trust-card">
+        <h4>⚡ Updates Are Your Decision</h4>
+        <p>When a CVE is patched, you decide when to update and can verify the patch before applying. 
+        With corporate AI, you have no visibility into what changed in an update or whether it 
+        introduced new data collection. Your infrastructure, your decisions.</p>
+      </div>
+      <div class="trust-card">
+        <h4>🤝 Community Accountability</h4>
+        <p>In a cooperative, the people running the infrastructure are accountable to the people 
+        using it — because they're the same people. That accountability structure produces 
+        better security decisions than one where operators answer to shareholders, not users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--ink)">
+  <div class="inner" style="text-align:center">
+    <h2 style="font-size:3rem;color:var(--white);margin-bottom:16px">Ready to Proceed?</h2>
+    <p style="font-family:'Space Mono',monospace;font-size:0.8rem;color:rgba(255,255,255,0.65);max-width:560px;margin:0 auto 28px;line-height:1.7">
+      Complete the checklist. Open the gateway only after doctor shows clean. 
+      Then your community has infrastructure that's more trustworthy than anything you were renting.
+    </p>
+    <a href="start.html" style="background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.07em;padding:13px 28px;text-decoration:none;border:3px solid var(--amber);display:inline-block;margin-right:12px">Back to Getting Started</a>
+    <a href="openclaw.html" style="background:transparent;color:rgba(255,255,255,0.6);font-family:'Space Mono',monospace;font-size:0.75rem;padding:13px 20px;text-decoration:none;border:2px solid rgba(255,255,255,0.2);display:inline-block">What is OpenClaw?</a>
+  </div>
+</section>
+
+<footer style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+  <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65)">
+    Kitchen Table Cloud — Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+  </p>
+  <p><a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55);text-decoration:none">⭐ GitHub</a></p>
+</footer>
+</body>
+</html>

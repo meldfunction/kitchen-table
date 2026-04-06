@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — Kitchen Table Cloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;--white:#FDFAF5;
+  --brick:#B54C2F;--slate:#2A4860;--amber:#C8872C;--sage:#3A6B50;
+  --sage-m:#5D9478;--muted:#7A7068;--baron:#6F1A1A;--warm:#C4874A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.75;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
+.inner{max-width:1100px;margin:0 auto}
+section{padding:72px 40px}
+.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.et{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:4px 12px;flex-shrink:0}
+.et-slate{background:var(--slate);color:var(--white)}
+.et-brick{background:var(--brick);color:var(--white)}
+.et-amber{background:var(--amber);color:var(--ink)}
+.et-sage{background:var(--sage);color:var(--white)}
+.et-ink{background:var(--ink);color:var(--white)}
+.et-baron{background:var(--baron);color:var(--white)}
+.eline{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+.eline-light{flex:1;height:1px;background:rgba(255,255,255,0.12)}
+.stitle{font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:10px}
+.ssub{max-width:680px;font-size:1.02rem;color:var(--muted);line-height:1.78;margin-top:12px;margin-bottom:40px}
+.mono{font-family:'Space Mono',monospace}
+/* Safe link styles on dark backgrounds */
+a.dark-link{color:var(--sage-m);text-decoration:none}
+a.dark-link:hover{color:var(--amber)}
+.code-block{background:#111108;border-left:3px solid var(--sage);padding:20px;font-family:'Space Mono',monospace;font-size:0.74rem;color:#7DB87D;line-height:1.85;overflow-x:auto;margin:16px 0}
+.code-block .cm{color:rgba(255,255,255,0.38)}.code-block .cmd{color:var(--amber)}
+/* Code links always readable */
+.code-block a{color:var(--sage-m);text-decoration:none}.code-block a:hover{color:var(--amber)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
+
+.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--amber)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
+.logo span{color:var(--amber)}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:1px}
+nav a{color:rgba(255,255,255,0.65);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.67rem;letter-spacing:0.04em;padding:4px 9px;transition:color 0.18s;white-space:nowrap}
+nav a:hover{color:var(--amber)}
+nav a.nav-accent{background:var(--amber);color:var(--ink);font-weight:700;padding:5px 12px}
+nav a.nav-accent:hover{background:var(--white)}
+nav a.nav-dim{color:rgba(255,255,255,0.42)}
+nav a.nav-dim:hover{color:rgba(255,255,255,0.75)}
+
+.hero-comm{background:var(--slate);padding:80px 40px 70px;border-bottom:3px solid var(--amber)}
+.hero-comm h1{font-size:clamp(3rem,6vw,5.5rem);color:var(--white);line-height:0.9;margin-bottom:18px}
+.hero-comm h1 span{color:var(--amber)}
+.hero-comm p{color:rgba(255,255,255,0.68);font-size:1.1rem;max-width:620px;line-height:1.72}
+.hero-comm p strong{color:var(--white)}
+.manifesto-section{background:var(--bg)}
+.manifesto-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.m-prose p{font-size:1.06rem;line-height:1.82;color:var(--ink);margin-bottom:18px}
+.m-prose p strong{color:var(--slate)}.m-prose p em{color:var(--brick);font-style:normal}
+.m-pull{background:var(--slate);color:var(--white);padding:32px;position:relative}
+.m-pull::before{content:'"';font-family:'Bebas Neue',sans-serif;font-size:7rem;color:rgba(255,255,255,0.07);position:absolute;top:-10px;left:14px;line-height:1}
+.m-pull p{font-size:1.15rem;line-height:1.65;position:relative;z-index:1;color:rgba(255,255,255,0.85)}
+.m-pull cite{display:block;margin-top:10px;font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.45);font-style:normal}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.1);margin-top:44px}
+.pillar{background:var(--bg);padding:28px 22px}
+.pillar h3{font-size:1.5rem;color:var(--slate);margin-bottom:10px}
+.pillar p{font-size:0.9rem;color:var(--muted);line-height:1.7}
+.pillar p strong{color:var(--ink)}
+.brands-section{background:var(--paper)}
+.brands-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:8px}
+.brand-card{border:3px solid var(--ink);padding:36px;position:relative;overflow:hidden}
+.brand-card::before{font-family:'Bebas Neue',sans-serif;font-size:8rem;position:absolute;bottom:-24px;right:-8px;line-height:1;color:rgba(0,0,0,0.04)}
+.brand-card.farm::before{content:'FARM'}.brand-card.sink::before{content:'SINK'}
+.brand-card.farm{background:var(--bg)}
+.brand-card.sink{background:var(--ink);border-color:var(--amber);color:var(--white)}
+.b-tag{display:inline-block;font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;padding:3px 10px;margin-bottom:14px}
+.farm .b-tag{background:var(--sage);color:var(--white)}.sink .b-tag{background:var(--amber);color:var(--ink)}
+.brand-card h3{font-size:3rem;margin-bottom:6px;color:var(--ink)}
+.brand-card.sink h3{color:var(--amber)}
+.b-sub{font-family:'Space Mono',monospace;font-size:0.74rem;color:var(--muted);display:block;margin-bottom:16px;letter-spacing:0.05em}
+.sink .b-sub{color:rgba(255,255,255,0.45)}
+.brand-card p{font-size:0.95rem;line-height:1.75;color:var(--ink);margin-bottom:12px;position:relative;z-index:1}
+.sink p{color:rgba(255,255,255,0.68)}
+.brand-card strong{color:var(--slate)}.sink strong{color:var(--amber)}
+.b-list{list-style:none;margin-top:14px;position:relative;z-index:1}
+.b-list li{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);padding:5px 0;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;gap:8px}
+.b-list li::before{content:'→';color:var(--sage);flex-shrink:0}
+.sink .b-list li{color:rgba(255,255,255,0.55);border-color:rgba(255,255,255,0.08)}
+.sink .b-list li::before{color:var(--amber)}
+.insp-section{background:var(--bg)}
+.insp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+.insp-card{background:var(--paper);border:2px solid transparent;padding:22px 18px;transition:border-color 0.2s,transform 0.2s}
+.insp-card:hover{border-color:var(--ink);transform:translateY(-3px)}
+.insp-type{font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+.insp-card h4{font-size:1.4rem;color:var(--ink);margin-bottom:7px}
+.insp-card p{font-size:0.84rem;color:var(--muted);line-height:1.65}
+.insp-card strong{color:var(--slate)}
+.insp-lesson{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage);margin-top:10px;display:block;border-top:1px solid rgba(0,0,0,0.08);padding-top:9px}
+.about-section{background:var(--slate);color:var(--white);padding:72px 40px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px}
+.ab-prose p{font-size:1.04rem;line-height:1.82;color:rgba(255,255,255,0.72);margin-bottom:16px}
+.ab-prose p strong{color:var(--white)}
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.1);margin-top:20px}
+.val{background:rgba(255,255,255,0.03);padding:18px}
+.val h5{font-size:1.1rem;color:var(--amber);margin-bottom:5px}
+.val p{font-family:'Space Mono',monospace;font-size:0.71rem;color:rgba(255,255,255,0.55);line-height:1.6}
+.ab-links{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+.ab-links a{background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.07em;padding:10px 20px;text-decoration:none;border:2px solid var(--amber);transition:all 0.2s;display:inline-block}
+.ab-links a:hover{background:transparent;color:var(--amber)}
+.ab-links a.s{background:transparent;color:var(--sage-m);border-color:var(--sage-m)}
+.ab-links a.s:hover{background:rgba(93,148,120,0.1)}
+@media(max-width:900px){.manifesto-grid,.brands-grid,.about-grid{grid-template-columns:1fr}.insp-grid{grid-template-columns:1fr 1fr}.pillars{grid-template-columns:1fr}.values-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.insp-grid{grid-template-columns:1fr}}
+
+@media(max-width:900px){section{padding:52px 24px}.site-header{padding:12px 24px}nav{display:none}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="logo">Kitchen Table <span>Cloud</span></div>
+  <nav><a href="index.html">Home</a>
+    <a href="start.html">Get Started</a>
+    <a href="openclaw.html">AI Agent</a>
+    <a href="swap.html">Swap Sheet</a>
+    <a href="map.html" class="nav-dim">Full Map</a>
+    <a href="community.html" class="nav-active">Community</a>
+    <a href="vision.html" class="nav-dim">Vision</a>
+    <a href="security.html">Security</a>
+    <a href="index.html#join" class="nav-accent">Join</a>
+    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" class="nav-dim">GitHub ↗</a></nav>
+</header>
+
+<div class="hero-comm">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-amber">Community</span></div>
+    <h1>We're Not <span>Customers</span>.<br>We're Stewards.</h1>
+    <p>Patagonia says they're in business to save the planet. Everything they make serves that mission or doesn't get made. 
+    <strong>We exist to demonstrate that digital infrastructure can be governed by the people who depend on it.</strong> 
+    Not as an ideological position — as a practical fact, proved one working service at a time.</p>
+  </div>
+</div>
+
+<section class="manifesto-section">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-slate">§ What We Believe</span><div class="eline"></div></div>
+    <h2 class="stitle">The Problem Society Isn't Solving</h2>
+    <div class="manifesto-grid">
+      <div class="m-prose">
+        <p>Governments regulate tech slowly and often in service of the companies they're supposed to regulate. 
+        Markets optimize for quarterly returns, not community wellbeing. Nonprofits orbit the edges without 
+        structural power to change the center.</p>
+        <p><strong>What's missing is the cooperative layer.</strong> Organizations owned by their users, governed by consent, 
+        accountable to members rather than shareholders. This model — proven in banking (credit unions), 
+        retail (REI), agriculture, and housing — has never been systematically applied to digital infrastructure.</p>
+        <p>Kitchen Table Cloud is a bet that it should be. We're small enough to move fast, principled enough 
+        to stay honest, and practical enough to know that <strong>the best argument for cooperative infrastructure 
+        is cooperative infrastructure that actually works.</strong></p>
+        <p>We want to change minds by changing what's possible. <em>One working service at a time. 
+        One community at a time. Starting here.</em></p>
+      </div>
+      <div>
+        <div class="m-pull">
+          <p>"The kitchen table is where families make decisions. Where neighbors solve problems. Where communities plan things. It's the right metaphor for what we're building — not the server room, not the boardroom. The table."</p>
+          <cite>— From our founding document</cite>
+        </div>
+        <div class="pillars" style="margin-top:20px">
+          <div class="pillar">
+            <h3>Infrastructure as Commons</h3>
+            <p>Water and roads became public goods when communities demanded it. <strong>Digital infrastructure is the next commons waiting to happen.</strong> We're not waiting for governments — we're building it ourselves first.</p>
+          </div>
+          <div class="pillar">
+            <h3>Participation Not Consumption</h3>
+            <p>Tech wants better customers. We want better participants. <strong>There's a meaningful difference between someone who uses a platform and someone who stewards one.</strong> Stewardship builds judgment. Consumption extracts it.</p>
+          </div>
+          <div class="pillar">
+            <h3>Open Source as Civic Act</h3>
+            <p>Contributing to open source is how you participate in the shape of your digital world. <strong>We see it the way previous generations saw voting, volunteering, or organizing.</strong> It's how citizens shape the infrastructure they depend on.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brands-section">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-ink">§ The Extended Family</span><div class="eline"></div></div>
+    <h2 class="stitle">From Farm to Table to Sink</h2>
+    <p class="ssub">Kitchen Table Cloud is where we gather. But every kitchen has a supply chain and an aftermath. Meet the ecosystem.</p>
+    <div class="brands-grid">
+      <div class="brand-card farm">
+        <span class="b-tag">Upstream</span>
+        <h3>The Farm</h3>
+        <span class="b-sub">Where the ingredients come from</span>
+        <p>Every kitchen needs ingredients. <strong>The Farm is the upstream cooperative R&amp;D commons</strong> — open training datasets, governance blueprints you can fork, hardware co-buying programs, and the experimental work that becomes tomorrow's standard recipe.</p>
+        <p>If Kitchen Table Cloud is where you eat, The Farm is where the food is grown. Open seed library for the technology commons.</p>
+        <ul class="b-list">
+          <li>Open model training datasets for community contexts</li>
+          <li>Hardware co-buying: bulk Pi orders, group pricing</li>
+          <li>Governance template library: sociocracy docs, consent protocols</li>
+          <li>Experimental research: what comes after Petals</li>
+          <li>Community knowledge base: what works, what doesn't</li>
+        </ul>
+      </div>
+      <div class="brand-card sink">
+        <span class="b-tag">The Long Game</span>
+        <h3>The Kitchen Sink</h3>
+        <span class="b-sub">Yes, we're putting everything in here</span>
+        <p><strong>The Kitchen Sink is our radical completeness statement.</strong> The vision of community infrastructure when it actually replaces the full commercial stack — not just the convenient parts.</p>
+        <p>Emergency communications. Community health records. Local energy grids. Cooperative ISPs. Everything you were told you had to rent. <strong>All of it.</strong></p>
+        <ul class="b-list">
+          <li>Community emergency broadcast &amp; alert systems</li>
+          <li>Cooperative health record infrastructure</li>
+          <li>Neighborhood energy monitoring and micro-grid coordination</li>
+          <li>Community-owned internet infrastructure (the long game)</li>
+          <li>Mutual aid ledgers, time banks, local exchange systems</li>
+          <li>Everything you were told you had to rent from someone else</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="insp-section">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-sage">§ Who We Admire</span><div class="eline"></div></div>
+    <h2 class="stitle">We Didn't Invent This. We Assembled It.</h2>
+    <p class="ssub">These are the projects, companies, and communities whose work proves another approach is possible. We build on their shoulders.</p>
+    <div class="insp-grid">
+      <div class="insp-card">
+        <span class="insp-type">Local-First Software</span>
+        <h4>Obsidian</h4>
+        <p>Notes on your device, no server, no subscription, 1,000+ community plugins. Proved that <strong>local-first + open extension</strong> creates more value than subscription lock-in.</p>
+        <span class="insp-lesson">→ User-owned data + community plugins beats the subscription model</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Privacy as Architecture</span>
+        <h4>Anytype</h4>
+        <p>E2E encrypted knowledge base, synced across devices, exportable forever. <strong>Privacy built in, not bolted on.</strong> Your data, by design.</p>
+        <span class="insp-lesson">→ Design for ownership first; sync is an implementation detail</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Honest AI Tools</span>
+        <h4>Elicit</h4>
+        <p>AI research assistant transparent about its limits, shows sources, doesn't confabulate. Proves <strong>honest specialized AI</strong> beats generic AI for people who need it.</p>
+        <span class="insp-lesson">→ AI that knows what it doesn't know is more trustworthy</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Attention-Respecting Design</span>
+        <h4>Calm Tech Institute</h4>
+        <p>Technology that serves human attention rather than harvesting it. A direct counterpoint to the <strong>engagement-maximizing model</strong> that made most apps addictive by design.</p>
+        <span class="insp-lesson">→ Good technology works in the background; it doesn't demand the foreground</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Mission-Driven Business</span>
+        <h4>Patagonia</h4>
+        <p>Mission-driven to the point of giving the company away. Proves that <strong>values can be structural</strong>, not just marketing. Their mission is load-bearing.</p>
+        <span class="insp-lesson">→ When the mission governs decisions, every decision gets easier</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Off-Grid Comms</span>
+        <h4>Meshtastic</h4>
+        <p>A global community building off-grid LoRa mesh networks with $35 radios. No subscription. No towers. <strong>Resilient comms by design.</strong></p>
+        <span class="insp-lesson">→ The most resilient infrastructure works without permission</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Open AI Infrastructure</span>
+        <h4>Petals + llama.cpp</h4>
+        <p>Petals: large AI models split across commodity hardware. llama.cpp: frontier AI on CPU. Together they made <strong>distributed community AI real.</strong></p>
+        <span class="insp-lesson">→ The open AI ecosystem moves faster than most people realize</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Community Hardware</span>
+        <h4>Raspberry Pi Foundation</h4>
+        <p>A $35 computer that changed what 'institutional scale' means. <strong>Democratized compute</strong> one Pi at a time — and keeps getting more capable.</p>
+        <span class="insp-lesson">→ Cheap capable hardware in enough hands changes the math entirely</span>
+      </div>
+      <div class="insp-card">
+        <span class="insp-type">Self-Hosting Community</span>
+        <h4>r/selfhosted</h4>
+        <p>One million people sharing configs, solving problems, documenting setups. The largest practical knowledge base for running your own services. <strong>Community knowledge as infrastructure.</strong></p>
+        <span class="insp-lesson">→ Documentation and community are as important as the software</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="inner">
+    <div class="eyebrow"><span class="et et-amber">§ About Us</span><div class="eline-light"></div></div>
+    <h2 class="stitle" style="color:var(--white)">We Built This Because We Need It</h2>
+    <div class="about-grid">
+      <div class="ab-prose">
+        <p>Kitchen Table Cloud is not a startup. It's not funded by venture capital. It doesn't have a growth target or an exit strategy. <strong>It exists because a small group of people looked at the digital infrastructure they depended on and didn't like what they saw.</strong></p>
+        <p>We come from organizing, technology, design, education, and cooperative development. What we share is the conviction that the extractive model of digital services is not inevitable — and that building the alternative is more useful than criticizing the status quo.</p>
+        <p>We use <strong>sociocracy</strong> as our governance model and <strong>platform cooperativism</strong> as our structural model. The community is the product. The product belongs to the community.</p>
+        <p>If this resonates with you, show up. Open a discussion. Tell someone this exists. Or just run the three commands on the home page and cancel a subscription. <strong>Every lever you take back matters.</strong></p>
+        <div class="ab-links">
+          <a href="vision.html">Read the Vision →</a>
+          <a href="start.html" class="s">Get Started →</a>
+          <a href="index.html#join" class="s">Join the Co-op →</a>
+        </div>
+      </div>
+      <div>
+        <div class="values-grid">
+          <div class="val"><h5>Open Source</h5><p>Everything we build is open. Transparency isn't a feature — it's the model.</p></div>
+          <div class="val"><h5>Cooperative</h5><p>Governed by members, for members. Decisions by consent. Benefits stay at the table.</p></div>
+          <div class="val"><h5>Local-First</h5><p>Data lives close to the people it belongs to. Cloud is optional. Resilience is structural.</p></div>
+          <div class="val"><h5>Human Scale</h5><p>We build for communities of 5–500. Not millions. Depth over breadth.</p></div>
+          <div class="val"><h5>Honest</h5><p>We say when something is harder than the alternative. Tradeoffs are real. We name them.</p></div>
+          <div class="val"><h5>Regenerative</h5><p>Technology that gives back to the communities it serves — instead of extracting from them.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55)">
+    Kitchen Table Cloud · Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+  </p>
+  <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank"
+     style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage-m);text-decoration:none">
+    ⭐ Star on GitHub
+  </a>
+</footer>
+</body>
+</html>
