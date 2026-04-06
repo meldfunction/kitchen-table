@@ -1,127 +1,569 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Started — Kitchen Table Cloud</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started — Kitchen Table Cloud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F3EFE8;
+      --paper: #E8E3D5;
+      --ink: #17140E;
+      --white: #FDFAF5;
+      --brick: #B54C2F;
+      --slate: #2A4860;
+      --amber: #C8872C;
+      --sage: #3A6B50;
+      --sage-m: #5D9478;
+      --muted: #7A7068;
+      --baron: #6F1A1A;
+    }
 
-:root{--bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;--white:#FDFAF5;
-  --brick:#B54C2F;--slate:#2A4860;--amber:#C8872C;--sage:#3A6B50;
-  --sage-m:#5D9478;--muted:#7A7068;--baron:#6F1A1A;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.75;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
-.inner{max-width:1100px;margin:0 auto}
-section{padding:72px 40px}
-.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.et{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:4px 12px;flex-shrink:0}
-.et-slate{background:var(--slate);color:var(--white)}
-.et-brick{background:var(--brick);color:var(--white)}
-.et-amber{background:var(--amber);color:var(--ink)}
-.et-sage{background:var(--sage);color:var(--white)}
-.et-ink{background:var(--ink);color:var(--white)}
-.eline{flex:1;height:1px;background:rgba(0,0,0,0.12)}
-.stitle{font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:10px}
-.ssub{max-width:660px;font-size:1.02rem;color:var(--muted);line-height:1.78;margin-top:12px;margin-bottom:40px}
-.mono{font-family:'Space Mono',monospace}
-.code-block{background:#111108;border-left:3px solid var(--sage);padding:20px;font-family:'Space Mono',monospace;font-size:0.74rem;color:#7DB87D;line-height:1.85;overflow-x:auto;margin:16px 0}
-.code-block .cm{color:rgba(255,255,255,0.65)}.code-block .cmd{color:var(--amber)}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Libre Baskerville', serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.04em;
+      line-height: 0.93
+    }
+
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    section {
+      padding: 72px 40px
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px
+    }
+
+    .et {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      flex-shrink: 0
+    }
+
+    .et-slate {
+      background: var(--slate);
+      color: var(--white)
+    }
+
+    .et-brick {
+      background: var(--brick);
+      color: var(--white)
+    }
+
+    .et-amber {
+      background: var(--amber);
+      color: var(--ink)
+    }
+
+    .et-sage {
+      background: var(--sage);
+      color: var(--white)
+    }
+
+    .et-ink {
+      background: var(--ink);
+      color: var(--white)
+    }
+
+    .eline {
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.12)
+    }
+
+    .stitle {
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      margin-bottom: 10px
+    }
+
+    .ssub {
+      max-width: 660px;
+      font-size: 1.02rem;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-top: 12px;
+      margin-bottom: 40px
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace
+    }
+
+    .code-block {
+      background: #111108;
+      border-left: 3px solid var(--sage);
+      padding: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      color: #7DB87D;
+      line-height: 1.85;
+      overflow-x: auto;
+      margin: 16px 0
+    }
+
+    .code-block .cm {
+      color: rgba(255, 255, 255, 0.65)
+    }
+
+    .code-block .cmd {
+      color: var(--amber)
+    }
 
 
-.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--amber)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
-.logo span{color:var(--amber)}
-nav a{color:rgba(255,255,255,0.6);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.67rem;letter-spacing:0.04em;padding:4px 9px;transition:color 0.18s;white-space:nowrap}
-nav a:hover{color:var(--amber)}
-nav a.nav-vision{border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.65)}
-nav a.nav-active{color:var(--amber);border-bottom:2px solid var(--amber)}
-nav a.nav-cta{background:var(--amber);color:var(--ink);font-weight:700}
-nav a.nav-cta:hover{background:var(--white)}
+    .site-header {
+      background: var(--ink);
+      padding: 13px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      border-bottom: 3px solid var(--amber)
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--white);
+      letter-spacing: 0.1em
+    }
+
+    .logo span {
+      color: var(--amber)
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.04em;
+      padding: 4px 9px;
+      transition: color 0.18s;
+      white-space: nowrap
+    }
+
+    nav a:hover {
+      color: var(--amber)
+    }
+
+    nav a.nav-vision {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.65)
+    }
+
+    nav a.nav-active {
+      color: var(--amber);
+      border-bottom: 2px solid var(--amber)
+    }
+
+    nav a.nav-cta {
+      background: var(--amber);
+      color: var(--ink);
+      font-weight: 700
+    }
+
+    nav a.nav-cta:hover {
+      background: var(--white)
+    }
 
 
-.hero-start{background:var(--ink);padding:80px 40px 70px;position:relative;overflow:hidden;border-bottom:3px solid var(--amber)}
-.hero-start h1{font-size:clamp(3.5rem,7vw,6.5rem);color:var(--white);line-height:0.9;margin-bottom:20px}
-.hero-start h1 span{color:var(--amber)}
-.hero-start p{color:rgba(255,255,255,0.55);font-size:1.08rem;max-width:560px;line-height:1.72;margin-bottom:28px}
-.hero-start p strong{color:var(--white)}
-.phase-nav{display:flex;gap:0;margin-top:48px;border:2px solid var(--ink);flex-wrap:wrap}
-.pnav-btn{flex:1;min-width:120px;padding:14px 16px;background:var(--paper);border:none;border-right:2px solid var(--ink);cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.05em;color:var(--ink);transition:background 0.2s;text-align:left}
-.pnav-btn:last-child{border-right:none}
-.pnav-btn.active{background:var(--slate);color:var(--white)}
-.pnav-btn .pn{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--muted);display:block;margin-bottom:2px;letter-spacing:0.1em;text-transform:uppercase}
-.pnav-btn.active .pn{color:var(--amber)}
-.phase-content{display:none}.phase-content.active{display:block}
-.checklist{list-style:none;margin-top:8px}
-.checklist li{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;border-bottom:1px solid rgba(0,0,0,0.07);cursor:pointer;transition:background 0.15s;line-height:1.55}
-.checklist li:hover{background:rgba(0,0,0,0.025)}
-.checklist li.done{opacity:0.5}
-.checklist li.done .cl-text{text-decoration:line-through;color:var(--muted)}
-.checkbox{width:20px;height:20px;border:2px solid var(--muted);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-.checklist li.done .checkbox{background:var(--sage);border-color:var(--sage);color:var(--white)}
-.cl-text{flex:1}
-.cl-text strong{font-family:'Space Mono',monospace;font-size:0.85rem;display:block;margin-bottom:3px}
-.cl-text span{font-size:0.84rem;color:var(--muted)}
-.cl-tag{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;background:var(--sage);color:var(--white);flex-shrink:0;align-self:flex-start;margin-top:2px}
-.cl-tag.hard{background:var(--brick)}.cl-tag.wait{background:var(--slate)}.cl-tag.done-t{background:var(--sage)}
-.phase-wrap{background:var(--paper);border:2px solid var(--ink);margin-top:0}
-.phase-header{background:var(--slate);color:var(--white);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
-.phase-header h3{font-size:1.6rem;letter-spacing:0.04em}
-.phase-header .ph-meta{font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.5)}
-.phase-intro{padding:20px 24px 8px;font-size:0.96rem;color:var(--muted);line-height:1.7;border-bottom:2px solid rgba(0,0,0,0.08)}
-.progress-bar-wrap{padding:16px 24px;background:rgba(0,0,0,0.04);border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:14px}
-.progress-bar{flex:1;height:6px;background:rgba(0,0,0,0.1);position:relative}
-.progress-fill{height:100%;background:var(--sage);transition:width 0.3s;width:0%}
-.progress-label{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);white-space:nowrap}
-.guide-callout{background:var(--ink);color:var(--white);padding:28px 32px;margin:28px 0 0}
-.guide-callout h4{font-size:1.5rem;color:var(--amber);margin-bottom:8px}
-.guide-callout p{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:12px}
-.guide-callout a{color:var(--sage-m);text-decoration:none}
-.guide-callout a:hover{color:var(--amber)}
-.quick-start{background:var(--ink);padding:48px 40px}
-.qs-inner{max-width:760px;margin:0 auto}
-.qs-inner h2{font-size:3rem;color:var(--amber);margin-bottom:16px}
-.qs-inner p{color:rgba(255,255,255,0.5);font-family:'Space Mono',monospace;font-size:0.8rem;line-height:1.7;margin-bottom:20px}
+    .hero-start {
+      background: var(--ink);
+      padding: 80px 40px 70px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px solid var(--amber)
+    }
 
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
-@media(max-width:900px){section{padding:52px 24px}.site-header{padding:12px 24px}nav{display:none}}
-</style>
+    .hero-start h1 {
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      color: var(--white);
+      line-height: 0.9;
+      margin-bottom: 20px
+    }
+
+    .hero-start h1 span {
+      color: var(--amber)
+    }
+
+    .hero-start p {
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 1.08rem;
+      max-width: 560px;
+      line-height: 1.72;
+      margin-bottom: 28px
+    }
+
+    .hero-start p strong {
+      color: var(--white)
+    }
+
+    .phase-nav {
+      display: flex;
+      gap: 0;
+      margin-top: 48px;
+      border: 2px solid var(--ink);
+      flex-wrap: wrap
+    }
+
+    .pnav-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 14px 16px;
+      background: var(--paper);
+      border: none;
+      border-right: 2px solid var(--ink);
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      transition: background 0.2s;
+      text-align: left
+    }
+
+    .pnav-btn:last-child {
+      border-right: none
+    }
+
+    .pnav-btn.active {
+      background: var(--slate);
+      color: var(--white)
+    }
+
+    .pnav-btn .pn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 2px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase
+    }
+
+    .pnav-btn.active .pn {
+      color: var(--amber)
+    }
+
+    .phase-content {
+      display: none
+    }
+
+    .phase-content.active {
+      display: block
+    }
+
+    .checklist {
+      list-style: none;
+      margin-top: 8px
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      cursor: pointer;
+      transition: background 0.15s;
+      line-height: 1.55
+    }
+
+    .checklist li:hover {
+      background: rgba(0, 0, 0, 0.025)
+    }
+
+    .checklist li.done {
+      opacity: 0.5
+    }
+
+    .checklist li.done .cl-text {
+      text-decoration: line-through;
+      color: var(--muted)
+    }
+
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--muted);
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s
+    }
+
+    .checklist li.done .checkbox {
+      background: var(--sage);
+      border-color: var(--sage);
+      color: var(--white)
+    }
+
+    .cl-text {
+      flex: 1
+    }
+
+    .cl-text strong {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 3px
+    }
+
+    .cl-text span {
+      font-size: 0.84rem;
+      color: var(--muted)
+    }
+
+    .cl-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      background: var(--sage);
+      color: var(--white);
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px
+    }
+
+    .cl-tag.hard {
+      background: var(--brick)
+    }
+
+    .cl-tag.wait {
+      background: var(--slate)
+    }
+
+    .cl-tag.done-t {
+      background: var(--sage)
+    }
+
+    .phase-wrap {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      margin-top: 0
+    }
+
+    .phase-header {
+      background: var(--slate);
+      color: var(--white);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .phase-header h3 {
+      font-size: 1.6rem;
+      letter-spacing: 0.04em
+    }
+
+    .phase-header .ph-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.5)
+    }
+
+    .phase-intro {
+      padding: 20px 24px 8px;
+      font-size: 0.96rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.08)
+    }
+
+    .progress-bar-wrap {
+      padding: 16px 24px;
+      background: rgba(0, 0, 0, 0.04);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.1);
+      position: relative
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--sage);
+      transition: width 0.3s;
+      width: 0%
+    }
+
+    .progress-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      white-space: nowrap
+    }
+
+    .guide-callout {
+      background: var(--ink);
+      color: var(--white);
+      padding: 28px 32px;
+      margin: 28px 0 0
+    }
+
+    .guide-callout h4 {
+      font-size: 1.5rem;
+      color: var(--amber);
+      margin-bottom: 8px
+    }
+
+    .guide-callout p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.7;
+      margin-bottom: 12px
+    }
+
+    .guide-callout a {
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    .guide-callout a:hover {
+      color: var(--amber)
+    }
+
+    .quick-start {
+      background: var(--ink);
+      padding: 48px 40px
+    }
+
+    .qs-inner {
+      max-width: 760px;
+      margin: 0 auto
+    }
+
+    .qs-inner h2 {
+      font-size: 3rem;
+      color: var(--amber);
+      margin-bottom: 16px
+    }
+
+    .qs-inner p {
+      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.7;
+      margin-bottom: 20px
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5
+    }
+
+    @media(max-width:900px) {
+      section {
+        padding: 52px 24px
+      }
+
+      .site-header {
+        padding: 12px 24px
+      }
+
+      nav {
+        display: none
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="site-header">
-  <div class="logo">Kitchen Table <span>Cloud</span></div>
-  <nav><a href="index.html#costs">Why Now</a>
-    <a href="index.html#101">101</a>
-    <a href="index.html#today">Do It Today</a>
-    <a href="start.html" class="nav-active">Get Started</a>
-    <a href="openclaw.html">AI Agent</a>
-    <a href="index.html#swap">Swap Sheet</a>
-    <a href="index.html#offline">Offline</a>
-    <a href="map.html" class="nav-vision">Full Map ↗</a>
-    <a href="vision.html" class="nav-vision">Vision ↗</a>
-    <a href="security.html">Security</a>
-    <a href="index.html#join">Join</a>
-    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" class="nav-vision">GitHub ↗</a></nav>
-</header>
+  <header class="site-header">
+    <div class="logo">Kitchen Table <span>Cloud</span></div>
+    <nav><a href="index.html#costs">Why Now</a>
+      <a href="index.html#101">101</a>
+      <a href="index.html#today">Do It Today</a>
+      <a href="start.html" class="nav-active">Get Started</a>
+      <a href="openclaw.html">AI Agent</a>
+      <a href="index.html#swap">Swap Sheet</a>
+      <a href="index.html#offline">Offline</a>
+      <a href="map.html" class="nav-vision">Full Map ↗</a>
+      <a href="vision.html" class="nav-vision">Vision ↗</a>
+      <a href="security.html">Security</a>
+      <a href="index.html#join">Join</a>
+      <a href="https://meldfunction.github.io/kitchen-table/" class="nav-vision">GitHub ↗</a>
+    </nav>
+  </header>
 
-<div class="hero-start">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-amber">Getting Started</span></div>
-    <h1>From <span>Convinced</span><br>to Running</h1>
-    <p>This is the bridge between "I understand why" and "it's working in my home." 
-    <strong>Work through the phases in order.</strong> Each one builds on the last. 
-    Start with Phase 00 this afternoon. Come back for the rest when you're ready.</p>
-    <p style="font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.55)">
-      ↳ Full technical details in the <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud/blob/main/sovereign-stack-guide.md" style="color:var(--amber);text-decoration:none" target="_blank">Sovereign Stack Guide →</a>
-    </p>
+  <div class="hero-start">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-amber">Getting Started</span></div>
+      <h1>From <span>Convinced</span><br>to Running</h1>
+      <p>This is the bridge between "I understand why" and "it's working in my home."
+        <strong>Work through the phases in order.</strong> Each one builds on the last.
+        Start with Phase 00 this afternoon. Come back for the rest when you're ready.
+      </p>
+      <p style="font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.55)">
+        ↳ Full technical details in the <a
+          href="https://meldfunction.github.io/kitchen-table//blob/main/sovereign-stack-guide.md"
+          style="color:var(--amber);text-decoration:none" target="_blank">Sovereign Stack Guide →</a>
+      </p>
+    </div>
   </div>
-</div>
 
-<section style="background:var(--paper);padding-bottom:0">
-  <div class="inner">
-    <div class="phase-nav" style="margin-bottom:0">
-      
+  <section style="background:var(--paper);padding-bottom:0">
+    <div class="inner">
+      <div class="phase-nav" style="margin-bottom:0">
+
         <button class="pnav-btn active" onclick="switchPhase(0)">
           <span class="pn">Phase 00</span>
           The Quick Start
@@ -146,20 +588,23 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
           <span class="pn">Phase 05</span>
           Community AI
         </button>
-    </div>
-    
-        <div class="phase-content active" id="phase-0">
-          <div class="phase-wrap">
-            <div class="phase-header">
-              <h3>Phase 00 — The Quick Start</h3>
-              <span class="ph-meta">⏱ 15 min</span>
+      </div>
+
+      <div class="phase-content active" id="phase-0">
+        <div class="phase-wrap">
+          <div class="phase-header">
+            <h3>Phase 00 — The Quick Start</h3>
+            <span class="ph-meta">⏱ 15 min</span>
+          </div>
+          <div class="phase-intro">Just want AI running right now? Three commands. Then come back and do the full setup.
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="prog-0"></div>
             </div>
-            <div class="phase-intro">Just want AI running right now? Three commands. Then come back and do the full setup.</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="prog-0"></div></div>
-              <div class="progress-label" id="prog-label-0">0 / 4 done</div>
-            </div>
-            <ul class="checklist">
+            <div class="progress-label" id="prog-label-0">0 / 4 done</div>
+          </div>
+          <ul class="checklist">
             <li onclick="toggleCheck(this)" data-phase="0" data-item="0">
               <div class="checkbox">✓</div>
               <div class="cl-text">
@@ -191,21 +636,25 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <span>You just saved $20/month. Do the full setup when you're ready.</span>
               </div>
               <span class="cl-tag done-t">Win</span>
-            </li></ul>
-          </div>
+            </li>
+          </ul>
         </div>
-        <div class="phase-content" id="phase-1">
-          <div class="phase-wrap">
-            <div class="phase-header">
-              <h3>Phase 01 — Hardware</h3>
-              <span class="ph-meta">⏱ 1–2 weeks (shipping)</span>
+      </div>
+      <div class="phase-content" id="phase-1">
+        <div class="phase-wrap">
+          <div class="phase-header">
+            <h3>Phase 01 — Hardware</h3>
+            <span class="ph-meta">⏱ 1–2 weeks (shipping)</span>
+          </div>
+          <div class="phase-intro">Get your node. This is your foundation — every other step runs on this hardware.
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="prog-1"></div>
             </div>
-            <div class="phase-intro">Get your node. This is your foundation — every other step runs on this hardware.</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="prog-1"></div></div>
-              <div class="progress-label" id="prog-label-1">0 / 6 done</div>
-            </div>
-            <ul class="checklist">
+            <div class="progress-label" id="prog-label-1">0 / 6 done</div>
+          </div>
+          <ul class="checklist">
             <li onclick="toggleCheck(this)" data-phase="1" data-item="0">
               <div class="checkbox">✓</div>
               <div class="cl-text">
@@ -253,26 +702,31 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <span>sudo apt update && sudo apt full-upgrade -y && sudo reboot</span>
               </div>
               <span class="cl-tag fast">Quick</span>
-            </li></ul>
-          </div>
+            </li>
+          </ul>
         </div>
-        <div class="phase-content" id="phase-2">
-          <div class="phase-wrap">
-            <div class="phase-header">
-              <h3>Phase 02 — Inference</h3>
-              <span class="ph-meta">⏱ 1 afternoon</span>
+      </div>
+      <div class="phase-content" id="phase-2">
+        <div class="phase-wrap">
+          <div class="phase-header">
+            <h3>Phase 02 — Inference</h3>
+            <span class="ph-meta">⏱ 1 afternoon</span>
+          </div>
+          <div class="phase-intro">Get AI running on your hardware. This is the core capability everything else builds
+            on.</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="prog-2"></div>
             </div>
-            <div class="phase-intro">Get AI running on your hardware. This is the core capability everything else builds on.</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="prog-2"></div></div>
-              <div class="progress-label" id="prog-label-2">0 / 7 done</div>
-            </div>
-            <ul class="checklist">
+            <div class="progress-label" id="prog-label-2">0 / 7 done</div>
+          </div>
+          <ul class="checklist">
             <li onclick="toggleCheck(this)" data-phase="2" data-item="0">
               <div class="checkbox">✓</div>
               <div class="cl-text">
                 <strong>Install core dependencies</strong>
-                <span>git curl wget build-essential cmake python3 python3-pip python3-venv libopenblas-dev nodejs docker.io</span>
+                <span>git curl wget build-essential cmake python3 python3-pip python3-venv libopenblas-dev nodejs
+                  docker.io</span>
               </div>
               <span class="cl-tag hard">Hands-on</span>
             </li>
@@ -323,21 +777,25 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <span>python3 -m venv ~/petals-env && pip install petals</span>
               </div>
               <span class="cl-tag hard">Hands-on</span>
-            </li></ul>
-          </div>
+            </li>
+          </ul>
         </div>
-        <div class="phase-content" id="phase-3">
-          <div class="phase-wrap">
-            <div class="phase-header">
-              <h3>Phase 03 — Mesh Network</h3>
-              <span class="ph-meta">⏱ 1 hour</span>
+      </div>
+      <div class="phase-content" id="phase-3">
+        <div class="phase-wrap">
+          <div class="phase-header">
+            <h3>Phase 03 — Mesh Network</h3>
+            <span class="ph-meta">⏱ 1 hour</span>
+          </div>
+          <div class="phase-intro">Connect your node to your community's private encrypted network. Do this before
+            sharing any services.</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="prog-3"></div>
             </div>
-            <div class="phase-intro">Connect your node to your community's private encrypted network. Do this before sharing any services.</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="prog-3"></div></div>
-              <div class="progress-label" id="prog-label-3">0 / 6 done</div>
-            </div>
-            <ul class="checklist">
+            <div class="progress-label" id="prog-label-3">0 / 6 done</div>
+          </div>
+          <ul class="checklist">
             <li onclick="toggleCheck(this)" data-phase="3" data-item="0">
               <div class="checkbox">✓</div>
               <div class="cl-text">
@@ -385,26 +843,31 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <span>List every node's Tailscale hostname. Test with: ansible all -i inventory.ini -m ping</span>
               </div>
               <span class="cl-tag hard">Hands-on</span>
-            </li></ul>
-          </div>
+            </li>
+          </ul>
         </div>
-        <div class="phase-content" id="phase-4">
-          <div class="phase-wrap">
-            <div class="phase-header">
-              <h3>Phase 04 — Services</h3>
-              <span class="ph-meta">⏱ 1–2 weekends</span>
+      </div>
+      <div class="phase-content" id="phase-4">
+        <div class="phase-wrap">
+          <div class="phase-header">
+            <h3>Phase 04 — Services</h3>
+            <span class="ph-meta">⏱ 1–2 weekends</span>
+          </div>
+          <div class="phase-intro">Layer community services on top of your mesh. Each one replaces a subscription. Do
+            them in order — CasaOS first.</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="prog-4"></div>
             </div>
-            <div class="phase-intro">Layer community services on top of your mesh. Each one replaces a subscription. Do them in order — CasaOS first.</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="prog-4"></div></div>
-              <div class="progress-label" id="prog-label-4">0 / 10 done</div>
-            </div>
-            <ul class="checklist">
+            <div class="progress-label" id="prog-label-4">0 / 10 done</div>
+          </div>
+          <ul class="checklist">
             <li onclick="toggleCheck(this)" data-phase="4" data-item="0">
               <div class="checkbox">✓</div>
               <div class="cl-text">
                 <strong>Install CasaOS (your home OS dashboard)</strong>
-                <span>curl -fsSL https://get.casaos.io | sudo bash — then open http://your-tailscale-ip in a browser</span>
+                <span>curl -fsSL https://get.casaos.io | sudo bash — then open http://your-tailscale-ip in a
+                  browser</span>
               </div>
               <span class="cl-tag fast">Quick</span>
             </li>
@@ -479,21 +942,25 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <span>From CasaOS. 3,000+ device integrations, all running locally with zero cloud.</span>
               </div>
               <span class="cl-tag hard">Hands-on</span>
-            </li></ul>
-          </div>
+            </li>
+          </ul>
         </div>
-        <div class="phase-content" id="phase-5">
-          <div class="phase-wrap">
-            <div class="phase-header">
-              <h3>Phase 05 — Community AI</h3>
-              <span class="ph-meta">⏱ Group coordination</span>
+      </div>
+      <div class="phase-content" id="phase-5">
+        <div class="phase-wrap">
+          <div class="phase-header">
+            <h3>Phase 05 — Community AI</h3>
+            <span class="ph-meta">⏱ Group coordination</span>
+          </div>
+          <div class="phase-intro">Pool your nodes into a distributed AI pod. This is where the community capability
+            exceeds what any individual can do alone.</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar">
+              <div class="progress-fill" id="prog-5"></div>
             </div>
-            <div class="phase-intro">Pool your nodes into a distributed AI pod. This is where the community capability exceeds what any individual can do alone.</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="prog-5"></div></div>
-              <div class="progress-label" id="prog-label-5">0 / 7 done</div>
-            </div>
-            <ul class="checklist">
+            <div class="progress-label" id="prog-label-5">0 / 7 done</div>
+          </div>
+          <ul class="checklist">
             <li onclick="toggleCheck(this)" data-phase="5" data-item="0">
               <div class="checkbox">✓</div>
               <div class="cl-text">
@@ -506,7 +973,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
               <div class="checkbox">✓</div>
               <div class="cl-text">
                 <strong>Verify collective inference pool is working</strong>
-                <span>Nodes should find each other via DHT. Check with: python3 -c 'from petals import AutoDistributedModelForCausalLM; ...'</span>
+                <span>Nodes should find each other via DHT. Check with: python3 -c 'from petals import
+                  AutoDistributedModelForCausalLM; ...'</span>
               </div>
               <span class="cl-tag hard">Hands-on</span>
             </li>
@@ -538,7 +1006,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
               <div class="checkbox">✓</div>
               <div class="cl-text">
                 <strong>Write your SOUL.md</strong>
-                <span>Your AI's identity, values, and explicit 'never do this' boundaries. Stored in ~/.openclaw/SOUL.md</span>
+                <span>Your AI's identity, values, and explicit 'never do this' boundaries. Stored in
+                  ~/.openclaw/SOUL.md</span>
               </div>
               <span class="cl-tag fast">Quick</span>
             </li>
@@ -549,83 +1018,91 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <span>Collect 500+ instruction-response pairs from your notes, docs, Slack exports. Run Unsloth.</span>
               </div>
               <span class="cl-tag hard">Hands-on</span>
-            </li></ul>
-          </div>
+            </li>
+          </ul>
         </div>
-    <div class="guide-callout" style="margin-top:28px">
-      <h4>📖 Need More Detail?</h4>
-      <p>Every step above has a full explanation in the Sovereign Stack Guide — 3,000+ lines of 
-      step-by-step commands, configuration examples, and troubleshooting. Written for humans, 
-      with the command-line parts clearly labeled.</p>
-      <p>
-        <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud/blob/main/sovereign-stack-guide.md" target="_blank">→ sovereign-stack-guide.md (full guide on GitHub)</a>&nbsp;&nbsp;
-        <a href="openclaw.html">→ What is OpenClaw and SOUL.md?</a>&nbsp;&nbsp;
-        <a href="security.html">→ Security checklist before you go live</a>
+      </div>
+      <div class="guide-callout" style="margin-top:28px">
+        <h4>📖 Need More Detail?</h4>
+        <p>Every step above has a full explanation in the Sovereign Stack Guide — 3,000+ lines of
+          step-by-step commands, configuration examples, and troubleshooting. Written for humans,
+          with the command-line parts clearly labeled.</p>
+        <p>
+          <a href="https://meldfunction.github.io/kitchen-table//blob/main/sovereign-stack-guide.md" target="_blank">→
+            sovereign-stack-guide.md (full guide on GitHub)</a>&nbsp;&nbsp;
+          <a href="openclaw.html">→ What is OpenClaw and SOUL.md?</a>&nbsp;&nbsp;
+          <a href="security.html">→ Security checklist before you go live</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--ink);padding:48px 40px">
+    <div class="qs-inner">
+      <h2>Progress Saves in Your Browser</h2>
+      <p>Your checklist progress is stored locally in your browser. It persists between visits.
+        When you clear your cache, it resets. If you want to share progress with your group —
+        the Ansible onboarding playbook tracks actual installed state: <br>
+        <a href="https://meldfunction.github.io/kitchen-table//blob/main/https://meldfunction.github.io/kitchen-table/onboard-new-member.yml"
+          target="_blank">→ onboard-new-member.yml</a>
       </p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section style="background:var(--ink);padding:48px 40px">
-  <div class="qs-inner">
-    <h2>Progress Saves in Your Browser</h2>
-    <p>Your checklist progress is stored locally in your browser. It persists between visits. 
-    When you clear your cache, it resets. If you want to share progress with your group — 
-    the Ansible onboarding playbook tracks actual installed state: <br>
-    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud/blob/main/playbooks/onboard-new-member.yml" target="_blank">→ onboard-new-member.yml</a></p>
-  </div>
-</section>
+  <script>
+    const state = JSON.parse(localStorage.getItem('ktc-checklist') || '{}');
 
-<script>
-const state = JSON.parse(localStorage.getItem('ktc-checklist') || '{}');
+    function saveState() {
+      localStorage.setItem('ktc-checklist', JSON.stringify(state));
+    }
 
-function saveState() {
-  localStorage.setItem('ktc-checklist', JSON.stringify(state));
-}
+    function toggleCheck(li) {
+      li.classList.toggle('done');
+      const key = li.dataset.phase + '-' + li.dataset.item;
+      state[key] = li.classList.contains('done');
+      saveState();
+      updateProgress(parseInt(li.dataset.phase));
+    }
 
-function toggleCheck(li) {
-  li.classList.toggle('done');
-  const key = li.dataset.phase + '-' + li.dataset.item;
-  state[key] = li.classList.contains('done');
-  saveState();
-  updateProgress(parseInt(li.dataset.phase));
-}
+    function updateProgress(phaseIdx) {
+      const phase = document.getElementById('phase-' + phaseIdx);
+      const items = phase.querySelectorAll('.checklist li');
+      const done = phase.querySelectorAll('.checklist li.done').length;
+      const pct = items.length ? (done / items.length * 100).toFixed(0) : 0;
+      const fill = document.getElementById('prog-' + phaseIdx);
+      const label = document.getElementById('prog-label-' + phaseIdx);
+      if (fill) fill.style.width = pct + '%';
+      if (label) label.textContent = done + ' / ' + items.length + ' done';
+    }
 
-function updateProgress(phaseIdx) {
-  const phase = document.getElementById('phase-' + phaseIdx);
-  const items = phase.querySelectorAll('.checklist li');
-  const done = phase.querySelectorAll('.checklist li.done').length;
-  const pct = items.length ? (done / items.length * 100).toFixed(0) : 0;
-  const fill = document.getElementById('prog-' + phaseIdx);
-  const label = document.getElementById('prog-label-' + phaseIdx);
-  if (fill) fill.style.width = pct + '%';
-  if (label) label.textContent = done + ' / ' + items.length + ' done';
-}
+    function switchPhase(idx) {
+      document.querySelectorAll('.phase-content').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      document.querySelectorAll('.pnav-btn').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+    }
 
-function switchPhase(idx) {
-  document.querySelectorAll('.phase-content').forEach((el, i) => {
-    el.classList.toggle('active', i === idx);
-  });
-  document.querySelectorAll('.pnav-btn').forEach((el, i) => {
-    el.classList.toggle('active', i === idx);
-  });
-}
+    // Restore state on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.checklist li').forEach(li => {
+        const key = li.dataset.phase + '-' + li.dataset.item;
+        if (state[key]) li.classList.add('done');
+      });
+      for (let i = 0; i < 6; i++) updateProgress(i);
+    });
+  </script>
 
-// Restore state on load
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.checklist li').forEach(li => {
-    const key = li.dataset.phase + '-' + li.dataset.item;
-    if (state[key]) li.classList.add('done');
-  });
-  for (let i = 0; i < 6; i++) updateProgress(i);
-});
-</script>
-
-<footer style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-  <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65)">
-    Kitchen Table Cloud — Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
-  </p>
-  <p><a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55);text-decoration:none">⭐ GitHub</a></p>
-</footer>
+  <footer
+    style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.65)">
+      Kitchen Table Cloud — Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+    </p>
+    <p><a href="https://meldfunction.github.io/kitchen-table/" target="_blank"
+        style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55);text-decoration:none">⭐
+        GitHub</a></p>
+  </footer>
 </body>
+
 </html>

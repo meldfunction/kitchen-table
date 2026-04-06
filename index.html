@@ -1,646 +1,1705 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Tech. Your Table. — Kitchen Table Cloud</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Tech. Your Table. — Kitchen Table Cloud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F3EFE8;
+      --paper: #E8E3D5;
+      --ink: #17140E;
+      --white: #FDFAF5;
+      --brick: #B54C2F;
+      --slate: #2A4860;
+      --amber: #C8872C;
+      --sage: #3A6B50;
+      --sage-m: #5D9478;
+      --muted: #7A7068;
+      --baron: #6F1A1A;
+      --warm: #C4874A;
+    }
 
-:root{
-  --bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;--white:#FDFAF5;
-  --brick:#B54C2F;--slate:#2A4860;--amber:#C8872C;--sage:#3A6B50;
-  --sage-m:#5D9478;--muted:#7A7068;--baron:#6F1A1A;--warm:#C4874A;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.75;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
-.inner{max-width:1100px;margin:0 auto}
-section{padding:72px 40px}
-.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.et{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:4px 12px;flex-shrink:0}
-.et-slate{background:var(--slate);color:var(--white)}
-.et-brick{background:var(--brick);color:var(--white)}
-.et-amber{background:var(--amber);color:var(--ink)}
-.et-sage{background:var(--sage);color:var(--white)}
-.et-ink{background:var(--ink);color:var(--white)}
-.et-baron{background:var(--baron);color:var(--white)}
-.eline{flex:1;height:1px;background:rgba(0,0,0,0.12)}
-.eline-light{flex:1;height:1px;background:rgba(255,255,255,0.12)}
-.stitle{font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:10px}
-.ssub{max-width:680px;font-size:1.02rem;color:var(--muted);line-height:1.78;margin-top:12px;margin-bottom:40px}
-.mono{font-family:'Space Mono',monospace}
-/* Safe link styles on dark backgrounds */
-a.dark-link{color:var(--sage-m);text-decoration:none}
-a.dark-link:hover{color:var(--amber)}
-.code-block{background:#111108;border-left:3px solid var(--sage);padding:20px;font-family:'Space Mono',monospace;font-size:0.74rem;color:#7DB87D;line-height:1.85;overflow-x:auto;margin:16px 0}
-.code-block .cm{color:rgba(255,255,255,0.38)}.code-block .cmd{color:var(--amber)}
-/* Code links always readable */
-.code-block a{color:var(--sage-m);text-decoration:none}.code-block a:hover{color:var(--amber)}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--amber)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
-.logo span{color:var(--amber)}
-nav{display:flex;align-items:center;flex-wrap:wrap;gap:1px}
-nav a{color:rgba(255,255,255,0.65);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.67rem;letter-spacing:0.04em;padding:4px 9px;transition:color 0.18s;white-space:nowrap}
-nav a:hover{color:var(--amber)}
-nav a.nav-accent{background:var(--amber);color:var(--ink);font-weight:700;padding:5px 12px}
-nav a.nav-accent:hover{background:var(--white)}
-nav a.nav-dim{color:rgba(255,255,255,0.58)}
-nav a.nav-dim:hover{color:rgba(255,255,255,0.75)}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* ── HERO ── */
-.hero{background:var(--ink);padding:100px 40px 86px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-60px;right:-100px;width:600px;height:600px;
-  background:radial-gradient(circle,rgba(200,135,44,0.06) 0%,transparent 65%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:44px;
-  background:var(--bg);clip-path:polygon(0 100%,100% 100%,100% 0,78% 58%,55% 12%,30% 68%,0 14%)}
-.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:center}
-.hero-kicker{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.2em;
-  color:var(--amber);text-transform:uppercase;margin-bottom:16px;display:block}
-.hero-hl{font-size:clamp(3.8rem,7vw,7rem);color:var(--white);line-height:0.89;margin-bottom:22px}
-.hero-hl .amber{color:var(--amber)}.hero-hl .strike{text-decoration:line-through;color:rgba(255,255,255,0.28);font-size:0.8em}
-.hero-sub{color:rgba(255,255,255,0.68);font-size:1.08rem;line-height:1.72;max-width:520px;margin-bottom:28px}
-.hero-sub strong{color:var(--white)}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.btn-a{background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
-  letter-spacing:0.07em;padding:12px 26px;text-decoration:none;border:3px solid var(--amber);transition:all 0.2s}
-.btn-a:hover{background:transparent;color:var(--amber)}
-.btn-g{background:transparent;color:rgba(255,255,255,0.7);font-family:'Space Mono',monospace;font-size:0.74rem;
-  padding:12px 18px;text-decoration:none;border:2px solid rgba(255,255,255,0.22);transition:all 0.2s}
-.btn-g:hover{border-color:rgba(255,255,255,0.6);color:var(--white)}
-/* Hero bill box */
-.bill-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-left:4px solid var(--brick);padding:26px}
-.bill-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;
-  color:var(--brick);text-transform:uppercase;margin-bottom:18px}
-.bill-item{padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:baseline}
-.bill-item:last-child{border-bottom:none}
-.bill-svc{font-family:'Space Mono',monospace;font-size:0.74rem;color:rgba(255,255,255,0.65)}
-.bill-amt{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--brick);line-height:1}
-.bill-total{margin-top:14px;padding-top:14px;border-top:2px solid rgba(255,255,255,0.15);
-  display:flex;justify-content:space-between;align-items:baseline}
-.bill-total .bill-svc{color:var(--white);font-size:0.8rem}
-.bill-total .bill-amt{color:var(--amber);font-size:2rem}
-.bill-footnote{font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.58);
-  margin-top:10px;text-align:right}
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Libre Baskerville', serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden
+    }
 
-/* ── MARQUEE ── */
-.mq{background:var(--brick);overflow:hidden;white-space:nowrap;padding:8px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
-.mq-t{display:inline-flex;animation:mq 40s linear infinite}
-.mq-t span{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.12em;color:var(--white);padding:0 18px}
-.mq-t .d{color:var(--amber)}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.04em;
+      line-height: 0.93
+    }
 
-/* ── TAKEOUT SECTION ── */
-.takeout-section{background:var(--paper)}
-.takeout-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:44px}
-.takeout-col p{font-size:1.05rem;line-height:1.82;color:var(--ink);margin-bottom:16px}
-.takeout-col p strong{color:var(--slate)}
-.takeout-col p em{color:var(--brick);font-style:normal;font-weight:700}
-.receipt{background:var(--white);border:2px solid var(--ink);font-family:'Space Mono',monospace;overflow:hidden}
-.receipt-head{background:var(--ink);color:var(--white);padding:12px 18px;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.08em;display:flex;justify-content:space-between}
-.receipt-head span{font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.55);letter-spacing:0.04em;align-self:center}
-.receipt-row{display:flex;justify-content:space-between;padding:9px 18px;border-bottom:1px dashed rgba(0,0,0,0.1);font-size:0.78rem;color:var(--ink)}
-.receipt-row.sub{font-weight:700;border-top:2px solid var(--ink);border-bottom:none;background:rgba(0,0,0,0.04)}
-.r-bad{color:var(--baron);font-weight:700}
-.receipt-op{padding:4px 18px;font-size:0.68rem;color:var(--muted);display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.02)}
-.receipt-op .op{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;line-height:1}
-.op-minus{color:var(--sage)}.op-plus{color:var(--brick)}.op-eq{color:var(--amber)}
-.receipt-row.total{background:var(--sage);color:var(--white);border-bottom:none;font-size:0.9rem;font-weight:700}
-.receipt-row.total .r-bad{color:var(--amber)}
-.intang-note{background:var(--baron);color:var(--white);padding:18px 18px;font-size:0.75rem;line-height:1.7}
-.intang-note strong{color:var(--amber)}
-.intang-note a{color:var(--sage-m);text-decoration:none}
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto
+    }
 
-/* ── MENU CARDS ── */
-.menu-section{background:var(--bg)}
-.menu-kicker{font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
-.flip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
-.flip-card{height:320px;perspective:1200px;cursor:pointer}
-.flip-inner{position:relative;width:100%;height:100%;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d}
-.flip-card:hover .flip-inner,.flip-card.open .flip-inner{transform:rotateY(180deg)}
-.ff,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:26px 22px;border:2px solid var(--ink);display:flex;flex-direction:column}
-.fb{transform:rotateY(180deg);background:var(--slate);border-color:var(--slate)}
-.ff{background:var(--bg)}.ff.feat{background:var(--ink);border-color:var(--ink)}
-.ff.feat h3{color:var(--amber)}.ff.feat .ctag{background:var(--amber);color:var(--ink)}
-.ff.feat .ci{color:var(--amber)}.ff.feat p{color:rgba(255,255,255,0.6)}
-.ff.feat .chint{color:rgba(255,255,255,0.5)}
-.ctag{display:inline-block;font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:0.14em;
-  text-transform:uppercase;background:var(--brick);color:var(--white);padding:3px 9px;margin-bottom:12px;align-self:flex-start}
-.ctag.go{background:var(--sage)}.ctag.am{background:var(--amber);color:var(--ink)}
-.ci{font-size:2rem;margin-bottom:10px;display:block;color:var(--sage)}
-.ff h3{font-size:1.8rem;color:var(--ink);margin-bottom:8px}
-.ff p{font-size:0.86rem;color:var(--muted);line-height:1.6;flex:1}
-.chint{font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--muted);opacity:0.7;margin-top:10px;text-align:right}
-/* back */
-.fb h4{font-size:1.4rem;color:var(--amber);margin-bottom:12px}
-.hw{list-style:none;flex:1}
-.hw li{font-family:'Space Mono',monospace;font-size:0.72rem;color:rgba(255,255,255,0.82);padding:5px 0;
-  border-bottom:1px solid rgba(255,255,255,0.1);display:flex;gap:9px;align-items:flex-start;line-height:1.5}
-.hw li:last-child{border-bottom:none}
-.sn{font-size:0.62rem;background:rgba(255,255,255,0.12);color:var(--amber);width:17px;height:17px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.bt{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--amber);margin-top:10px;letter-spacing:0.07em}
-.more-link{display:block;text-align:center;margin-top:20px;font-family:'Space Mono',monospace;font-size:0.78rem;
-  color:var(--slate);text-decoration:none;padding:10px;border:1px solid rgba(0,0,0,0.12);
-  transition:background 0.2s}
-.more-link:hover{background:var(--paper)}
+    section {
+      padding: 72px 40px
+    }
 
-/* ── PANTRY SWAP PREVIEW ── */
-.swap-prev-section{background:var(--paper)}
-.swap-prev-table{width:100%;border-collapse:collapse;font-size:0.86rem;margin-top:8px}
-.swap-prev-table thead th{padding:11px 14px;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.06em}
-.col-b{background:var(--baron);color:var(--white)}
-.col-ar{background:var(--ink);color:var(--muted);text-align:center;width:44px}
-.col-r{background:var(--sage);color:var(--white)}
-.col-w{background:var(--slate);color:var(--white)}
-.swap-prev-table tbody tr{border-bottom:1px solid rgba(0,0,0,0.08)}
-.swap-prev-table tbody tr:hover{background:rgba(0,0,0,0.025)}
-.swap-prev-table td{padding:11px 14px;vertical-align:top}
-.bn{color:var(--baron);font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;display:block;margin-bottom:2px;text-decoration:line-through;text-decoration-color:rgba(181,76,47,0.4)}
-.bb{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);font-style:italic}
-.rn{color:var(--sage);font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;display:block;margin-bottom:2px}
-.rb{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted)}
-.wc{font-size:0.84rem;color:var(--ink);line-height:1.6}
-.wc strong{color:var(--slate)}
-.see-all{display:inline-block;margin-top:20px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
-  letter-spacing:0.07em;color:var(--slate);text-decoration:none;padding:10px 22px;
-  border:2px solid var(--slate);transition:all 0.2s}
-.see-all:hover{background:var(--slate);color:var(--white)}
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px
+    }
 
-/* ── COOKING TOGETHER ── */
-.together-section{background:var(--ink);color:var(--white);padding:72px 40px}
-.together-section .stitle{color:var(--white)}
-.together-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,0.08);margin-top:44px}
-.together-card{background:rgba(255,255,255,0.03);padding:28px 22px}
-.together-card h4{font-size:1.4rem;color:var(--amber);margin-bottom:10px}
-.together-card p{font-size:0.88rem;color:rgba(255,255,255,0.65);line-height:1.7}
-.together-card p strong{color:var(--white)}
-.together-pull{background:var(--brick);padding:32px 40px;text-align:center;margin-top:44px}
-.together-pull p{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,3.5vw,2.8rem);
-  color:var(--white);line-height:1.1;letter-spacing:0.02em}
-.together-pull p span{color:var(--amber)}
-.together-pull a{display:inline-block;margin-top:18px;font-family:'Space Mono',monospace;
-  font-size:0.78rem;color:var(--sage-m);text-decoration:none}
-.together-pull a:hover{color:var(--amber)}
+    .et {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      flex-shrink: 0
+    }
 
-/* ── JOIN / TIERS ── */
-.join-section{background:var(--paper);padding:72px 40px}
-.tiers-wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:2px solid var(--ink);margin-top:44px}
-.tier{padding:26px 18px;border-right:2px solid var(--ink);position:relative}
-.tier:last-child{border-right:none}
-.tier.hl{background:var(--sage)}
-.tn{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(0,0,0,0.06);position:absolute;top:8px;right:10px;line-height:1}
-.tier.hl .tn{color:rgba(255,255,255,0.08)}
-.tier-icon{font-size:1.7rem;display:block;margin-bottom:8px}
-.tier h3{font-size:1.35rem;color:var(--ink);margin-bottom:6px}
-.tier.hl h3{color:var(--amber)}
-.tier-role{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--sage);display:block;margin-bottom:8px;letter-spacing:0.05em;font-style:italic}
-.tier.hl .tier-role{color:var(--amber)}
-.tier p{font-size:0.84rem;color:var(--muted);line-height:1.6}
-.tier.hl p{color:rgba(255,255,255,0.75)}
-.tier-ps{margin-top:10px;list-style:none}
-.tier-ps li{font-family:'Space Mono',monospace;font-size:0.67rem;color:var(--muted);padding:4px 0;
-  border-bottom:1px dashed rgba(0,0,0,0.1);display:flex;gap:5px;align-items:flex-start}
-.tier-ps li::before{content:'→';color:var(--sage);flex-shrink:0}
-.tier.hl .tier-ps li{color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.12)}
-.tier.hl .tier-ps li::before{color:var(--amber)}
+    .et-slate {
+      background: var(--slate);
+      color: var(--white)
+    }
 
-/* ── EXPLORE BAR ── */
-.explore-bar{background:var(--slate);padding:36px 40px}
-.explore-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
-.explore-bar h3{font-size:2rem;color:var(--white);margin-bottom:6px}
-.explore-bar p{font-family:'Space Mono',monospace;font-size:0.76rem;color:rgba(255,255,255,0.55);line-height:1.65;max-width:480px}
-.explore-links{display:flex;gap:10px;flex-wrap:wrap}
-.el{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--sage-m);text-decoration:none;
-  padding:8px 14px;border:1px solid rgba(93,148,120,0.35);transition:all 0.2s;white-space:nowrap}
-.el:hover{background:rgba(93,148,120,0.12);color:var(--amber);border-color:rgba(200,135,44,0.4)}
+    .et-brick {
+      background: var(--brick);
+      color: var(--white)
+    }
 
-@media(max-width:900px){
-  .hero-inner,.takeout-grid,.together-grid{grid-template-columns:1fr}
-  .bill-box{display:none}.flip-grid{grid-template-columns:1fr 1fr}
-  .tiers-wrap{grid-template-columns:1fr 1fr}
-  .explore-inner{flex-direction:column;align-items:flex-start}
-}
-@media(max-width:560px){.flip-grid{grid-template-columns:1fr}.tiers-wrap{grid-template-columns:1fr}}
+    .et-amber {
+      background: var(--amber);
+      color: var(--ink)
+    }
 
-@media(max-width:900px){section{padding:52px 24px}.site-header{padding:12px 24px}nav{display:none}}
-</style>
+    .et-sage {
+      background: var(--sage);
+      color: var(--white)
+    }
+
+    .et-ink {
+      background: var(--ink);
+      color: var(--white)
+    }
+
+    .et-baron {
+      background: var(--baron);
+      color: var(--white)
+    }
+
+    .eline {
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.12)
+    }
+
+    .eline-light {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12)
+    }
+
+    .stitle {
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      margin-bottom: 10px
+    }
+
+    .ssub {
+      max-width: 680px;
+      font-size: 1.02rem;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-top: 12px;
+      margin-bottom: 40px
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace
+    }
+
+    /* Safe link styles on dark backgrounds */
+    a.dark-link {
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    a.dark-link:hover {
+      color: var(--amber)
+    }
+
+    .code-block {
+      background: #111108;
+      border-left: 3px solid var(--sage);
+      padding: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      color: #7DB87D;
+      line-height: 1.85;
+      overflow-x: auto;
+      margin: 16px 0
+    }
+
+    .code-block .cm {
+      color: rgba(255, 255, 255, 0.38)
+    }
+
+    .code-block .cmd {
+      color: var(--amber)
+    }
+
+    /* Code links always readable */
+    .code-block a {
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    .code-block a:hover {
+      color: var(--amber)
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5
+    }
+
+    .site-header {
+      background: var(--ink);
+      padding: 13px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      border-bottom: 3px solid var(--amber)
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--white);
+      letter-spacing: 0.1em
+    }
+
+    .logo span {
+      color: var(--amber)
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1px
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.65);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.04em;
+      padding: 4px 9px;
+      transition: color 0.18s;
+      white-space: nowrap
+    }
+
+    nav a:hover {
+      color: var(--amber)
+    }
+
+    nav a.nav-accent {
+      background: var(--amber);
+      color: var(--ink);
+      font-weight: 700;
+      padding: 5px 12px
+    }
+
+    nav a.nav-accent:hover {
+      background: var(--white)
+    }
+
+    nav a.nav-dim {
+      color: rgba(255, 255, 255, 0.58)
+    }
+
+    nav a.nav-dim:hover {
+      color: rgba(255, 255, 255, 0.75)
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      padding: 100px 40px 86px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200, 135, 44, 0.06) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 44px;
+      background: var(--bg);
+      clip-path: polygon(0 100%, 100% 100%, 100% 0, 78% 58%, 55% 12%, 30% 68%, 0 14%)
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 56px;
+      align-items: center
+    }
+
+    .hero-kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block
+    }
+
+    .hero-hl {
+      font-size: clamp(3.8rem, 7vw, 7rem);
+      color: var(--white);
+      line-height: 0.89;
+      margin-bottom: 22px
+    }
+
+    .hero-hl .amber {
+      color: var(--amber)
+    }
+
+    .hero-hl .strike {
+      text-decoration: line-through;
+      color: rgba(255, 255, 255, 0.28);
+      font-size: 0.8em
+    }
+
+    .hero-sub {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 1.08rem;
+      line-height: 1.72;
+      max-width: 520px;
+      margin-bottom: 28px
+    }
+
+    .hero-sub strong {
+      color: var(--white)
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .btn-a {
+      background: var(--amber);
+      color: var(--ink);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.07em;
+      padding: 12px 26px;
+      text-decoration: none;
+      border: 3px solid var(--amber);
+      transition: all 0.2s
+    }
+
+    .btn-a:hover {
+      background: transparent;
+      color: var(--amber)
+    }
+
+    .btn-g {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      padding: 12px 18px;
+      text-decoration: none;
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      transition: all 0.2s
+    }
+
+    .btn-g:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      color: var(--white)
+    }
+
+    /* Hero bill box */
+    .bill-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-left: 4px solid var(--brick);
+      padding: 26px
+    }
+
+    .bill-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: var(--brick);
+      text-transform: uppercase;
+      margin-bottom: 18px
+    }
+
+    .bill-item {
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline
+    }
+
+    .bill-item:last-child {
+      border-bottom: none
+    }
+
+    .bill-svc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      color: rgba(255, 255, 255, 0.65)
+    }
+
+    .bill-amt {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--brick);
+      line-height: 1
+    }
+
+    .bill-total {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 2px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline
+    }
+
+    .bill-total .bill-svc {
+      color: var(--white);
+      font-size: 0.8rem
+    }
+
+    .bill-total .bill-amt {
+      color: var(--amber);
+      font-size: 2rem
+    }
+
+    .bill-footnote {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.58);
+      margin-top: 10px;
+      text-align: right
+    }
+
+    /* ── MARQUEE ── */
+    .mq {
+      background: var(--brick);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 8px 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink)
+    }
+
+    .mq-t {
+      display: inline-flex;
+      animation: mq 40s linear infinite
+    }
+
+    .mq-t span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      padding: 0 18px
+    }
+
+    .mq-t .d {
+      color: var(--amber)
+    }
+
+    @keyframes mq {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* ── TAKEOUT SECTION ── */
+    .takeout-section {
+      background: var(--paper)
+    }
+
+    .takeout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 44px
+    }
+
+    .takeout-col p {
+      font-size: 1.05rem;
+      line-height: 1.82;
+      color: var(--ink);
+      margin-bottom: 16px
+    }
+
+    .takeout-col p strong {
+      color: var(--slate)
+    }
+
+    .takeout-col p em {
+      color: var(--brick);
+      font-style: normal;
+      font-weight: 700
+    }
+
+    .receipt {
+      background: var(--white);
+      border: 2px solid var(--ink);
+      font-family: 'Space Mono', monospace;
+      overflow: hidden
+    }
+
+    .receipt-head {
+      background: var(--ink);
+      color: var(--white);
+      padding: 12px 18px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .receipt-head span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.04em;
+      align-self: center
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 18px;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+      font-size: 0.78rem;
+      color: var(--ink)
+    }
+
+    .receipt-row.sub {
+      font-weight: 700;
+      border-top: 2px solid var(--ink);
+      border-bottom: none;
+      background: rgba(0, 0, 0, 0.04)
+    }
+
+    .r-bad {
+      color: var(--baron);
+      font-weight: 700
+    }
+
+    .receipt-op {
+      padding: 4px 18px;
+      font-size: 0.68rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.02)
+    }
+
+    .receipt-op .op {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      line-height: 1
+    }
+
+    .op-minus {
+      color: var(--sage)
+    }
+
+    .op-plus {
+      color: var(--brick)
+    }
+
+    .op-eq {
+      color: var(--amber)
+    }
+
+    .receipt-row.total {
+      background: var(--sage);
+      color: var(--white);
+      border-bottom: none;
+      font-size: 0.9rem;
+      font-weight: 700
+    }
+
+    .receipt-row.total .r-bad {
+      color: var(--amber)
+    }
+
+    .intang-note {
+      background: var(--baron);
+      color: var(--white);
+      padding: 18px 18px;
+      font-size: 0.75rem;
+      line-height: 1.7
+    }
+
+    .intang-note strong {
+      color: var(--amber)
+    }
+
+    .intang-note a {
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    /* ── MENU CARDS ── */
+    .menu-section {
+      background: var(--bg)
+    }
+
+    .menu-kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    .flip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 8px
+    }
+
+    .flip-card {
+      height: 320px;
+      perspective: 1200px;
+      cursor: pointer
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d
+    }
+
+    .flip-card:hover .flip-inner,
+    .flip-card.open .flip-inner {
+      transform: rotateY(180deg)
+    }
+
+    .ff,
+    .fb {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      padding: 26px 22px;
+      border: 2px solid var(--ink);
+      display: flex;
+      flex-direction: column
+    }
+
+    .fb {
+      transform: rotateY(180deg);
+      background: var(--slate);
+      border-color: var(--slate)
+    }
+
+    .ff {
+      background: var(--bg)
+    }
+
+    .ff.feat {
+      background: var(--ink);
+      border-color: var(--ink)
+    }
+
+    .ff.feat h3 {
+      color: var(--amber)
+    }
+
+    .ff.feat .ctag {
+      background: var(--amber);
+      color: var(--ink)
+    }
+
+    .ff.feat .ci {
+      color: var(--amber)
+    }
+
+    .ff.feat p {
+      color: rgba(255, 255, 255, 0.6)
+    }
+
+    .ff.feat .chint {
+      color: rgba(255, 255, 255, 0.5)
+    }
+
+    .ctag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--brick);
+      color: var(--white);
+      padding: 3px 9px;
+      margin-bottom: 12px;
+      align-self: flex-start
+    }
+
+    .ctag.go {
+      background: var(--sage)
+    }
+
+    .ctag.am {
+      background: var(--amber);
+      color: var(--ink)
+    }
+
+    .ci {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+      color: var(--sage)
+    }
+
+    .ff h3 {
+      font-size: 1.8rem;
+      color: var(--ink);
+      margin-bottom: 8px
+    }
+
+    .ff p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1
+    }
+
+    .chint {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+      opacity: 0.7;
+      margin-top: 10px;
+      text-align: right
+    }
+
+    /* back */
+    .fb h4 {
+      font-size: 1.4rem;
+      color: var(--amber);
+      margin-bottom: 12px
+    }
+
+    .hw {
+      list-style: none;
+      flex: 1
+    }
+
+    .hw li {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.82);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      line-height: 1.5
+    }
+
+    .hw li:last-child {
+      border-bottom: none
+    }
+
+    .sn {
+      font-size: 0.62rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--amber);
+      width: 17px;
+      height: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px
+    }
+
+    .bt {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--amber);
+      margin-top: 10px;
+      letter-spacing: 0.07em
+    }
+
+    .more-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--slate);
+      text-decoration: none;
+      padding: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      transition: background 0.2s
+    }
+
+    .more-link:hover {
+      background: var(--paper)
+    }
+
+    /* ── PANTRY SWAP PREVIEW ── */
+    .swap-prev-section {
+      background: var(--paper)
+    }
+
+    .swap-prev-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-top: 8px
+    }
+
+    .swap-prev-table thead th {
+      padding: 11px 14px;
+      text-align: left;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em
+    }
+
+    .col-b {
+      background: var(--baron);
+      color: var(--white)
+    }
+
+    .col-ar {
+      background: var(--ink);
+      color: var(--muted);
+      text-align: center;
+      width: 44px
+    }
+
+    .col-r {
+      background: var(--sage);
+      color: var(--white)
+    }
+
+    .col-w {
+      background: var(--slate);
+      color: var(--white)
+    }
+
+    .swap-prev-table tbody tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08)
+    }
+
+    .swap-prev-table tbody tr:hover {
+      background: rgba(0, 0, 0, 0.025)
+    }
+
+    .swap-prev-table td {
+      padding: 11px 14px;
+      vertical-align: top
+    }
+
+    .bn {
+      color: var(--baron);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+      text-decoration: line-through;
+      text-decoration-color: rgba(181, 76, 47, 0.4)
+    }
+
+    .bb {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-style: italic
+    }
+
+    .rn {
+      color: var(--sage);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px
+    }
+
+    .rb {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted)
+    }
+
+    .wc {
+      font-size: 0.84rem;
+      color: var(--ink);
+      line-height: 1.6
+    }
+
+    .wc strong {
+      color: var(--slate)
+    }
+
+    .see-all {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.07em;
+      color: var(--slate);
+      text-decoration: none;
+      padding: 10px 22px;
+      border: 2px solid var(--slate);
+      transition: all 0.2s
+    }
+
+    .see-all:hover {
+      background: var(--slate);
+      color: var(--white)
+    }
+
+    /* ── COOKING TOGETHER ── */
+    .together-section {
+      background: var(--ink);
+      color: var(--white);
+      padding: 72px 40px
+    }
+
+    .together-section .stitle {
+      color: var(--white)
+    }
+
+    .together-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin-top: 44px
+    }
+
+    .together-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 28px 22px
+    }
+
+    .together-card h4 {
+      font-size: 1.4rem;
+      color: var(--amber);
+      margin-bottom: 10px
+    }
+
+    .together-card p {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.7
+    }
+
+    .together-card p strong {
+      color: var(--white)
+    }
+
+    .together-pull {
+      background: var(--brick);
+      padding: 32px 40px;
+      text-align: center;
+      margin-top: 44px
+    }
+
+    .together-pull p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: 0.02em
+    }
+
+    .together-pull p span {
+      color: var(--amber)
+    }
+
+    .together-pull a {
+      display: inline-block;
+      margin-top: 18px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    .together-pull a:hover {
+      color: var(--amber)
+    }
+
+    /* ── JOIN / TIERS ── */
+    .join-section {
+      background: var(--paper);
+      padding: 72px 40px
+    }
+
+    .tiers-wrap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      border: 2px solid var(--ink);
+      margin-top: 44px
+    }
+
+    .tier {
+      padding: 26px 18px;
+      border-right: 2px solid var(--ink);
+      position: relative
+    }
+
+    .tier:last-child {
+      border-right: none
+    }
+
+    .tier.hl {
+      background: var(--sage)
+    }
+
+    .tn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: rgba(0, 0, 0, 0.06);
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      line-height: 1
+    }
+
+    .tier.hl .tn {
+      color: rgba(255, 255, 255, 0.08)
+    }
+
+    .tier-icon {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 8px
+    }
+
+    .tier h3 {
+      font-size: 1.35rem;
+      color: var(--ink);
+      margin-bottom: 6px
+    }
+
+    .tier.hl h3 {
+      color: var(--amber)
+    }
+
+    .tier-role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--sage);
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+      font-style: italic
+    }
+
+    .tier.hl .tier-role {
+      color: var(--amber)
+    }
+
+    .tier p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.6
+    }
+
+    .tier.hl p {
+      color: rgba(255, 255, 255, 0.75)
+    }
+
+    .tier-ps {
+      margin-top: 10px;
+      list-style: none
+    }
+
+    .tier-ps li {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.67rem;
+      color: var(--muted);
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 5px;
+      align-items: flex-start
+    }
+
+    .tier-ps li::before {
+      content: '→';
+      color: var(--sage);
+      flex-shrink: 0
+    }
+
+    .tier.hl .tier-ps li {
+      color: rgba(255, 255, 255, 0.7);
+      border-color: rgba(255, 255, 255, 0.12)
+    }
+
+    .tier.hl .tier-ps li::before {
+      color: var(--amber)
+    }
+
+    /* ── EXPLORE BAR ── */
+    .explore-bar {
+      background: var(--slate);
+      padding: 36px 40px
+    }
+
+    .explore-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap
+    }
+
+    .explore-bar h3 {
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 6px
+    }
+
+    .explore-bar p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.65;
+      max-width: 480px
+    }
+
+    .explore-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .el {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--sage-m);
+      text-decoration: none;
+      padding: 8px 14px;
+      border: 1px solid rgba(93, 148, 120, 0.35);
+      transition: all 0.2s;
+      white-space: nowrap
+    }
+
+    .el:hover {
+      background: rgba(93, 148, 120, 0.12);
+      color: var(--amber);
+      border-color: rgba(200, 135, 44, 0.4)
+    }
+
+    @media(max-width:900px) {
+
+      .hero-inner,
+      .takeout-grid,
+      .together-grid {
+        grid-template-columns: 1fr
+      }
+
+      .bill-box {
+        display: none
+      }
+
+      .flip-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .tiers-wrap {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .explore-inner {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+
+    @media(max-width:560px) {
+      .flip-grid {
+        grid-template-columns: 1fr
+      }
+
+      .tiers-wrap {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:900px) {
+      section {
+        padding: 52px 24px
+      }
+
+      .site-header {
+        padding: 12px 24px
+      }
+
+      nav {
+        display: none
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="site-header">
-  <div class="logo">Kitchen Table <span>Cloud</span></div>
-  <nav><a href="index.html" class="nav-active">Home</a>
-    <a href="start.html">Get Started</a>
-    <a href="openclaw.html">AI Agent</a>
-    <a href="swap.html">Swap Sheet</a>
-    <a href="map.html" class="nav-dim">Full Map</a>
-    <a href="community.html">Community</a>
-    <a href="vision.html" class="nav-dim">Vision</a>
-    <a href="security.html">Security</a>
-    <a href="index.html#join" class="nav-accent">Join</a>
-    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" class="nav-dim">GitHub ↗</a></nav>
-</header>
+  <header class="site-header">
+    <div class="logo">Kitchen Table <span>Cloud</span></div>
+    <nav><a href="index.html" class="nav-active">Home</a>
+      <a href="start.html">Get Started</a>
+      <a href="openclaw.html">AI Agent</a>
+      <a href="swap.html">Swap Sheet</a>
+      <a href="map.html" class="nav-dim">Full Map</a>
+      <a href="community.html">Community</a>
+      <a href="vision.html" class="nav-dim">Vision</a>
+      <a href="security.html">Security</a>
+      <a href="index.html#join" class="nav-accent">Join</a>
+      <a href="https://meldfunction.github.io/kitchen-table/" class="nav-dim">GitHub ↗</a>
+    </nav>
+  </header>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero" id="home">
-  <div class="hero-inner">
-    <div>
-      <span class="hero-kicker">Community Infrastructure · Open Source · No Rent</span>
-      <h1 class="hero-hl">
-        You've Been<br>
-        Ordering <span class="amber">Takeout</span><br>
-        Long Enough.
-      </h1>
-      <p class="hero-sub">
-        Every subscription you pay is dinner from a restaurant that spies on you, charges more 
-        every year, and owns the kitchen. <strong>What if your community owned the kitchen?</strong>
-        AI, music, files, messaging, photos — cooked from scratch, on hardware you hold, 
-        governed by the people eating at the table.
-      </p>
-      <div class="hero-ctas">
-        <a href="start.html" class="btn-a">Get the Recipe →</a>
-        <a href="#menu" class="btn-g">See Tonight's Menu</a>
-      </div>
-    </div>
-    <div>
-      <div class="bill-box">
-        <div class="bill-label">// Your monthly takeout bill</div>
-        <div class="bill-item"><span class="bill-svc">AI (ChatGPT / Claude)</span><span class="bill-amt">$20–40</span></div>
-        <div class="bill-item"><span class="bill-svc">Music (Spotify)</span><span class="bill-amt">$11</span></div>
-        <div class="bill-item"><span class="bill-svc">Cloud storage</span><span class="bill-amt">$3–10</span></div>
-        <div class="bill-item"><span class="bill-svc">Office suite</span><span class="bill-amt">$8</span></div>
-        <div class="bill-item"><span class="bill-svc">Password manager</span><span class="bill-amt">$4</span></div>
-        <div class="bill-total">
-          <span class="bill-svc">Monthly total</span>
-          <span class="bill-amt">$46–73</span>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div>
+        <span class="hero-kicker">Community Infrastructure · Open Source · No Rent</span>
+        <h1 class="hero-hl">
+          You've Been<br>
+          Ordering <span class="amber">Takeout</span><br>
+          Long Enough.
+        </h1>
+        <p class="hero-sub">
+          Every subscription you pay is dinner from a restaurant that spies on you, charges more
+          every year, and owns the kitchen. <strong>What if your community owned the kitchen?</strong>
+          AI, music, files, messaging, photos — cooked from scratch, on hardware you hold,
+          governed by the people eating at the table.
+        </p>
+        <div class="hero-ctas">
+          <a href="start.html" class="btn-a">Get the Recipe →</a>
+          <a href="#menu" class="btn-g">See Tonight's Menu</a>
         </div>
-        <div class="bill-footnote">That's $552–876/yr · before the next price hike</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="mq">
-  <div class="mq-t">
-    <span>COOK FROM SCRATCH</span><span class="d">✦</span><span>OWN YOUR PANTRY</span><span class="d">✦</span><span>SET THE MENU</span><span class="d">✦</span><span>FEED YOUR COMMUNITY</span><span class="d">✦</span><span>NO MORE TAKEOUT</span><span class="d">✦</span><span>THE TABLE IS YOURS</span><span class="d">✦</span><span>PULL UP A CHAIR</span><span class="d">✦</span>
-    <span>COOK FROM SCRATCH</span><span class="d">✦</span><span>OWN YOUR PANTRY</span><span class="d">✦</span><span>SET THE MENU</span><span class="d">✦</span><span>FEED YOUR COMMUNITY</span><span class="d">✦</span><span>NO MORE TAKEOUT</span><span class="d">✦</span><span>THE TABLE IS YOURS</span><span class="d">✦</span><span>PULL UP A CHAIR</span><span class="d">✦</span>
-  </div>
-</div>
-
-<!-- ═══ THE TAKEOUT PROBLEM ═══ -->
-<section class="takeout-section" id="why">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-baron">The Takeout Problem</span><div class="eline"></div></div>
-    <h2 class="stitle">You Don't Know What's In It</h2>
-    <div class="takeout-grid">
-      <div class="takeout-col">
-        <p>Takeout is convenient. We're not going to pretend otherwise. But takeout comes with
-        costs that don't show up on the receipt — <em>your listening history profiled and sold,
-        your prompts used to train models you'll pay for again later,</em> your files scanned
-        for ad signals, your conversations stored on servers in jurisdictions you've never considered.</p>
-        <p>The restaurant raises prices when it wants. It decides what's on the menu. It can close
-        at any time and take your order history with it. And it's been doing this so long
-        that <strong>most people don't even imagine the alternative.</strong></p>
-        <p>The alternative is a kitchen. Your kitchen. Or better yet — a kitchen shared with
-        neighbors who each bring something different: hardware, recipes, ingredients, expertise.
-        The feast that comes out is better than anything any one of you could have cooked alone.</p>
-        <p>That's the premise. The math is real, the technology is ready, and the community
-        model is how it becomes sustainable.</p>
       </div>
       <div>
-        <div class="receipt">
-          <div class="receipt-head">Your Current Bill <span>monthly estimates</span></div>
-          <div class="receipt-row"><span>AI subscriptions</span><span class="r-bad">$20–40</span></div>
-          <div class="receipt-row"><span>Music + podcasts</span><span class="r-bad">$11</span></div>
-          <div class="receipt-row"><span>Cloud storage</span><span class="r-bad">$3–10</span></div>
-          <div class="receipt-row"><span>Office + notes</span><span class="r-bad">$8–16</span></div>
-          <div class="receipt-row"><span>Passwords + security</span><span class="r-bad">$4</span></div>
-          <div class="receipt-row sub"><span>Subtotal</span><span>$46–81 / month</span></div>
-          <div class="receipt-op"><span class="op op-minus">−</span><span>Community hardware (one-time, ~$160 shared)</span></div>
-          <div class="receipt-op"><span class="op op-minus">−</span><span>Monthly electricity per node (~$4)</span></div>
-          <div class="receipt-op"><span class="op op-eq">=</span><span>Year-one savings per person</span></div>
-          <div class="receipt-row total"><span>💰 Back in your pocket</span><span class="r-bad">$500–900/yr</span></div>
-          <div class="intang-note">
-            <strong>Not on the receipt:</strong> your prompts training their models ·
-            your music profile sold · your searches tracked · your photos analyzed ·
-            price hikes you can't opt out of.
-            <br><a href="swap.html">See the full cost breakdown →</a>
+        <div class="bill-box">
+          <div class="bill-label">// Your monthly takeout bill</div>
+          <div class="bill-item"><span class="bill-svc">AI (ChatGPT / Claude)</span><span class="bill-amt">$20–40</span>
+          </div>
+          <div class="bill-item"><span class="bill-svc">Music (Spotify)</span><span class="bill-amt">$11</span></div>
+          <div class="bill-item"><span class="bill-svc">Cloud storage</span><span class="bill-amt">$3–10</span></div>
+          <div class="bill-item"><span class="bill-svc">Office suite</span><span class="bill-amt">$8</span></div>
+          <div class="bill-item"><span class="bill-svc">Password manager</span><span class="bill-amt">$4</span></div>
+          <div class="bill-total">
+            <span class="bill-svc">Monthly total</span>
+            <span class="bill-amt">$46–73</span>
+          </div>
+          <div class="bill-footnote">That's $552–876/yr · before the next price hike</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="mq">
+    <div class="mq-t">
+      <span>COOK FROM SCRATCH</span><span class="d">✦</span><span>OWN YOUR PANTRY</span><span
+        class="d">✦</span><span>SET THE MENU</span><span class="d">✦</span><span>FEED YOUR COMMUNITY</span><span
+        class="d">✦</span><span>NO MORE TAKEOUT</span><span class="d">✦</span><span>THE TABLE IS YOURS</span><span
+        class="d">✦</span><span>PULL UP A CHAIR</span><span class="d">✦</span>
+      <span>COOK FROM SCRATCH</span><span class="d">✦</span><span>OWN YOUR PANTRY</span><span
+        class="d">✦</span><span>SET THE MENU</span><span class="d">✦</span><span>FEED YOUR COMMUNITY</span><span
+        class="d">✦</span><span>NO MORE TAKEOUT</span><span class="d">✦</span><span>THE TABLE IS YOURS</span><span
+        class="d">✦</span><span>PULL UP A CHAIR</span><span class="d">✦</span>
+    </div>
+  </div>
+
+  <!-- ═══ THE TAKEOUT PROBLEM ═══ -->
+  <section class="takeout-section" id="why">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-baron">The Takeout Problem</span>
+        <div class="eline"></div>
+      </div>
+      <h2 class="stitle">You Don't Know What's In It</h2>
+      <div class="takeout-grid">
+        <div class="takeout-col">
+          <p>Takeout is convenient. We're not going to pretend otherwise. But takeout comes with
+            costs that don't show up on the receipt — <em>your listening history profiled and sold,
+              your prompts used to train models you'll pay for again later,</em> your files scanned
+            for ad signals, your conversations stored on servers in jurisdictions you've never considered.</p>
+          <p>The restaurant raises prices when it wants. It decides what's on the menu. It can close
+            at any time and take your order history with it. And it's been doing this so long
+            that <strong>most people don't even imagine the alternative.</strong></p>
+          <p>The alternative is a kitchen. Your kitchen. Or better yet — a kitchen shared with
+            neighbors who each bring something different: hardware, recipes, ingredients, expertise.
+            The feast that comes out is better than anything any one of you could have cooked alone.</p>
+          <p>That's the premise. The math is real, the technology is ready, and the community
+            model is how it becomes sustainable.</p>
+        </div>
+        <div>
+          <div class="receipt">
+            <div class="receipt-head">Your Current Bill <span>monthly estimates</span></div>
+            <div class="receipt-row"><span>AI subscriptions</span><span class="r-bad">$20–40</span></div>
+            <div class="receipt-row"><span>Music + podcasts</span><span class="r-bad">$11</span></div>
+            <div class="receipt-row"><span>Cloud storage</span><span class="r-bad">$3–10</span></div>
+            <div class="receipt-row"><span>Office + notes</span><span class="r-bad">$8–16</span></div>
+            <div class="receipt-row"><span>Passwords + security</span><span class="r-bad">$4</span></div>
+            <div class="receipt-row sub"><span>Subtotal</span><span>$46–81 / month</span></div>
+            <div class="receipt-op"><span class="op op-minus">−</span><span>Community hardware (one-time, ~$160
+                shared)</span></div>
+            <div class="receipt-op"><span class="op op-minus">−</span><span>Monthly electricity per node (~$4)</span>
+            </div>
+            <div class="receipt-op"><span class="op op-eq">=</span><span>Year-one savings per person</span></div>
+            <div class="receipt-row total"><span>💰 Back in your pocket</span><span class="r-bad">$500–900/yr</span>
+            </div>
+            <div class="intang-note">
+              <strong>Not on the receipt:</strong> your prompts training their models ·
+              your music profile sold · your searches tracked · your photos analyzed ·
+              price hikes you can't opt out of.
+              <br><a href="swap.html">See the full cost breakdown →</a>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TONIGHT'S MENU ═══ -->
+  <section class="menu-section" id="menu">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-sage">Tonight's Menu</span>
+        <div class="eline"></div>
+      </div>
+      <div class="menu-kicker">Six dishes you can cook this weekend. Hover or tap for the recipe.</div>
+      <h2 class="stitle">What's Cooking</h2>
+
+      <div class="flip-grid">
+        <div class="flip-card" onclick="this.classList.toggle('open')">
+          <div class="flip-inner">
+            <div class="ff feat">
+              <span class="ctag am">Start Here</span>
+              <span class="ci">🤖</span>
+              <h3>Community AI</h3>
+              <p>An AI assistant that runs on your hardware. Private, offline-capable, yours forever. Cancel the
+                subscription tonight.</p>
+              <div class="chint">tap for the recipe →</div>
+            </div>
+            <div class="fb">
+              <h4>The Recipe</h4>
+              <ul class="hw">
+                <li><span class="sn">1</span>Install Ollama: <code>curl -fsSL https://ollama.com/install.sh | sh</code>
+                </li>
+                <li><span class="sn">2</span>Pull a free model:
+                  <code>ollama pull phi3.5:3.8b-mini-instruct-q4_K_M</code></li>
+                <li><span class="sn">3</span>Talk to it — it's yours now</li>
+                <li><span class="sn">4</span>Cancel ChatGPT or Claude subscription</li>
+                <li><span class="sn">5</span>Invite your community — share the kitchen</li>
+              </ul>
+              <div class="bt">⏱ First serving: ~15 minutes</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('open')">
+          <div class="flip-inner">
+            <div class="ff">
+              <span class="ctag go">The Pantry</span>
+              <span class="ci">📁</span>
+              <h3>Your Files</h3>
+              <p>Documents, photos, calendar, contacts — in your own pantry. Nobody rummaging through your shelves for
+                ad data.</p>
+              <div class="chint">tap for the recipe →</div>
+            </div>
+            <div class="fb">
+              <h4>The Recipe</h4>
+              <ul class="hw">
+                <li><span class="sn">1</span>Install CasaOS (your kitchen dashboard):
+                  <code>curl -fsSL https://get.casaos.io | sudo bash</code></li>
+                <li><span class="sn">2</span>Install NextCloud from the app store — one click</li>
+                <li><span class="sn">3</span>Install the desktop client — starts syncing immediately</li>
+                <li><span class="sn">4</span>Move your active folder first, archive later</li>
+                <li><span class="sn">5</span>Calendar and contacts come free with the pantry</li>
+              </ul>
+              <div class="bt">⏱ One weekend to fully stock</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('open')">
+          <div class="flip-inner">
+            <div class="ff">
+              <span class="ctag">Potluck</span>
+              <span class="ci">🎵</span>
+              <h3>Pool the Music</h3>
+              <p>Everyone in the group brings their library. The collective pantry beats any playlist. Lossless quality.
+                No algorithm.</p>
+              <div class="chint">tap for the recipe →</div>
+            </div>
+            <div class="fb">
+              <h4>The Recipe</h4>
+              <ul class="hw">
+                <li><span class="sn">1</span>Install Navidrome — the community jukebox</li>
+                <li><span class="sn">2</span>Everyone adds their library to the shared folder</li>
+                <li><span class="sn">3</span>Stream from any phone: Symfonium (Android) or Amperfy (iOS)</li>
+                <li><span class="sn">4</span>Share playlists between members — a real collaborative pantry</li>
+                <li><span class="sn">5</span>Cancel Spotify. Enjoy what you actually own.</li>
+              </ul>
+              <div class="bt">⏱ One afternoon to set up</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('open')">
+          <div class="flip-inner">
+            <div class="ff">
+              <span class="ctag">Private</span>
+              <span class="ci">💬</span>
+              <h3>Your Table Talk</h3>
+              <p>A chat server that belongs to your community. End-to-end encrypted. Nobody can read the table
+                conversation except those at it.</p>
+              <div class="chint">tap for the recipe →</div>
+            </div>
+            <div class="fb">
+              <h4>The Recipe</h4>
+              <ul class="hw">
+                <li><span class="sn">1</span>Install Matrix Synapse — the homeserver everyone connects to</li>
+                <li><span class="sn">2</span>Everyone downloads Element — points it at your server</li>
+                <li><span class="sn">3</span>Add bridges so friends on WhatsApp/Discord can join gradually</li>
+                <li><span class="sn">4</span>End-to-end encrypted. Your kitchen, your rules.</li>
+              </ul>
+              <div class="bt">⏱ One weekend + gradual migration</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('open')">
+          <div class="flip-inner">
+            <div class="ff">
+              <span class="ctag">30 Min</span>
+              <span class="ci">🔍</span>
+              <h3>Anonymous Search</h3>
+              <p>Queries Google and a dozen others simultaneously — without telling any of them who's asking. No
+                ingredient list for their ad machine.</p>
+              <div class="chint">tap for the recipe →</div>
+            </div>
+            <div class="fb">
+              <h4>The Recipe</h4>
+              <ul class="hw">
+                <li><span class="sn">1</span><code>docker run -d -p 8888:8080 searxng/searxng</code></li>
+                <li><span class="sn">2</span>Open browser at your-ip:8888</li>
+                <li><span class="sn">3</span>Set as default search engine</li>
+                <li><span class="sn">4</span>Results from multiple engines. Zero profile built on you.</li>
+              </ul>
+              <div class="bt">⏱ 30 minutes start to finish</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="this.classList.toggle('open')">
+          <div class="flip-inner">
+            <div class="ff">
+              <span class="ctag go">The Kitchen</span>
+              <span class="ci">🏡</span>
+              <h3>Your Home OS</h3>
+              <p>One dashboard to manage it all. Install services with a click. It's an app store — but you own the
+                store and know every ingredient.</p>
+              <div class="chint">tap for the recipe →</div>
+            </div>
+            <div class="fb">
+              <h4>The Recipe</h4>
+              <ul class="hw">
+                <li><span class="sn">1</span>Install CasaOS: <code>curl -fsSL https://get.casaos.io | sudo bash</code>
+                </li>
+                <li><span class="sn">2</span>Open dashboard at your local IP in a browser</li>
+                <li><span class="sn">3</span>Browse the community app store — everything above, one click</li>
+                <li><span class="sn">4</span>Monitor storage, manage who's at the table</li>
+                <li><span class="sn">5</span>Works on any PC, laptop, or Raspberry Pi 5</li>
+              </ul>
+              <div class="bt">⏱ Under an hour to the first dish</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="start.html" class="more-link">→ Full step-by-step recipes with time estimates, commands, and a progress
+        checklist</a>
+    </div>
+  </section>
+
+  <!-- ═══ PANTRY SWAP PREVIEW ═══ -->
+  <section class="swap-prev-section" id="swap-preview">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-baron">The Pantry Swap</span>
+        <div class="eline"></div>
+      </div>
+      <h2 class="stitle">Swap the Packaged Goods</h2>
+      <p class="ssub">Every corporate ingredient has a community alternative — usually better quality,
+        definitely cheaper, and you know exactly what's in it.</p>
+
+      <table class="swap-prev-table">
+        <thead>
+          <tr>
+            <th class="col-b">🏰 What They Sell You<br><small
+                style="font-size:0.58rem;opacity:0.65;font-weight:normal">Pre-packaged, overpriced, surveilled</small>
+            </th>
+            <th class="col-ar"></th>
+            <th class="col-r">🏹 What You Can Make<br><small
+                style="font-size:0.58rem;opacity:0.65;font-weight:normal">Community ingredient, open recipe</small></th>
+            <th class="col-w">Why It Matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="bn">AI Subscriptions</span><span class="bb">OpenAI · Anthropic · Google · Microsoft</span>
+            </td>
+            <td style="text-align:center;color:var(--muted)">→</td>
+            <td><span class="rn">Ollama + open models</span><span class="rb">Llama · Phi-3.5 · Mistral —
+                offline-capable</span></td>
+            <td class="wc">Your prompts train their models. <strong>You're the unpaid chef.</strong></td>
+          </tr>
+          <tr>
+            <td><span class="bn">Cloud Files &amp; Docs</span><span class="bb">Google Drive · OneDrive · Dropbox ·
+                iCloud</span></td>
+            <td style="text-align:center;color:var(--muted)">→</td>
+            <td><span class="rn">NextCloud + Collabora</span><span class="rb">Files · calendar · docs —
+                self-hosted</span></td>
+            <td class="wc">Google scans your docs. <strong>Microsoft Recall screenshots everything you do.</strong></td>
+          </tr>
+          <tr>
+            <td><span class="bn">Music Streaming</span><span class="bb">Spotify · Apple Music · Amazon Music</span></td>
+            <td style="text-align:center;color:var(--muted)">→</td>
+            <td><span class="rn">Navidrome</span><span class="rb">Your library · lossless · zero algorithm</span></td>
+            <td class="wc">Spotify pays artists $0.003/stream and builds a <strong>detailed behavioral profile from your
+                listening.</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="swap.html" class="see-all">See the Full Pantry Swap — 10 ingredients →</a>
+    </div>
+  </section>
+
+  <!-- ═══ COOKING TOGETHER ═══ -->
+  <section class="together-section" id="together">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-amber">Cooking Together</span>
+        <div class="eline-light"></div>
+      </div>
+      <h2 class="stitle">The Feast Is Better When Everyone Brings Something</h2>
+      <p class="ssub" style="color:rgba(255,255,255,0.55)">Tech companies became powerful by sharing infrastructure
+        costs — they just kept the benefits.
+        Your community can do the same thing. Keep the benefits.</p>
+
+      <div class="together-grid">
+        <div class="together-card">
+          <h4>📉 Shared Costs</h4>
+          <p>Six people sharing one kitchen setup pay a fraction of the cost each.
+            <strong>More people → lower cost per person</strong> → better infrastructure for everyone.
+            That's cooperative economics. Tech companies have always used it. Now you can too.
+          </p>
+        </div>
+        <div class="together-card">
+          <h4>🧠 Collective Intelligence</h4>
+          <p>Six Raspberry Pi 5s pooled together hold 48GB of RAM. <strong>That's enough to run an
+              8B AI model that no single Pi could handle alone.</strong> The community's AI is
+            smarter than any individual's AI. Same principle as any good kitchen brigade.</p>
+        </div>
+        <div class="together-card">
+          <h4>🛡️ Resilient by Design</h4>
+          <p>When your solo server goes down, everything stops. When one node in a mesh goes
+            offline, <strong>the others route around it.</strong> A shared kitchen doesn't close
+            because one stove breaks. Distributed infrastructure is more durable than isolated.</p>
+        </div>
+      </div>
+
+      <div class="together-pull">
+        <p>"Tech needs to connect us. <span>Not entrap us.</span><br>That's been the modern mistake."</p>
+        <a href="community.html">Read our philosophy on community, cooperation, and what this is really about →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ JOIN / KITCHEN BRIGADE ═══ -->
+  <section class="join-section" id="join">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-sage">The Kitchen Brigade</span>
+        <div class="eline"></div>
+      </div>
+      <h2 class="stitle">Find Your Role at the Table</h2>
+      <p class="ssub">A kitchen runs on different skills. Some people grow the ingredients, some cook,
+        some serve, some wash up. All of it matters. Here's where you fit.</p>
+
+      <div class="tiers-wrap">
+        <div class="tier">
+          <span class="tn">01</span>
+          <span class="tier-icon">📣</span>
+          <h3>Guest</h3>
+          <span class="tier-role">Show up, spread the word</span>
+          <p>Tell people this exists. Come to community calls. The table grows when guests become regulars.</p>
+          <ul class="tier-ps">
+            <li>Community chat access</li>
+            <li>Learning resources</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <span class="tn">02</span>
+          <span class="tier-icon">💸</span>
+          <h3>Regular</h3>
+          <span class="tier-role">Cover your plate</span>
+          <p>Contribute to real costs: electricity, internet, hardware. Full access to everything the kitchen produces.
+          </p>
+          <ul class="tier-ps">
+            <li>AI inference pool</li>
+            <li>File storage</li>
+            <li>Music, chat, search</li>
+          </ul>
+        </div>
+        <div class="tier hl">
+          <span class="tn">03</span>
+          <span class="tier-icon">🖥️</span>
+          <h3>Line Cook</h3>
+          <span class="tier-role">Run a node at home</span>
+          <p>Your Pi is a community burner. Your hardware becomes community capacity. Electricity stipend included.</p>
+          <ul class="tier-ps">
+            <li>Hardware = infrastructure</li>
+            <li>Priority AI access</li>
+            <li>Power for all</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <span class="tn">04</span>
+          <span class="tier-icon">🔧</span>
+          <h3>Sous Chef</h3>
+          <span class="tier-role">Tech, writing, teaching</span>
+          <p>Your expertise is an ingredient too. Help others get set up, write guides, improve the recipes.</p>
+          <ul class="tier-ps">
+            <li>Onboard new members</li>
+            <li>Write guides</li>
+            <li>Vote on decisions</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <span class="tn">05</span>
+          <span class="tier-icon">🌱</span>
+          <h3>Head Chef</h3>
+          <span class="tier-role">Governance + funding</span>
+          <p>Keep the kitchen running. Shape decisions. Sponsor nodes for members who can't afford the hardware.</p>
+          <ul class="tier-ps">
+            <li>Co-op governance</li>
+            <li>Sponsor nodes</li>
+            <li>Shape the menu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EXPLORE BAR ═══ -->
+  <div class="explore-bar">
+    <div class="explore-inner">
+      <div>
+        <h3>Hungry for More?</h3>
+        <p>The kitchen has a lot of rooms. Here's what's cooking in each one.</p>
+      </div>
+      <div class="explore-links">
+        <a href="start.html" class="el">📋 Full Recipes (Getting Started)</a>
+        <a href="openclaw.html" class="el">🤖 What Is a Community AI Agent</a>
+        <a href="swap.html" class="el">🔄 Full Pantry Swap (10 ingredients)</a>
+        <a href="map.html" class="el">🍯 The Honeycomb Map (37 dimensions)</a>
+        <a href="community.html" class="el">🏡 What Community Means to Us</a>
+        <a href="vision.html" class="el">🔭 The Vision &amp; Roadmap</a>
+        <a href="security.html" class="el">🔒 Security Before You Go Live</a>
+        <a href="https://meldfunction.github.io/kitchen-table/" target="_blank" class="el">📂 GitHub Repo + Full
+          Guides</a>
       </div>
     </div>
   </div>
-</section>
-
-<!-- ═══ TONIGHT'S MENU ═══ -->
-<section class="menu-section" id="menu">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-sage">Tonight's Menu</span><div class="eline"></div></div>
-    <div class="menu-kicker">Six dishes you can cook this weekend. Hover or tap for the recipe.</div>
-    <h2 class="stitle">What's Cooking</h2>
-
-    <div class="flip-grid">
-      <div class="flip-card" onclick="this.classList.toggle('open')">
-        <div class="flip-inner">
-          <div class="ff feat">
-            <span class="ctag am">Start Here</span>
-            <span class="ci">🤖</span>
-            <h3>Community AI</h3>
-            <p>An AI assistant that runs on your hardware. Private, offline-capable, yours forever. Cancel the subscription tonight.</p>
-            <div class="chint">tap for the recipe →</div>
-          </div>
-          <div class="fb">
-            <h4>The Recipe</h4>
-            <ul class="hw">
-              <li><span class="sn">1</span>Install Ollama: <code>curl -fsSL https://ollama.com/install.sh | sh</code></li>
-              <li><span class="sn">2</span>Pull a free model: <code>ollama pull phi3.5:3.8b-mini-instruct-q4_K_M</code></li>
-              <li><span class="sn">3</span>Talk to it — it's yours now</li>
-              <li><span class="sn">4</span>Cancel ChatGPT or Claude subscription</li>
-              <li><span class="sn">5</span>Invite your community — share the kitchen</li>
-            </ul>
-            <div class="bt">⏱ First serving: ~15 minutes</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flip-card" onclick="this.classList.toggle('open')">
-        <div class="flip-inner">
-          <div class="ff">
-            <span class="ctag go">The Pantry</span>
-            <span class="ci">📁</span>
-            <h3>Your Files</h3>
-            <p>Documents, photos, calendar, contacts — in your own pantry. Nobody rummaging through your shelves for ad data.</p>
-            <div class="chint">tap for the recipe →</div>
-          </div>
-          <div class="fb">
-            <h4>The Recipe</h4>
-            <ul class="hw">
-              <li><span class="sn">1</span>Install CasaOS (your kitchen dashboard): <code>curl -fsSL https://get.casaos.io | sudo bash</code></li>
-              <li><span class="sn">2</span>Install NextCloud from the app store — one click</li>
-              <li><span class="sn">3</span>Install the desktop client — starts syncing immediately</li>
-              <li><span class="sn">4</span>Move your active folder first, archive later</li>
-              <li><span class="sn">5</span>Calendar and contacts come free with the pantry</li>
-            </ul>
-            <div class="bt">⏱ One weekend to fully stock</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flip-card" onclick="this.classList.toggle('open')">
-        <div class="flip-inner">
-          <div class="ff">
-            <span class="ctag">Potluck</span>
-            <span class="ci">🎵</span>
-            <h3>Pool the Music</h3>
-            <p>Everyone in the group brings their library. The collective pantry beats any playlist. Lossless quality. No algorithm.</p>
-            <div class="chint">tap for the recipe →</div>
-          </div>
-          <div class="fb">
-            <h4>The Recipe</h4>
-            <ul class="hw">
-              <li><span class="sn">1</span>Install Navidrome — the community jukebox</li>
-              <li><span class="sn">2</span>Everyone adds their library to the shared folder</li>
-              <li><span class="sn">3</span>Stream from any phone: Symfonium (Android) or Amperfy (iOS)</li>
-              <li><span class="sn">4</span>Share playlists between members — a real collaborative pantry</li>
-              <li><span class="sn">5</span>Cancel Spotify. Enjoy what you actually own.</li>
-            </ul>
-            <div class="bt">⏱ One afternoon to set up</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flip-card" onclick="this.classList.toggle('open')">
-        <div class="flip-inner">
-          <div class="ff">
-            <span class="ctag">Private</span>
-            <span class="ci">💬</span>
-            <h3>Your Table Talk</h3>
-            <p>A chat server that belongs to your community. End-to-end encrypted. Nobody can read the table conversation except those at it.</p>
-            <div class="chint">tap for the recipe →</div>
-          </div>
-          <div class="fb">
-            <h4>The Recipe</h4>
-            <ul class="hw">
-              <li><span class="sn">1</span>Install Matrix Synapse — the homeserver everyone connects to</li>
-              <li><span class="sn">2</span>Everyone downloads Element — points it at your server</li>
-              <li><span class="sn">3</span>Add bridges so friends on WhatsApp/Discord can join gradually</li>
-              <li><span class="sn">4</span>End-to-end encrypted. Your kitchen, your rules.</li>
-            </ul>
-            <div class="bt">⏱ One weekend + gradual migration</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flip-card" onclick="this.classList.toggle('open')">
-        <div class="flip-inner">
-          <div class="ff">
-            <span class="ctag">30 Min</span>
-            <span class="ci">🔍</span>
-            <h3>Anonymous Search</h3>
-            <p>Queries Google and a dozen others simultaneously — without telling any of them who's asking. No ingredient list for their ad machine.</p>
-            <div class="chint">tap for the recipe →</div>
-          </div>
-          <div class="fb">
-            <h4>The Recipe</h4>
-            <ul class="hw">
-              <li><span class="sn">1</span><code>docker run -d -p 8888:8080 searxng/searxng</code></li>
-              <li><span class="sn">2</span>Open browser at your-ip:8888</li>
-              <li><span class="sn">3</span>Set as default search engine</li>
-              <li><span class="sn">4</span>Results from multiple engines. Zero profile built on you.</li>
-            </ul>
-            <div class="bt">⏱ 30 minutes start to finish</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flip-card" onclick="this.classList.toggle('open')">
-        <div class="flip-inner">
-          <div class="ff">
-            <span class="ctag go">The Kitchen</span>
-            <span class="ci">🏡</span>
-            <h3>Your Home OS</h3>
-            <p>One dashboard to manage it all. Install services with a click. It's an app store — but you own the store and know every ingredient.</p>
-            <div class="chint">tap for the recipe →</div>
-          </div>
-          <div class="fb">
-            <h4>The Recipe</h4>
-            <ul class="hw">
-              <li><span class="sn">1</span>Install CasaOS: <code>curl -fsSL https://get.casaos.io | sudo bash</code></li>
-              <li><span class="sn">2</span>Open dashboard at your local IP in a browser</li>
-              <li><span class="sn">3</span>Browse the community app store — everything above, one click</li>
-              <li><span class="sn">4</span>Monitor storage, manage who's at the table</li>
-              <li><span class="sn">5</span>Works on any PC, laptop, or Raspberry Pi 5</li>
-            </ul>
-            <div class="bt">⏱ Under an hour to the first dish</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <a href="start.html" class="more-link">→ Full step-by-step recipes with time estimates, commands, and a progress checklist</a>
-  </div>
-</section>
-
-<!-- ═══ PANTRY SWAP PREVIEW ═══ -->
-<section class="swap-prev-section" id="swap-preview">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-baron">The Pantry Swap</span><div class="eline"></div></div>
-    <h2 class="stitle">Swap the Packaged Goods</h2>
-    <p class="ssub">Every corporate ingredient has a community alternative — usually better quality, 
-    definitely cheaper, and you know exactly what's in it.</p>
-
-    <table class="swap-prev-table">
-      <thead>
-        <tr>
-          <th class="col-b">🏰 What They Sell You<br><small style="font-size:0.58rem;opacity:0.65;font-weight:normal">Pre-packaged, overpriced, surveilled</small></th>
-          <th class="col-ar"></th>
-          <th class="col-r">🏹 What You Can Make<br><small style="font-size:0.58rem;opacity:0.65;font-weight:normal">Community ingredient, open recipe</small></th>
-          <th class="col-w">Why It Matters</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="bn">AI Subscriptions</span><span class="bb">OpenAI · Anthropic · Google · Microsoft</span></td>
-          <td style="text-align:center;color:var(--muted)">→</td>
-          <td><span class="rn">Ollama + open models</span><span class="rb">Llama · Phi-3.5 · Mistral — offline-capable</span></td>
-          <td class="wc">Your prompts train their models. <strong>You're the unpaid chef.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="bn">Cloud Files &amp; Docs</span><span class="bb">Google Drive · OneDrive · Dropbox · iCloud</span></td>
-          <td style="text-align:center;color:var(--muted)">→</td>
-          <td><span class="rn">NextCloud + Collabora</span><span class="rb">Files · calendar · docs — self-hosted</span></td>
-          <td class="wc">Google scans your docs. <strong>Microsoft Recall screenshots everything you do.</strong></td>
-        </tr>
-        <tr>
-          <td><span class="bn">Music Streaming</span><span class="bb">Spotify · Apple Music · Amazon Music</span></td>
-          <td style="text-align:center;color:var(--muted)">→</td>
-          <td><span class="rn">Navidrome</span><span class="rb">Your library · lossless · zero algorithm</span></td>
-          <td class="wc">Spotify pays artists $0.003/stream and builds a <strong>detailed behavioral profile from your listening.</strong></td>
-        </tr>
-      </tbody>
-    </table>
-    <a href="swap.html" class="see-all">See the Full Pantry Swap — 10 ingredients →</a>
-  </div>
-</section>
-
-<!-- ═══ COOKING TOGETHER ═══ -->
-<section class="together-section" id="together">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-amber">Cooking Together</span><div class="eline-light"></div></div>
-    <h2 class="stitle">The Feast Is Better When Everyone Brings Something</h2>
-    <p class="ssub" style="color:rgba(255,255,255,0.55)">Tech companies became powerful by sharing infrastructure costs — they just kept the benefits. 
-    Your community can do the same thing. Keep the benefits.</p>
-
-    <div class="together-grid">
-      <div class="together-card">
-        <h4>📉 Shared Costs</h4>
-        <p>Six people sharing one kitchen setup pay a fraction of the cost each. 
-        <strong>More people → lower cost per person</strong> → better infrastructure for everyone. 
-        That's cooperative economics. Tech companies have always used it. Now you can too.</p>
-      </div>
-      <div class="together-card">
-        <h4>🧠 Collective Intelligence</h4>
-        <p>Six Raspberry Pi 5s pooled together hold 48GB of RAM. <strong>That's enough to run an 
-        8B AI model that no single Pi could handle alone.</strong> The community's AI is 
-        smarter than any individual's AI. Same principle as any good kitchen brigade.</p>
-      </div>
-      <div class="together-card">
-        <h4>🛡️ Resilient by Design</h4>
-        <p>When your solo server goes down, everything stops. When one node in a mesh goes 
-        offline, <strong>the others route around it.</strong> A shared kitchen doesn't close 
-        because one stove breaks. Distributed infrastructure is more durable than isolated.</p>
-      </div>
-    </div>
-
-    <div class="together-pull">
-      <p>"Tech needs to connect us. <span>Not entrap us.</span><br>That's been the modern mistake."</p>
-      <a href="community.html">Read our philosophy on community, cooperation, and what this is really about →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ JOIN / KITCHEN BRIGADE ═══ -->
-<section class="join-section" id="join">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-sage">The Kitchen Brigade</span><div class="eline"></div></div>
-    <h2 class="stitle">Find Your Role at the Table</h2>
-    <p class="ssub">A kitchen runs on different skills. Some people grow the ingredients, some cook, 
-    some serve, some wash up. All of it matters. Here's where you fit.</p>
-
-    <div class="tiers-wrap">
-      <div class="tier">
-        <span class="tn">01</span>
-        <span class="tier-icon">📣</span>
-        <h3>Guest</h3>
-        <span class="tier-role">Show up, spread the word</span>
-        <p>Tell people this exists. Come to community calls. The table grows when guests become regulars.</p>
-        <ul class="tier-ps"><li>Community chat access</li><li>Learning resources</li></ul>
-      </div>
-      <div class="tier">
-        <span class="tn">02</span>
-        <span class="tier-icon">💸</span>
-        <h3>Regular</h3>
-        <span class="tier-role">Cover your plate</span>
-        <p>Contribute to real costs: electricity, internet, hardware. Full access to everything the kitchen produces.</p>
-        <ul class="tier-ps"><li>AI inference pool</li><li>File storage</li><li>Music, chat, search</li></ul>
-      </div>
-      <div class="tier hl">
-        <span class="tn">03</span>
-        <span class="tier-icon">🖥️</span>
-        <h3>Line Cook</h3>
-        <span class="tier-role">Run a node at home</span>
-        <p>Your Pi is a community burner. Your hardware becomes community capacity. Electricity stipend included.</p>
-        <ul class="tier-ps"><li>Hardware = infrastructure</li><li>Priority AI access</li><li>Power for all</li></ul>
-      </div>
-      <div class="tier">
-        <span class="tn">04</span>
-        <span class="tier-icon">🔧</span>
-        <h3>Sous Chef</h3>
-        <span class="tier-role">Tech, writing, teaching</span>
-        <p>Your expertise is an ingredient too. Help others get set up, write guides, improve the recipes.</p>
-        <ul class="tier-ps"><li>Onboard new members</li><li>Write guides</li><li>Vote on decisions</li></ul>
-      </div>
-      <div class="tier">
-        <span class="tn">05</span>
-        <span class="tier-icon">🌱</span>
-        <h3>Head Chef</h3>
-        <span class="tier-role">Governance + funding</span>
-        <p>Keep the kitchen running. Shape decisions. Sponsor nodes for members who can't afford the hardware.</p>
-        <ul class="tier-ps"><li>Co-op governance</li><li>Sponsor nodes</li><li>Shape the menu</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ EXPLORE BAR ═══ -->
-<div class="explore-bar">
-  <div class="explore-inner">
-    <div>
-      <h3>Hungry for More?</h3>
-      <p>The kitchen has a lot of rooms. Here's what's cooking in each one.</p>
-    </div>
-    <div class="explore-links">
-      <a href="start.html" class="el">📋 Full Recipes (Getting Started)</a>
-      <a href="openclaw.html" class="el">🤖 What Is a Community AI Agent</a>
-      <a href="swap.html" class="el">🔄 Full Pantry Swap (10 ingredients)</a>
-      <a href="map.html" class="el">🍯 The Honeycomb Map (37 dimensions)</a>
-      <a href="community.html" class="el">🏡 What Community Means to Us</a>
-      <a href="vision.html" class="el">🔭 The Vision &amp; Roadmap</a>
-      <a href="security.html" class="el">🔒 Security Before You Go Live</a>
-      <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank" class="el">📂 GitHub Repo + Full Guides</a>
-    </div>
-  </div>
-</div>
-<footer style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-  <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55)">
-    Kitchen Table Cloud · Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
-  </p>
-  <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank"
-     style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage-m);text-decoration:none">
-    ⭐ Star on GitHub
-  </a>
-</footer>
+  <footer
+    style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55)">
+      Kitchen Table Cloud · Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+    </p>
+    <a href="https://meldfunction.github.io/kitchen-table/" target="_blank"
+      style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage-m);text-decoration:none">
+      ⭐ Star on GitHub
+    </a>
+  </footer>
 </body>
+
 </html>

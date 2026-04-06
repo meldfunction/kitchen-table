@@ -1,196 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Pantry Swap — Kitchen Table Cloud</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap" rel="stylesheet">
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Pantry Swap — Kitchen Table Cloud</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@0,400;0,700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F3EFE8;
+      --paper: #E8E3D5;
+      --ink: #17140E;
+      --white: #FDFAF5;
+      --brick: #B54C2F;
+      --slate: #2A4860;
+      --amber: #C8872C;
+      --sage: #3A6B50;
+      --sage-m: #5D9478;
+      --muted: #7A7068;
+      --baron: #6F1A1A;
+      --warm: #C4874A;
+    }
 
-:root{
-  --bg:#F3EFE8;--paper:#E8E3D5;--ink:#17140E;--white:#FDFAF5;
-  --brick:#B54C2F;--slate:#2A4860;--amber:#C8872C;--sage:#3A6B50;
-  --sage-m:#5D9478;--muted:#7A7068;--baron:#6F1A1A;--warm:#C4874A;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:'Libre Baskerville',serif;font-size:17px;line-height:1.75;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;line-height:0.93}
-.inner{max-width:1100px;margin:0 auto}
-section{padding:72px 40px}
-.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.et{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;padding:4px 12px;flex-shrink:0}
-.et-slate{background:var(--slate);color:var(--white)}
-.et-brick{background:var(--brick);color:var(--white)}
-.et-amber{background:var(--amber);color:var(--ink)}
-.et-sage{background:var(--sage);color:var(--white)}
-.et-ink{background:var(--ink);color:var(--white)}
-.et-baron{background:var(--baron);color:var(--white)}
-.eline{flex:1;height:1px;background:rgba(0,0,0,0.12)}
-.eline-light{flex:1;height:1px;background:rgba(255,255,255,0.12)}
-.stitle{font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:10px}
-.ssub{max-width:680px;font-size:1.02rem;color:var(--muted);line-height:1.78;margin-top:12px;margin-bottom:40px}
-.mono{font-family:'Space Mono',monospace}
-/* Safe link styles on dark backgrounds */
-a.dark-link{color:var(--sage-m);text-decoration:none}
-a.dark-link:hover{color:var(--amber)}
-.code-block{background:#111108;border-left:3px solid var(--sage);padding:20px;font-family:'Space Mono',monospace;font-size:0.74rem;color:#7DB87D;line-height:1.85;overflow-x:auto;margin:16px 0}
-.code-block .cm{color:rgba(255,255,255,0.38)}.code-block .cmd{color:var(--amber)}
-/* Code links always readable */
-.code-block a{color:var(--sage-m);text-decoration:none}.code-block a:hover{color:var(--amber)}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.5}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-.site-header{background:var(--ink);padding:13px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--amber)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.1em}
-.logo span{color:var(--amber)}
-nav{display:flex;align-items:center;flex-wrap:wrap;gap:1px}
-nav a{color:rgba(255,255,255,0.65);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.67rem;letter-spacing:0.04em;padding:4px 9px;transition:color 0.18s;white-space:nowrap}
-nav a:hover{color:var(--amber)}
-nav a.nav-accent{background:var(--amber);color:var(--ink);font-weight:700;padding:5px 12px}
-nav a.nav-accent:hover{background:var(--white)}
-nav a.nav-dim{color:rgba(255,255,255,0.42)}
-nav a.nav-dim:hover{color:rgba(255,255,255,0.75)}
+    html {
+      scroll-behavior: smooth
+    }
 
-.hero-swap{background:var(--baron);padding:72px 40px 60px;border-bottom:3px solid var(--amber)}
-.hero-swap h1{font-size:clamp(3rem,6vw,5.5rem);color:var(--white);line-height:0.91;margin-bottom:16px}
-.hero-swap h1 span{color:var(--amber)}
-.hero-swap p{color:rgba(255,255,255,0.68);font-size:1.08rem;max-width:580px;line-height:1.7}
-.swap-table{width:100%;border-collapse:collapse;font-size:0.87rem}
-.swap-table thead th{padding:12px 15px;text-align:left;font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.06em}
-.col-B{background:var(--baron);color:var(--white)}.col-A{background:var(--ink);color:var(--muted);text-align:center;width:44px}
-.col-R{background:var(--sage);color:var(--white)}.col-W{background:var(--slate);color:var(--white)}
-.swap-table tbody tr{border-bottom:1px solid rgba(0,0,0,0.08);transition:background 0.15s}
-.swap-table tbody tr:hover{background:rgba(0,0,0,0.025)}
-.swap-table td{padding:12px 15px;vertical-align:top}
-.bn{color:var(--baron);font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;display:block;margin-bottom:2px;text-decoration:line-through;text-decoration-color:rgba(181,76,47,0.4)}
-.bb{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);font-style:italic}
-.rn{color:var(--sage);font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;display:block;margin-bottom:2px}
-.rb{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted)}
-.wc{font-size:0.84rem;color:var(--ink);line-height:1.6}
-.wc strong{color:var(--slate)}
-.cta-band{background:var(--ink);padding:36px 40px;text-align:center}
-.cta-band h3{font-size:2.2rem;color:var(--white);margin-bottom:10px}
-.cta-band p{font-family:'Space Mono',monospace;font-size:0.78rem;color:rgba(255,255,255,0.6);margin-bottom:20px;line-height:1.65}
-.cta-band a{background:var(--amber);color:var(--ink);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.07em;padding:12px 26px;text-decoration:none;border:3px solid var(--amber);display:inline-block;margin:4px;transition:all 0.2s}
-.cta-band a:hover{background:transparent;color:var(--amber)}
-.cta-band a.sec{background:transparent;color:var(--sage-m);border-color:var(--sage-m)}
-.cta-band a.sec:hover{background:rgba(93,148,120,0.1)}
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Libre Baskerville', serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden
+    }
 
-@media(max-width:900px){section{padding:52px 24px}.site-header{padding:12px 24px}nav{display:none}}
-</style>
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.04em;
+      line-height: 0.93
+    }
+
+    .inner {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    section {
+      padding: 72px 40px
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px
+    }
+
+    .et {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      flex-shrink: 0
+    }
+
+    .et-slate {
+      background: var(--slate);
+      color: var(--white)
+    }
+
+    .et-brick {
+      background: var(--brick);
+      color: var(--white)
+    }
+
+    .et-amber {
+      background: var(--amber);
+      color: var(--ink)
+    }
+
+    .et-sage {
+      background: var(--sage);
+      color: var(--white)
+    }
+
+    .et-ink {
+      background: var(--ink);
+      color: var(--white)
+    }
+
+    .et-baron {
+      background: var(--baron);
+      color: var(--white)
+    }
+
+    .eline {
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.12)
+    }
+
+    .eline-light {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12)
+    }
+
+    .stitle {
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      margin-bottom: 10px
+    }
+
+    .ssub {
+      max-width: 680px;
+      font-size: 1.02rem;
+      color: var(--muted);
+      line-height: 1.78;
+      margin-top: 12px;
+      margin-bottom: 40px
+    }
+
+    .mono {
+      font-family: 'Space Mono', monospace
+    }
+
+    /* Safe link styles on dark backgrounds */
+    a.dark-link {
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    a.dark-link:hover {
+      color: var(--amber)
+    }
+
+    .code-block {
+      background: #111108;
+      border-left: 3px solid var(--sage);
+      padding: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      color: #7DB87D;
+      line-height: 1.85;
+      overflow-x: auto;
+      margin: 16px 0
+    }
+
+    .code-block .cm {
+      color: rgba(255, 255, 255, 0.38)
+    }
+
+    .code-block .cmd {
+      color: var(--amber)
+    }
+
+    /* Code links always readable */
+    .code-block a {
+      color: var(--sage-m);
+      text-decoration: none
+    }
+
+    .code-block a:hover {
+      color: var(--amber)
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5
+    }
+
+    .site-header {
+      background: var(--ink);
+      padding: 13px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      border-bottom: 3px solid var(--amber)
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--white);
+      letter-spacing: 0.1em
+    }
+
+    .logo span {
+      color: var(--amber)
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1px
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.65);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.04em;
+      padding: 4px 9px;
+      transition: color 0.18s;
+      white-space: nowrap
+    }
+
+    nav a:hover {
+      color: var(--amber)
+    }
+
+    nav a.nav-accent {
+      background: var(--amber);
+      color: var(--ink);
+      font-weight: 700;
+      padding: 5px 12px
+    }
+
+    nav a.nav-accent:hover {
+      background: var(--white)
+    }
+
+    nav a.nav-dim {
+      color: rgba(255, 255, 255, 0.42)
+    }
+
+    nav a.nav-dim:hover {
+      color: rgba(255, 255, 255, 0.75)
+    }
+
+    .hero-swap {
+      background: var(--baron);
+      padding: 72px 40px 60px;
+      border-bottom: 3px solid var(--amber)
+    }
+
+    .hero-swap h1 {
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      color: var(--white);
+      line-height: 0.91;
+      margin-bottom: 16px
+    }
+
+    .hero-swap h1 span {
+      color: var(--amber)
+    }
+
+    .hero-swap p {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 1.08rem;
+      max-width: 580px;
+      line-height: 1.7
+    }
+
+    .swap-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem
+    }
+
+    .swap-table thead th {
+      padding: 12px 15px;
+      text-align: left;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em
+    }
+
+    .col-B {
+      background: var(--baron);
+      color: var(--white)
+    }
+
+    .col-A {
+      background: var(--ink);
+      color: var(--muted);
+      text-align: center;
+      width: 44px
+    }
+
+    .col-R {
+      background: var(--sage);
+      color: var(--white)
+    }
+
+    .col-W {
+      background: var(--slate);
+      color: var(--white)
+    }
+
+    .swap-table tbody tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      transition: background 0.15s
+    }
+
+    .swap-table tbody tr:hover {
+      background: rgba(0, 0, 0, 0.025)
+    }
+
+    .swap-table td {
+      padding: 12px 15px;
+      vertical-align: top
+    }
+
+    .bn {
+      color: var(--baron);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+      text-decoration: line-through;
+      text-decoration-color: rgba(181, 76, 47, 0.4)
+    }
+
+    .bb {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-style: italic
+    }
+
+    .rn {
+      color: var(--sage);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px
+    }
+
+    .rb {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted)
+    }
+
+    .wc {
+      font-size: 0.84rem;
+      color: var(--ink);
+      line-height: 1.6
+    }
+
+    .wc strong {
+      color: var(--slate)
+    }
+
+    .cta-band {
+      background: var(--ink);
+      padding: 36px 40px;
+      text-align: center
+    }
+
+    .cta-band h3 {
+      font-size: 2.2rem;
+      color: var(--white);
+      margin-bottom: 10px
+    }
+
+    .cta-band p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+      line-height: 1.65
+    }
+
+    .cta-band a {
+      background: var(--amber);
+      color: var(--ink);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.07em;
+      padding: 12px 26px;
+      text-decoration: none;
+      border: 3px solid var(--amber);
+      display: inline-block;
+      margin: 4px;
+      transition: all 0.2s
+    }
+
+    .cta-band a:hover {
+      background: transparent;
+      color: var(--amber)
+    }
+
+    .cta-band a.sec {
+      background: transparent;
+      color: var(--sage-m);
+      border-color: var(--sage-m)
+    }
+
+    .cta-band a.sec:hover {
+      background: rgba(93, 148, 120, 0.1)
+    }
+
+    @media(max-width:900px) {
+      section {
+        padding: 52px 24px
+      }
+
+      .site-header {
+        padding: 12px 24px
+      }
+
+      nav {
+        display: none
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header class="site-header">
-  <div class="logo">Kitchen Table <span>Cloud</span></div>
-  <nav><a href="index.html">Home</a>
-    <a href="start.html">Get Started</a>
-    <a href="openclaw.html">AI Agent</a>
-    <a href="swap.html" class="nav-active">Swap Sheet</a>
-    <a href="map.html" class="nav-dim">Full Map</a>
-    <a href="community.html">Community</a>
-    <a href="vision.html" class="nav-dim">Vision</a>
-    <a href="security.html">Security</a>
-    <a href="index.html#join" class="nav-accent">Join</a>
-    <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" class="nav-dim">GitHub ↗</a></nav>
-</header>
+  <header class="site-header">
+    <div class="logo">Kitchen Table <span>Cloud</span></div>
+    <nav><a href="index.html">Home</a>
+      <a href="start.html">Get Started</a>
+      <a href="openclaw.html">AI Agent</a>
+      <a href="swap.html" class="nav-active">Swap Sheet</a>
+      <a href="map.html" class="nav-dim">Full Map</a>
+      <a href="community.html">Community</a>
+      <a href="vision.html" class="nav-dim">Vision</a>
+      <a href="security.html">Security</a>
+      <a href="index.html#join" class="nav-accent">Join</a>
+      <a href="https://meldfunction.github.io/kitchen-table/" class="nav-dim">GitHub ↗</a>
+    </nav>
+  </header>
 
-<div class="hero-swap">
-  <div class="inner">
-    <div class="eyebrow"><span class="et et-amber">The Pantry Swap</span></div>
-    <h1>Swap the <span>Packaged Goods</span><br>for Community Ingredients</h1>
-    <p>Every subscription was built to extract maximum value from you. Every alternative below was built to give it back — with an honest explanation of <em>why</em> the swap matters, not just what it is.</p>
+  <div class="hero-swap">
+    <div class="inner">
+      <div class="eyebrow"><span class="et et-amber">The Pantry Swap</span></div>
+      <h1>Swap the <span>Packaged Goods</span><br>for Community Ingredients</h1>
+      <p>Every subscription was built to extract maximum value from you. Every alternative below was built to give it
+        back — with an honest explanation of <em>why</em> the swap matters, not just what it is.</p>
+    </div>
   </div>
-</div>
 
-<section style="background:var(--bg);padding-top:0;padding-bottom:0">
-  <table class="swap-table">
-    <thead>
-      <tr>
-        <th class="col-B">🏰 The Packaged Good<br><small style="font-size:0.58rem;opacity:0.65;font-weight:normal">Pre-made, overpriced, surveilled</small></th>
-        <th class="col-A"></th>
-        <th class="col-R">🏹 The Community Ingredient<br><small style="font-size:0.58rem;opacity:0.65;font-weight:normal">Open recipe · you know what's in it</small></th>
-        <th class="col-W">💬 Why It Matters</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="bn">AI Subscriptions</span><span class="bb">OpenAI (ChatGPT) · Anthropic (Claude) · Google (Gemini) · Microsoft (Copilot)</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Ollama + open models</span><span class="rb">Llama 3.x · Phi-3.5 · Mistral · Qwen2.5 — offline-capable, forever free</span></td>
-        <td class="wc">Your prompts train their models. <strong>You are unpaid R&amp;D labor.</strong> Local AI means conversations stay on your hardware — and the models keep improving without costing you more.</td>
-      </tr>
-      <tr>
-        <td><span class="bn">Cloud Files &amp; Docs</span><span class="bb">Google Drive/Workspace · Microsoft OneDrive/365 · Dropbox · iCloud</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">NextCloud + Collabora</span><span class="rb">Files · calendar · contacts · docs — fully self-hosted, open source</span></td>
-        <td class="wc">Google scans your documents for ad signals. <strong>Microsoft's AI 'Recall' literally screenshots everything you do.</strong> NextCloud is your full workspace on your hardware.</td>
-      </tr>
-      <tr>
-        <td><span class="bn">Music Streaming</span><span class="bb">Spotify · Apple Music · Amazon Music · YouTube Music · Tidal</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Navidrome</span><span class="rb">Your library · Subsonic API · every major mobile client · lossless quality</span></td>
-        <td class="wc">Spotify pays artists $0.003/stream and builds a behavioral profile from your listening. <strong>Your library, your server, lossless audio, no algorithm.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">Photo Backup</span><span class="bb">Google Photos · Apple iCloud Photos · Amazon Photos</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Immich</span><span class="rb">Face recognition · auto-backup from phone · album sharing · open source</span></td>
-        <td class="wc">Google Photos analyzes your family photos for object recognition and location data — used to refine advertising. <strong>Your family's memories should not train a surveillance platform.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">Group Chat &amp; Messaging</span><span class="bb">WhatsApp (Meta) · Discord · Telegram · Slack · iMessage (Apple)</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Matrix + Element</span><span class="rb">Federated · E2E encrypted · bridges to every existing platform</span></td>
-        <td class="wc">Meta harvests WhatsApp metadata (who, when, where) 24/7. Discord mines server activity for advertising. <strong>Matrix runs on your server, bridges to everything — nobody can ban your community.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">Home Automation</span><span class="bb">Google Nest · Amazon Echo/Alexa · Apple HomeKit · Ring</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Home Assistant</span><span class="rb">3,000+ device integrations · 100% local · no cloud required · open source</span></td>
-        <td class="wc">Your smart home sends behavioral data to corporate clouds 24/7. Amazon has shared Alexa recordings with law enforcement. <strong>Home Assistant runs entirely locally — automations work when the internet is down.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">Video Library</span><span class="bb">Plex (cloud-dependent) · Netflix · streaming services</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Jellyfin</span><span class="rb">100% free · no account required · streams to any device · your media</span></td>
-        <td class="wc">Netflix removes titles from your 'library.' Plex requires account creation and sends your library metadata to their servers. <strong>Jellyfin is Plex — minus the surveillance, minus the account, minus the fee.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">Web Search</span><span class="bb">Google · Bing · Yahoo · even most 'private' alternatives</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">SearXNG</span><span class="rb">Queries all major engines simultaneously · zero identity leakage · self-hosted</span></td>
-        <td class="wc">Google correlates your searches across every device you've ever used. <strong>SearXNG asks multiple engines your question without telling any of them who you are.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">Password Management</span><span class="bb">1Password · LastPass (hacked 2022) · Dashlane · Bitwarden cloud</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Vaultwarden</span><span class="rb">Self-hosted Bitwarden server · all Bitwarden clients work unchanged</span></td>
-        <td class="wc">LastPass was hacked and 25 million encrypted vaults leaked in 2022. Cloud password managers are high-value targets. <strong>Your vault on your hardware — same apps, zero cloud exposure.</strong></td>
-      </tr>
-      <tr>
-        <td><span class="bn">DNS Resolution</span><span class="bb">Google 8.8.8.8 · Cloudflare 1.1.1.1 · ISP default</span></td>
-        <td style="text-align:center;color:var(--muted)">→</td>
-        <td><span class="rn">Pi-hole + Unbound</span><span class="rb">Network-wide ad blocking + direct root server DNS resolution</span></td>
-        <td class="wc">Every DNS query tells Google or your ISP every domain you visit, tied to your IP. <strong>Pi-hole blocks ads on every device. Unbound resolves DNS directly — no middleman, no logs.</strong></td>
-      </tr></tbody>
-  </table>
-</section>
+  <section style="background:var(--bg);padding-top:0;padding-bottom:0">
+    <table class="swap-table">
+      <thead>
+        <tr>
+          <th class="col-B">🏰 The Packaged Good<br><small
+              style="font-size:0.58rem;opacity:0.65;font-weight:normal">Pre-made, overpriced, surveilled</small></th>
+          <th class="col-A"></th>
+          <th class="col-R">🏹 The Community Ingredient<br><small
+              style="font-size:0.58rem;opacity:0.65;font-weight:normal">Open recipe · you know what's in it</small></th>
+          <th class="col-W">💬 Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="bn">AI Subscriptions</span><span class="bb">OpenAI (ChatGPT) · Anthropic (Claude) · Google
+              (Gemini) · Microsoft (Copilot)</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Ollama + open models</span><span class="rb">Llama 3.x · Phi-3.5 · Mistral · Qwen2.5 —
+              offline-capable, forever free</span></td>
+          <td class="wc">Your prompts train their models. <strong>You are unpaid R&amp;D labor.</strong> Local AI means
+            conversations stay on your hardware — and the models keep improving without costing you more.</td>
+        </tr>
+        <tr>
+          <td><span class="bn">Cloud Files &amp; Docs</span><span class="bb">Google Drive/Workspace · Microsoft
+              OneDrive/365 · Dropbox · iCloud</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">NextCloud + Collabora</span><span class="rb">Files · calendar · contacts · docs — fully
+              self-hosted, open source</span></td>
+          <td class="wc">Google scans your documents for ad signals. <strong>Microsoft's AI 'Recall' literally
+              screenshots everything you do.</strong> NextCloud is your full workspace on your hardware.</td>
+        </tr>
+        <tr>
+          <td><span class="bn">Music Streaming</span><span class="bb">Spotify · Apple Music · Amazon Music · YouTube
+              Music · Tidal</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Navidrome</span><span class="rb">Your library · Subsonic API · every major mobile client
+              · lossless quality</span></td>
+          <td class="wc">Spotify pays artists $0.003/stream and builds a behavioral profile from your listening.
+            <strong>Your library, your server, lossless audio, no algorithm.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">Photo Backup</span><span class="bb">Google Photos · Apple iCloud Photos · Amazon
+              Photos</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Immich</span><span class="rb">Face recognition · auto-backup from phone · album sharing ·
+              open source</span></td>
+          <td class="wc">Google Photos analyzes your family photos for object recognition and location data — used to
+            refine advertising. <strong>Your family's memories should not train a surveillance platform.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">Group Chat &amp; Messaging</span><span class="bb">WhatsApp (Meta) · Discord · Telegram ·
+              Slack · iMessage (Apple)</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Matrix + Element</span><span class="rb">Federated · E2E encrypted · bridges to every
+              existing platform</span></td>
+          <td class="wc">Meta harvests WhatsApp metadata (who, when, where) 24/7. Discord mines server activity for
+            advertising. <strong>Matrix runs on your server, bridges to everything — nobody can ban your
+              community.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">Home Automation</span><span class="bb">Google Nest · Amazon Echo/Alexa · Apple HomeKit ·
+              Ring</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Home Assistant</span><span class="rb">3,000+ device integrations · 100% local · no cloud
+              required · open source</span></td>
+          <td class="wc">Your smart home sends behavioral data to corporate clouds 24/7. Amazon has shared Alexa
+            recordings with law enforcement. <strong>Home Assistant runs entirely locally — automations work when the
+              internet is down.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">Video Library</span><span class="bb">Plex (cloud-dependent) · Netflix · streaming
+              services</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Jellyfin</span><span class="rb">100% free · no account required · streams to any device ·
+              your media</span></td>
+          <td class="wc">Netflix removes titles from your 'library.' Plex requires account creation and sends your
+            library metadata to their servers. <strong>Jellyfin is Plex — minus the surveillance, minus the account,
+              minus the fee.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">Web Search</span><span class="bb">Google · Bing · Yahoo · even most 'private'
+              alternatives</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">SearXNG</span><span class="rb">Queries all major engines simultaneously · zero identity
+              leakage · self-hosted</span></td>
+          <td class="wc">Google correlates your searches across every device you've ever used. <strong>SearXNG asks
+              multiple engines your question without telling any of them who you are.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">Password Management</span><span class="bb">1Password · LastPass (hacked 2022) · Dashlane
+              · Bitwarden cloud</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Vaultwarden</span><span class="rb">Self-hosted Bitwarden server · all Bitwarden clients
+              work unchanged</span></td>
+          <td class="wc">LastPass was hacked and 25 million encrypted vaults leaked in 2022. Cloud password managers are
+            high-value targets. <strong>Your vault on your hardware — same apps, zero cloud exposure.</strong></td>
+        </tr>
+        <tr>
+          <td><span class="bn">DNS Resolution</span><span class="bb">Google 8.8.8.8 · Cloudflare 1.1.1.1 · ISP
+              default</span></td>
+          <td style="text-align:center;color:var(--muted)">→</td>
+          <td><span class="rn">Pi-hole + Unbound</span><span class="rb">Network-wide ad blocking + direct root server
+              DNS resolution</span></td>
+          <td class="wc">Every DNS query tells Google or your ISP every domain you visit, tied to your IP.
+            <strong>Pi-hole blocks ads on every device. Unbound resolves DNS directly — no middleman, no logs.</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 
-<div class="cta-band">
-  <h3>Ready to Start Cooking?</h3>
-  <p>Every ingredient above has a full recipe — step-by-step, with time estimates<br>
-  and a progress checklist that saves in your browser.</p>
-  <a href="start.html">Get the Recipes →</a>
-  <a href="openclaw.html" class="sec">What is a Community AI? →</a>
-  <a href="map.html" class="sec">See All 37 Dimensions →</a>
-</div>
-<footer style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-  <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55)">
-    Kitchen Table Cloud · Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
-  </p>
-  <a href="https://github.com/kitchen-table-cloud/kitchen-table-cloud" target="_blank"
-     style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage-m);text-decoration:none">
-    ⭐ Star on GitHub
-  </a>
-</footer>
+  <div class="cta-band">
+    <h3>Ready to Start Cooking?</h3>
+    <p>Every ingredient above has a full recipe — step-by-step, with time estimates<br>
+      and a progress checklist that saves in your browser.</p>
+    <a href="start.html">Get the Recipes →</a>
+    <a href="openclaw.html" class="sec">What is a Community AI? →</a>
+    <a href="map.html" class="sec">See All 37 Dimensions →</a>
+  </div>
+  <footer
+    style="background:var(--ink);border-top:3px solid var(--amber);padding:28px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <p style="font-family:'Space Mono',monospace;font-size:0.68rem;color:rgba(255,255,255,0.55)">
+      Kitchen Table Cloud · Open Source · Community Governed · <span style="color:var(--amber)">The time is now.</span>
+    </p>
+    <a href="https://meldfunction.github.io/kitchen-table/" target="_blank"
+      style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--sage-m);text-decoration:none">
+      ⭐ Star on GitHub
+    </a>
+  </footer>
 </body>
+
 </html>
