@@ -34,9 +34,9 @@ Every major tech platform — Spotify, Google Drive, ChatGPT, Discord — is inf
 
 Kitchen Table Cloud is a blueprint and community for building the alternative: community-owned, cooperatively governed digital infrastructure that's as capable as the commercial stack but ruled by its users, not shareholders.
 
-The full technical guide — 3,000+ lines, seven parts, full appendices — is in **[sovereign-stack-guide.md](sovereign-stack-guide.md)**.
+The full technical guide — 3,000+ lines, seven parts, full appendices — is in **[sovereign-stack-guide.md](https://meldfunction.github.io/kitchen-table/sovereign-stack-guide.md)**. Check out the **[read me](https://meldfunction.github.io/kitchen-table/sovereign-stack-README.md)** as well.
 
-The human-readable version is at **[kitchentable.cloud](https://kitchen-table-cloud.github.io)**.
+The human-readable version is at **[Kitchen Table](https://meldfunction.github.io/kitchen-table/)**.
 
 ---
 
@@ -92,7 +92,7 @@ kitchen-table-cloud/
 
 ## Guide Structure
 
-The [sovereign-stack-guide.md](sovereign-stack-guide.md) covers everything:
+The [sovereign-stack-guide.md](https://meldfunction.github.io/kitchen-table/sovereign-stack-guide.md) covers everything:
 
 | Part | Topic | What You Get |
 |---|---|---|
@@ -126,7 +126,7 @@ The [sovereign-stack-guide.md](sovereign-stack-guide.md) covers everything:
 
 ## Security
 
-Read [security.html](https://kitchen-table-cloud.github.io/security.html) before opening access to your community.
+Read [security.html](https://meldfunction.github.io/kitchen-table/security.html) before opening access to your community.
 
 Key points:
 - **Gateway must bind to Tailscale IP only** — never 0.0.0.0 (CVE-2026-25253)
@@ -146,7 +146,7 @@ This is a **cooperative**, not a startup. Five ways to participate:
 4. **Builder** — Contribute skills: tech, writing, teaching, design. Your expertise is infrastructure.
 5. **Steward** — Governance and funding. Shape decisions. Sponsor nodes for members who can't afford hardware.
 
-**To join:** [Open an issue](https://github.com/kitchen-table-cloud/kitchen-table-cloud/issues) titled "I want to get involved" and tell us what you're working with.
+**To join:** [Open an issue](https://github.com/meldfunction/kitchen-table/issues) titled "I want to get involved" and tell us what you're working with.
 
 ---
 
@@ -160,7 +160,7 @@ We believe:
 
 We're inspired by Obsidian's local-first philosophy, Anytype's privacy-as-architecture approach, Elicit's honesty about AI capabilities, the Calm Tech Institute's attention-respecting design principles, and Patagonia's mission-as-governance model.
 
-Full vision: [vision.html](https://kitchen-table-cloud.github.io/vision.html) · Full map: [map.html](https://kitchen-table-cloud.github.io/map.html)
+Full vision: [vision.html](https://meldfunction.github.io/kitchen-table/vision.html) · Full map: [map.html](https://meldfunction.github.io/kitchen-table/map.html)
 
 ---
 
